@@ -13,6 +13,42 @@
       "PackagePath": "staticwebassets\\favicon.ico"
     },
     {
+      "Id": "C:\\Projetos\\DentalPlus\\DentalPlus\\wwwroot\\images\\Agendamentos.png",
+      "PackagePath": "staticwebassets\\images\\Agendamentos.png"
+    },
+    {
+      "Id": "C:\\Projetos\\DentalPlus\\DentalPlus\\wwwroot\\images\\Configuracoes.png",
+      "PackagePath": "staticwebassets\\images\\Configuracoes.png"
+    },
+    {
+      "Id": "C:\\Projetos\\DentalPlus\\DentalPlus\\wwwroot\\images\\Estoque.png",
+      "PackagePath": "staticwebassets\\images\\Estoque.png"
+    },
+    {
+      "Id": "C:\\Projetos\\DentalPlus\\DentalPlus\\wwwroot\\images\\Financeiro.png",
+      "PackagePath": "staticwebassets\\images\\Financeiro.png"
+    },
+    {
+      "Id": "C:\\Projetos\\DentalPlus\\DentalPlus\\wwwroot\\images\\Medicos.png",
+      "PackagePath": "staticwebassets\\images\\Medicos.png"
+    },
+    {
+      "Id": "C:\\Projetos\\DentalPlus\\DentalPlus\\wwwroot\\images\\Mensagem.png",
+      "PackagePath": "staticwebassets\\images\\Mensagem.png"
+    },
+    {
+      "Id": "C:\\Projetos\\DentalPlus\\DentalPlus\\wwwroot\\images\\Pacientes.png",
+      "PackagePath": "staticwebassets\\images\\Pacientes.png"
+    },
+    {
+      "Id": "C:\\Projetos\\DentalPlus\\DentalPlus\\wwwroot\\images\\PlanoSaude.png",
+      "PackagePath": "staticwebassets\\images\\PlanoSaude.png"
+    },
+    {
+      "Id": "C:\\Projetos\\DentalPlus\\DentalPlus\\wwwroot\\images\\TipoConsultas.png",
+      "PackagePath": "staticwebassets\\images\\TipoConsultas.png"
+    },
+    {
       "Id": "C:\\Projetos\\DentalPlus\\DentalPlus\\wwwroot\\js\\site.js",
       "PackagePath": "staticwebassets\\js\\site.js"
     },
