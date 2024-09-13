@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿﻿
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -8,11 +9,13 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/DentalPlus.styles.css" asp-append-version="true" />
 </head>
-<body onload="CarregaUsuarioLogado()>
+<body onload="CarregaUsuarioLogado()">
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
-                
+                <!-- Título à esquerda -->
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Menu">Dental Tech</a>
+
                 <!-- Botão de toggle para colapso em dispositivos móveis -->
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
@@ -48,7 +51,7 @@
             if (nome != "") {
                 var divNome = document.getElementById("NomeUsuarioLogado");
                 divNome.innerHTML = "Olá " + nome + " <a href='../Home/Login/0'>(Sair)</a>";
-                divNome.style.color = "blue";
+                divNome.style.color = "Blue";
             } else {
                 window.location.href = '../Home/Login';
             }

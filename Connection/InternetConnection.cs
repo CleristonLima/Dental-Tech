@@ -1,6 +1,6 @@
 ﻿using System.Net.NetworkInformation;
 
-namespace DentalPlus.InternetConnection
+namespace DentalPlus.Connection
 {
     public class InternetConnection
     {

@@ -2,11 +2,19 @@ using DentalPlus.Models;
 using DentalPlus.Uteis;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using DentalPlus.Connection;
 
 namespace DentalPlus.Controllers
 {
     public class HomeController : Controller
     {
+        private InternetConnection internetConnection = new InternetConnection();
+
+        private bool VerificarConexaoInternet()
+        {
+            return internetConnection.VerificarConexaoInternet();
+        }
+
         public IActionResult Menu()
         {
             return View();
@@ -15,15 +23,17 @@ namespace DentalPlus.Controllers
         [HttpGet]
         public IActionResult Login(int? id)
         {
-            // Para realizar o logout
-            if (id != null)
+            if (!VerificarConexaoInternet())
             {
-                if (id == 0)
-                {
-                    HttpContext.Session.SetString("IdUsuarioLogado", string.Empty);
-                    HttpContext.Session.SetString("NomeUsuarioLogado", string.Empty);
-                }
+                TempData["ErrorLogin"] = "Sem conexão com a internet. Verifique sua rede e tente novamente.";
+                return View();
+            }
 
+            // Para realizar o logout
+            if (id != null && id == 0)
+            {
+                HttpContext.Session.SetString("IdUsuarioLogado", string.Empty);
+                HttpContext.Session.SetString("NomeUsuarioLogado", string.Empty);
             }
 
             return View();
@@ -32,6 +42,13 @@ namespace DentalPlus.Controllers
         [HttpPost]
         public IActionResult Login(LoginModel login)
         {
+            if (!VerificarConexaoInternet())
+            {
+                TempData["ErrorLogin"] = "Sem conexão com a internet. Verifique sua rede e tente novamente.";
+                return View();
+            }
+
+
             if (ModelState.IsValid || true)
             {
                 bool loginOk = login.ValidarLogin();
@@ -48,6 +65,7 @@ namespace DentalPlus.Controllers
                     TempData["ErrorLogin"] = login.ErrorMessage;
                 }
             }
+
             return View();
         }
 
