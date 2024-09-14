@@ -17,7 +17,15 @@ namespace DentalPlus.Controllers
 
         public IActionResult Menu()
         {
-            return View();
+            if (!VerificarConexaoInternet())
+            {
+                TempData["ErrorLogin"] = "Sem conexão com a internet. Verifique sua rede e tente novamente.";
+                return View();
+            }
+            else
+            {
+                return View();
+            }
         }
 
         [HttpGet]
@@ -47,7 +55,6 @@ namespace DentalPlus.Controllers
                 TempData["ErrorLogin"] = "Sem conexão com a internet. Verifique sua rede e tente novamente.";
                 return View();
             }
-
 
             if (ModelState.IsValid || true)
             {

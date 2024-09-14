@@ -29,6 +29,10 @@
       "PackagePath": "staticwebassets\\images\\Financeiro.png"
     },
     {
+      "Id": "C:\\Projetos\\DentalPlus\\DentalPlus\\wwwroot\\images\\Login.png",
+      "PackagePath": "staticwebassets\\images\\Login.png"
+    },
+    {
       "Id": "C:\\Projetos\\DentalPlus\\DentalPlus\\wwwroot\\images\\Medicos.png",
       "PackagePath": "staticwebassets\\images\\Medicos.png"
     },
@@ -39,6 +43,10 @@
     {
       "Id": "C:\\Projetos\\DentalPlus\\DentalPlus\\wwwroot\\images\\Pacientes.png",
       "PackagePath": "staticwebassets\\images\\Pacientes.png"
+    },
+    {
+      "Id": "C:\\Projetos\\DentalPlus\\DentalPlus\\wwwroot\\images\\Perfil.png",
+      "PackagePath": "staticwebassets\\images\\Perfil.png"
     },
     {
       "Id": "C:\\Projetos\\DentalPlus\\DentalPlus\\wwwroot\\images\\PlanoSaude.png",

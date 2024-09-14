@@ -10,28 +10,33 @@ namespace DentalPlus.Uteis
         private static string User = "root";
         private static string Password = "";
         private static string ConnectionString = $"Server={Server};Database={Database};Uid={User};Pwd={Password};Sslmode=none;Charset=utf8;";
-        private static MySqlConnection Connection;
 
-        public DAL()
+        // Método para abrir uma conexão e garantir que ela seja fechada após o uso
+        private MySqlConnection GetConnection()
         {
-            Connection = new MySqlConnection(ConnectionString);
-            Connection.Open();
+            return new MySqlConnection(ConnectionString);
         }
 
-        // Espera um parametro do tipo string contendo um comando do tipo SELECT
+        // Retorna um DataTable com base em uma string SQL
         public DataTable RetDataTable(string sql)
         {
-            DataTable data = new DataTable();
-            MySqlCommand Command = new MySqlCommand(sql, Connection);
-            MySqlDataAdapter da = new MySqlDataAdapter(Command);
-            da.Fill(data);
-            return data;
+            using (MySqlConnection conn = GetConnection())
+            {
+                conn.Open();
+                using (MySqlCommand Command = new MySqlCommand(sql, conn))
+                {
+                    MySqlDataAdapter da = new MySqlDataAdapter(Command);
+                    DataTable data = new DataTable();
+                    da.Fill(data);
+                    return data;
+                }
+            }
         }
 
-        // Recebe o comando preparado
+        // Retorna um DataTable com base em um MySqlCommand preparado
         public DataTable RetDataTable(MySqlCommand Command)
         {
-            using (MySqlConnection conn = new MySqlConnection(ConnectionString))
+            using (MySqlConnection conn = GetConnection())
             {
                 conn.Open();
                 Command.Connection = conn;
@@ -43,11 +48,28 @@ namespace DentalPlus.Uteis
             }
         }
 
-        // Espera um parametro do tipo String contendo um comando SQL do tipo INSERT, UPDATE e DELETE
+        // Executa comandos SQL de INSERT, UPDATE e DELETE
         public void ExecutarComandoSQL(string sql)
         {
-            MySqlCommand Command = new MySqlCommand(sql, Connection);
-            Command.ExecuteNonQuery();
+            using (MySqlConnection conn = GetConnection())
+            {
+                conn.Open();
+                using (MySqlCommand Command = new MySqlCommand(sql, conn))
+                {
+                    Command.ExecuteNonQuery();
+                }
+            }
+        }
+
+        // Executa comandos SQL preparados, como no caso de parâmetros
+        public void ExecutarComandoSQL(MySqlCommand Command)
+        {
+            using (MySqlConnection conn = GetConnection())
+            {
+                conn.Open();
+                Command.Connection = conn;
+                Command.ExecuteNonQuery();
+            }
         }
     }
 }

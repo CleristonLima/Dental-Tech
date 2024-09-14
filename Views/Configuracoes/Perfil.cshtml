@@ -1,0 +1,48 @@
+﻿<h3>Lista de perfis</h3>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Código do perfil</th>
+            <th>Descricao do perfil</th>
+            <th>Sigla</th>
+            <th>#</th>
+            <th>#</th>
+        </tr>
+    </thead>
+
+    <tbody>
+            @{
+                foreach (var item in (List<PerfilModel>)ViewBag.ListaPerfis)
+                {
+                <tr>
+                    
+                    <td>@item.IdProfile</td>
+                    <td>@item.NameProfile</td>
+                    <td>@item.CodeProfile</td>
+                    <td><button type="button" class="btn btn-warning" onclick="Editar(@item.IdProfile)">Editar</button></td>
+                    <td><button type="button" class="btn btn-danger" onclick="Excluir(@item.IdProfile)">Excluir</button></td>
+                </tr>
+                }
+            }
+    </tbody>
+
+</table>
+<br />
+<button class="btn btn-block btn-primary" type="button" onclick="Cadastrar()">Cadastrar Perfil</button>
+
+<script>
+
+    function Cadastrar() {
+        window.location.href = "../Configuracoes/CadastroPerfil";
+    }
+
+    function Editar(id) {
+        window.location.href = "../Configuracoes/CadastroPerfil/" + id;
+    }
+
+    function Excluir(id) {
+        window.location.href = "../Configuracoes/Excluir/" + id;
+    }
+</script>
+    

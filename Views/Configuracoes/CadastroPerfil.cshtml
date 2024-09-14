@@ -1,0 +1,29 @@
+﻿@model PerfilModel
+
+
+<h3>Cadastro de perfil</h3>
+
+<br />
+
+<form asp-controller="Configuracoes" asp-action="CadastroPerfil" method="post">
+    <!-- Campo oculto para IdProfile -->
+    <input type="hidden" asp-for="IdProfile" />
+
+    <div class="form-group">
+        <label>Descrição do perfil</label>
+        <br />
+        <input asp-for="NameProfile" type="text" class="form-control" />
+        <span asp-validation-for="NameProfile" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <br />
+        <label>Sigla</label>
+        <br />
+        <input asp-for="CodeProfile" type="text" class="form-control" />
+        <span asp-validation-for="CodeProfile" class="text-danger"></span>
+    </div>
+
+    <br />
+    <button type="submit" class="btn btn-block btn-success">Salvar</button>
+</form>
