@@ -56,7 +56,7 @@ namespace DentalPlus.Controllers
             if (!VerificarConexaoInternet())
             {
                 TempData["ErrorLogin"] = "Sem conexão com a internet. Verifique sua rede e tente novamente.";
-                return View();
+                return RedirectToAction("Perfil", "Configuracoes");
             }
             else
             {
@@ -73,14 +73,14 @@ namespace DentalPlus.Controllers
 
         }
 
-        // Vai receber os dados
+        // Vai receber os dados de perfil
         [HttpPost]
         public IActionResult CadastroPerfil(PerfilModel perfil)
         {
             if (!VerificarConexaoInternet())
             {
                 TempData["ErrorLogin"] = "Sem conexão com a internet. Verifique sua rede e tente novamente.";
-                return View();
+                return RedirectToAction("Perfil", "Configuracoes");
             }
             else
             {
@@ -95,7 +95,7 @@ namespace DentalPlus.Controllers
             if (!VerificarConexaoInternet())
             {
                 TempData["ErrorLogin"] = "Sem conexão com a internet. Verifique sua rede e tente novamente.";
-                return View();
+                return RedirectToAction("Perfil", "Configuracoes");
             }
             else
             {
@@ -109,7 +109,7 @@ namespace DentalPlus.Controllers
             if (!VerificarConexaoInternet())
             {
                 TempData["ErrorLogin"] = "Sem conexão com a internet. Verifique sua rede e tente novamente.";
-                return View();
+                return RedirectToAction("Perfil", "Configuracoes");
             }
             else
             {

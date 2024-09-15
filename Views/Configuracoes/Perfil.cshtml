@@ -1,5 +1,7 @@
 ﻿<h3>Lista de perfis</h3>
 
+@if (ViewBag.ListaPerfis != null)
+{
 <table class="table table-bordered">
     <thead>
         <tr>
@@ -15,34 +17,68 @@
             @{
                 foreach (var item in (List<PerfilModel>)ViewBag.ListaPerfis)
                 {
-                <tr>
-                    
-                    <td>@item.IdProfile</td>
-                    <td>@item.NameProfile</td>
-                    <td>@item.CodeProfile</td>
-                    <td><button type="button" class="btn btn-warning" onclick="Editar(@item.IdProfile)">Editar</button></td>
-                    <td><button type="button" class="btn btn-danger" onclick="Excluir(@item.IdProfile)">Excluir</button></td>
-                </tr>
+                        <tr>
+                            
+                            <td>@item.IdProfile</td>
+                            <td>@item.NameProfile</td>
+                            <td>@item.CodeProfile</td>
+                            <td><button type="button" class="btn btn-warning" onclick="Editar(@item.IdProfile)">Editar</button></td>
+                            <td><button type="button" class="btn btn-danger" onclick="Excluir(@item.IdProfile)">Excluir</button></td>
+                        </tr>
                 }
             }
     </tbody>
 
-</table>
+    </table>
+    <br />
+
+    <button class="btn btn-block btn-primary" type="button" onclick="Cadastrar()">Cadastrar Perfil</button>
+}
+else
+{
+    <p>Não foi possível carregar a lista de perfis. Verifique sua conexão com a internet e tente novamente.</p>
+}
 <br />
-<button class="btn btn-block btn-primary" type="button" onclick="Cadastrar()">Cadastrar Perfil</button>
 
 <script>
+    function checkInternetConnection() {
+        if (!navigator.onLine) {
+            alert("Sem conexao com a internet. Verifique sua rede e tente novamente.");
+        }
+    }
+
+    window.addEventListener('load', checkInternetConnection);
+    window.addEventListener('offline', checkInternetConnection);
+
+    document.addEventListener('DOMContentLoaded', function () {
+        var errorMessage = '@TempData["ErrorLogin"]';
+        if (errorMessage) {
+            alert(errorMessage);
+        }
+    });
 
     function Cadastrar() {
-        window.location.href = "../Configuracoes/CadastroPerfil";
+        if (!navigator.onLine) {
+            alert("Sem conexão com a internet. Verifique sua rede e tente novamente.");
+        } else {
+            window.location.href = "../Configuracoes/CadastroPerfil";
+        }
     }
 
     function Editar(id) {
-        window.location.href = "../Configuracoes/CadastroPerfil/" + id;
+        if (!navigator.onLine) {
+            alert("Sem conexão com a internet. Verifique sua rede e tente novamente.");
+        } else {
+            window.location.href = "../Configuracoes/CadastroPerfil/" + id;
+        }
     }
 
     function Excluir(id) {
-        window.location.href = "../Configuracoes/Excluir/" + id;
+        if (!navigator.onLine) {
+            alert("Sem conexão com a internet. Verifique sua rede e tente novamente.");
+        } else {
+            window.location.href = "../Configuracoes/Excluir/" + id;
+        }
     }
 </script>
     

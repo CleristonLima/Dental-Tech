@@ -5,6 +5,12 @@
 <script>
     function Voltar()
     {
-        window.location.href = '../../Configuracoes/Perfil';
+        if (!navigator.onLine) {
+            alert("Sem conexão com a internet. Verifique sua rede e tente novamente.");
+        }
+        else {
+            window.location.href = '../../Configuracoes/Perfil';
+        }
+    
     }
 </script>

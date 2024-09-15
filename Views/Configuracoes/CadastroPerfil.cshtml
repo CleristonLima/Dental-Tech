@@ -12,7 +12,7 @@
     <div class="form-group">
         <label>Descrição do perfil</label>
         <br />
-        <input asp-for="NameProfile" type="text" class="form-control" />
+        <input asp-for="NameProfile" type="text" class="form-control" required="required"/>
         <span asp-validation-for="NameProfile" class="text-danger"></span>
     </div>
 
@@ -20,7 +20,7 @@
         <br />
         <label>Sigla</label>
         <br />
-        <input asp-for="CodeProfile" type="text" class="form-control" />
+        <input asp-for="CodeProfile" type="text" class="form-control" required="required" />
         <span asp-validation-for="CodeProfile" class="text-danger"></span>
     </div>
 

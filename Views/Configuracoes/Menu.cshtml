@@ -20,6 +20,24 @@
 
 </style>
 
+<script>
+    function checkInternetConnection() {
+        if (!navigator.onLine) {
+            alert("Sem conexao com a internet. Verifique sua rede e tente novamente.");
+        }
+    }
+
+    window.addEventListener('load', checkInternetConnection);
+    window.addEventListener('offline', checkInternetConnection);
+
+    document.addEventListener('DOMContentLoaded', function () {
+        var errorMessage = '@TempData["ErrorLogin"]';
+        if (errorMessage) {
+            alert(errorMessage);
+        }
+    });
+</script>
+
 <br />
 <div class="container">
     <div class="row text-center">
