@@ -1,1 +1,87 @@
-﻿<h2>Cadastro de Login</h2>
+﻿<h3>Lista de Logins</h3>
+
+@if (ViewBag.ListaAcessos != null)
+{
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Login</th>
+                <th>Email</th>
+                <th>Acesso Bloqueado?</th>
+                <th>Perfil</th>
+                <th>#</th>
+                <th>#</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @{
+                foreach (var item in (List<AcessoModel>)ViewBag.ListaAcessos)
+                {
+                    <tr>
+
+                        <td>@item.NamePeople</td>
+                        <td>@item.LoginUser</td>
+                        <td>@item.Email</td>
+                        <td>@item.BlockUser</td>
+                        <td>@item.NameProfile</td>
+                        <td><button type="button" class="btn btn-warning" onclick="Editar(@item.IdProfile)">Editar</button></td>
+                        <td><button type="button" class="btn btn-danger" onclick="Excluir(@item.IdProfile)">Excluir</button></td>
+                    </tr>
+                }
+            }
+        </tbody>
+
+    </table>
+    <br />
+
+    <button class="btn btn-block btn-primary" type="button" onclick="Cadastrar()">Cadastrar Perfil</button>
+}
+else
+{
+    <p>Não foi possível carregar a lista de perfis. Verifique sua conexão com a internet e tente novamente.</p>
+}
+<br />
+
+<script>
+    function checkInternetConnection() {
+        if (!navigator.onLine) {
+            alert("Sem conexao com a internet. Verifique sua rede e tente novamente.");
+        }
+    }
+
+    window.addEventListener('load', checkInternetConnection);
+    window.addEventListener('offline', checkInternetConnection);
+
+    document.addEventListener('DOMContentLoaded', function () {
+        var errorMessage = '@TempData["ErrorLogin"]';
+        if (errorMessage) {
+            alert(errorMessage);
+        }
+    });
+
+    function Cadastrar() {
+        if (!navigator.onLine) {
+            alert("Sem conexão com a internet. Verifique sua rede e tente novamente.");
+        } else {
+            window.location.href = "../Configuracoes/CadastroPerfil";
+        }
+    }
+
+    function Editar(id) {
+        if (!navigator.onLine) {
+            alert("Sem conexão com a internet. Verifique sua rede e tente novamente.");
+        } else {
+            window.location.href = "../Configuracoes/CadastroPerfil/" + id;
+        }
+    }
+
+    function Excluir(id) {
+        if (!navigator.onLine) {
+            alert("Sem conexão com a internet. Verifique sua rede e tente novamente.");
+        } else {
+            window.location.href = "../Configuracoes/Excluir/" + id;
+        }
+    }
+</script>

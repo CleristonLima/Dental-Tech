@@ -130,6 +130,7 @@ namespace DentalPlus.Controllers
             }
             else
             {
+                ViewBag.ListaAcessos = new AcessoModel().ListarTodosAcessos();
                 return View();
             }
         }
