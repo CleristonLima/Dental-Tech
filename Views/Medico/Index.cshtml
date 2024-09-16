@@ -1,0 +1,88 @@
+﻿<h3>Lista de medicos</h3>
+
+@if (ViewBag.ListaMedicos != null)
+{
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>CRM/CRO</th>
+                <th>Especialidade</th>
+                <th>Telefone 1</th>
+                <th>Telefone 2</th>
+                <th>Email</th>
+                <th>#</th>
+                <th>#</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @{
+                foreach (var item in (List<MedicoModel>)ViewBag.ListaMedicos)
+                {
+                    <tr>
+                        <td>@item.NameDoctor</td>
+                        <td>@item.CRM_CRO</td>
+                        <td>@item.Speciality</td>
+                        <td>@item.Phone_number_1</td>
+                        <td>@item.Phone_number_2</td>
+                        <td>@item.Email</td>
+                        <td><button type="button" class="btn btn-warning" onclick="Editar(@item.IdDoctor)">Editar</button></td>
+                        <td><button type="button" class="btn btn-danger" onclick="Excluir(@item.IdDoctor)">Excluir</button></td>
+                    </tr>
+                }
+            }
+        </tbody>
+
+    </table>
+    <br />
+
+    <button class="btn btn-block btn-primary" type="button" onclick="Cadastrar()">Cadastrar novo Medico</button>
+}
+else
+{
+    <p>Não foi possível carregar a lista de médicos. Verifique sua conexão com a internet e tente novamente.</p>
+}
+<br />
+
+<script>
+    function checkInternetConnection() {
+        if (!navigator.onLine) {
+            alert("Sem conexao com a internet. Verifique sua rede e tente novamente.");
+        }
+    }
+
+    window.addEventListener('load', checkInternetConnection);
+    window.addEventListener('offline', checkInternetConnection);
+
+    document.addEventListener('DOMContentLoaded', function () {
+        var errorMessage = '@TempData["ErrorLogin"]';
+        if (errorMessage) {
+            alert(errorMessage);
+        }
+    });
+
+    function Cadastrar() {
+        if (!navigator.onLine) {
+            alert("Sem conexão com a internet. Verifique sua rede e tente novamente.");
+        } else {
+            window.location.href = "../Medico/CadastroMedico";
+        }
+    }
+
+    function Editar(id) {
+        if (!navigator.onLine) {
+            alert("Sem conexão com a internet. Verifique sua rede e tente novamente.");
+        } else {
+            window.location.href = "../Medico/CadastroMedico/" + id;
+        }
+    }
+
+    function Excluir(id) {
+        if (!navigator.onLine) {
+            alert("Sem conexão com a internet. Verifique sua rede e tente novamente.");
+        } else {
+            window.location.href = "../Medico/Excluir/" + id;
+        }
+    }
+</script>

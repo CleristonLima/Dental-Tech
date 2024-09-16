@@ -71,5 +71,15 @@ namespace DentalPlus.Uteis
                 Command.ExecuteNonQuery();
             }
         }
+
+        public object RetornarValor(string sql)
+        {
+            using (MySqlConnection conn = new MySqlConnection(ConnectionString))
+            {
+                conn.Open();
+                MySqlCommand cmd = new MySqlCommand(sql, conn);
+                return cmd.ExecuteScalar();
+            }
+        }
     }
 }
