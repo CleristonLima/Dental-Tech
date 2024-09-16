@@ -1,6 +1,7 @@
 ﻿using DentalPlus.Connection;
 using DentalPlus.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace DentalPlus.Controllers
 {
@@ -120,18 +121,61 @@ namespace DentalPlus.Controllers
 
         // Na parte abaixo e para cadastro de logins
 
-
+        [HttpGet]
         public IActionResult Acesso()
         {
             if (!VerificarConexaoInternet())
             {
                 TempData["ErrorLogin"] = "Sem conexão com a internet. Verifique sua rede e tente novamente.";
-                return View();
+                return RedirectToAction("Acesso", "Configuracoes");
             }
             else
             {
                 ViewBag.ListaAcessos = new AcessoModel().ListarTodosAcessos();
                 return View();
+            }
+        }
+
+        [HttpGet]
+        public IActionResult CadastroLogin(int? id)
+        {
+            if (!VerificarConexaoInternet())
+            {
+                TempData["ErrorLogin"] = "Sem conexão com a internet. Verifique sua rede e tente novamente.";
+                return RedirectToAction("Acesso", "Configuracoes");
+            }
+            else
+            {
+                AcessoModel acesso = new AcessoModel();
+
+                if (id != null)
+                {
+                    //Carregar o registro do cliente numa ViewBag
+                    acesso = new AcessoModel().RetornarAcesso(id);
+                }
+
+                // Recuperar a lista de perfis
+                var perfis = new PerfilModel().ListarTodosPerfis();
+                ViewBag.ListaPerfis = new SelectList(perfis, "IdProfile", "NomeComSigla");
+
+                return View(acesso);
+            }
+
+        }
+
+        [HttpPost]
+        public IActionResult CadastroLogin(AcessoModel acesso)
+        {
+            if (!VerificarConexaoInternet())
+            {
+                TempData["ErrorLogin"] = "Sem conexão com a internet. Verifique sua rede e tente novamente.";
+                return RedirectToAction("Acesso", "Configuracoes");
+            }
+            else
+            {
+                acesso.userId = _httpContextAccessor.HttpContext?.Session.GetString("IdUsuarioLogado");
+                acesso.Gravar();
+                return RedirectToAction("Acesso");
             }
         }
     }

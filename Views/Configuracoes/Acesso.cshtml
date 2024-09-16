@@ -11,7 +11,6 @@
                 <th>Acesso Bloqueado?</th>
                 <th>Perfil</th>
                 <th>#</th>
-                <th>#</th>
             </tr>
         </thead>
 
@@ -20,14 +19,12 @@
                 foreach (var item in (List<AcessoModel>)ViewBag.ListaAcessos)
                 {
                     <tr>
-
                         <td>@item.NamePeople</td>
                         <td>@item.LoginUser</td>
                         <td>@item.Email</td>
                         <td>@item.BlockUser</td>
                         <td>@item.NameProfile</td>
-                        <td><button type="button" class="btn btn-warning" onclick="Editar(@item.IdProfile)">Editar</button></td>
-                        <td><button type="button" class="btn btn-danger" onclick="Excluir(@item.IdProfile)">Excluir</button></td>
+                        <td><button type="button" class="btn btn-warning" onclick="Editar(@item.IdLogin)">Editar</button></td>
                     </tr>
                 }
             }
@@ -36,7 +33,7 @@
     </table>
     <br />
 
-    <button class="btn btn-block btn-primary" type="button" onclick="Cadastrar()">Cadastrar Perfil</button>
+    <button class="btn btn-block btn-primary" type="button" onclick="Cadastrar()">Cadastrar novo login</button>
 }
 else
 {
@@ -65,7 +62,7 @@ else
         if (!navigator.onLine) {
             alert("Sem conexão com a internet. Verifique sua rede e tente novamente.");
         } else {
-            window.location.href = "../Configuracoes/CadastroPerfil";
+            window.location.href = "../Configuracoes/CadastroLogin";
         }
     }
 
@@ -73,15 +70,7 @@ else
         if (!navigator.onLine) {
             alert("Sem conexão com a internet. Verifique sua rede e tente novamente.");
         } else {
-            window.location.href = "../Configuracoes/CadastroPerfil/" + id;
-        }
-    }
-
-    function Excluir(id) {
-        if (!navigator.onLine) {
-            alert("Sem conexão com a internet. Verifique sua rede e tente novamente.");
-        } else {
-            window.location.href = "../Configuracoes/Excluir/" + id;
+            window.location.href = "../Configuracoes/CadastroLogin/" + id;
         }
     }
 </script>

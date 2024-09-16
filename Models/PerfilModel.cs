@@ -1,5 +1,6 @@
 ﻿using DentalPlus.Uteis;
 using MySql.Data.MySqlClient;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.Data;
 using System.Web;
@@ -29,6 +30,14 @@ namespace DentalPlus.Models
         public string CodeProfile { get; set; }
 
         public string userId { get; set; }
+
+        public string NomeComSigla
+        {
+            get
+            {
+                return $"{NameProfile} - ({CodeProfile})";
+            }
+        }
 
         public List<PerfilModel> ListarTodosPerfis()
         {
