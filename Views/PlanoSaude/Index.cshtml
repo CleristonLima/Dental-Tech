@@ -1,0 +1,88 @@
+﻿<h3>Lista de planos de saude</h3>
+
+@if (ViewBag.ListaPlanos != null)
+{
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Nome do plano</th>
+                <th>Operadora</th>
+                <th>Cobertura</th>
+                <th>Telefone 1</th>
+                <th>Telefone 2</th>
+                <th>Email</th>
+                <th>#</th>
+                <th>#</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @{
+                foreach (var item in (List<PlanoSaudeModel>)ViewBag.ListaPlanos)
+                {
+                    <tr>
+                        <td>@item.NamePlan</td>
+                        <td>@item.Operator</td>
+                        <td>@item.Coverage</td>
+                        <td>@item.Phone_number_1</td>
+                        <td>@item.Phone_number_2</td>
+                        <td>@item.Email</td>
+                        <td><button type="button" class="btn btn-warning" onclick="Editar(@item.IdPlan)">Editar</button></td>
+                        <td><button type="button" class="btn btn-danger" onclick="Excluir(@item.IdPlan)">Excluir</button></td>
+                    </tr>
+                }
+            }
+        </tbody>
+
+    </table>
+    <br />
+
+    <button class="btn btn-block btn-primary" type="button" onclick="Cadastrar()">Cadastrar novo Plano de Saúde</button>
+}
+else
+{
+    <p>Não foi possível carregar a lista de médicos. Verifique sua conexão com a internet e tente novamente.</p>
+}
+<br />
+
+<script>
+    function checkInternetConnection() {
+        if (!navigator.onLine) {
+            alert("Sem conexao com a internet. Verifique sua rede e tente novamente.");
+        }
+    }
+
+    window.addEventListener('load', checkInternetConnection);
+    window.addEventListener('offline', checkInternetConnection);
+
+    document.addEventListener('DOMContentLoaded', function () {
+        var errorMessage = '@TempData["ErrorLogin"]';
+        if (errorMessage) {
+            alert(errorMessage);
+        }
+    });
+
+    function Cadastrar() {
+        if (!navigator.onLine) {
+            alert("Sem conexão com a internet. Verifique sua rede e tente novamente.");
+        } else {
+            window.location.href = "../PlanoSaude/CadastroPlanoSaude";
+        }
+    }
+
+    function Editar(id) {
+        if (!navigator.onLine) {
+            alert("Sem conexão com a internet. Verifique sua rede e tente novamente.");
+        } else {
+            window.location.href = "../PlanoSaude/CadastroPlanoSaude/" + id;
+        }
+    }
+
+    function Excluir(id) {
+        if (!navigator.onLine) {
+            alert("Sem conexão com a internet. Verifique sua rede e tente novamente.");
+        } else {
+            window.location.href = "../PlanoSaude/Excluir/" + id;
+        }
+    }
+</script>

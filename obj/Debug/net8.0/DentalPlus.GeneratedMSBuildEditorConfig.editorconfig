@@ -78,6 +78,22 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWVkaWNvXEluZGV4LmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Projetos/DentalPlus/DentalPlus/Views/PlanoSaude/CadastroPlanoSaude.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGxhbm9TYXVkZVxDYWRhc3Ryb1BsYW5vU2F1ZGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Projetos/DentalPlus/DentalPlus/Views/PlanoSaude/Excluir.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGxhbm9TYXVkZVxFeGNsdWlyLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Projetos/DentalPlus/DentalPlus/Views/PlanoSaude/ExcluirPlanoSaude.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGxhbm9TYXVkZVxFeGNsdWlyUGxhbm9TYXVkZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Projetos/DentalPlus/DentalPlus/Views/PlanoSaude/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGxhbm9TYXVkZVxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Projetos/DentalPlus/DentalPlus/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
