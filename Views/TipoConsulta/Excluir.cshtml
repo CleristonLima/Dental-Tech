@@ -1,6 +1,6 @@
-﻿<h2>Excluir esse plano de saúde?</h2>
+﻿<h2>Excluir essa consulta?</h2>
 
-<h3> Deseja realmente plano de saúde?</h3>
+<h3> Deseja realmente excluir essa consulta?</h3>
 <br />
 <button type="button" class="btn btn-danger" onclick="Nao()">Não</button>
 <button type="button" class="btn btn-success" onclick="Sim()">Sim</button>
@@ -26,7 +26,7 @@
         if (!navigator.onLine) {
             alert("Sem conexão com a internet. Verifique sua rede e tente novamente.");
         } else {
-            window.location.href = '../../PlanoSaude/ExcluirPlanoSaude/' + '@ViewData["IdPlan"].ToString()';
+            window.location.href = '../../TipoConsulta/ExcluirTipoConsulta/' + '@ViewData["IdMedicalConsultation"].ToString()';
         }
     }
 
@@ -34,7 +34,7 @@
         if (!navigator.onLine) {
             alert("Sem conexão com a internet. Verifique sua rede e tente novamente.");
         } else {
-            window.location.href = '../../PlanoSaude/Index';
+            window.location.href = '../../TipoConsulta/Index';
         }
     }
 </script>

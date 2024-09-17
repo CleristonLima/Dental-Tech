@@ -1,16 +1,12 @@
-﻿<h3>Lista de medicos</h3>
+﻿<h3>Lista de tipos de consultas</h3>
 
-@if (ViewBag.ListaMedicos != null)
+@if (ViewBag.ListaTipoConsultas != null)
 {
     <table class="table table-bordered">
         <thead>
             <tr>
-                <th>Nome</th>
-                <th>CRM/CRO</th>
-                <th>Especialidade</th>
-                <th>Telefone 1</th>
-                <th>Telefone 2</th>
-                <th>Email</th>
+                <th>Nome do consulta médica</th>
+                <th>R$ - Valor da consulta</th>
                 <th>#</th>
                 <th>#</th>
             </tr>
@@ -18,17 +14,13 @@
 
         <tbody>
             @{
-                foreach (var item in (List<MedicoModel>)ViewBag.ListaMedicos)
+                foreach (var item in (List<TipoConsultaModel>)ViewBag.ListaTipoConsultas)
                 {
                     <tr>
-                        <td>@item.NameDoctor</td>
-                        <td>@item.CRM_CRO</td>
-                        <td>@item.Speciality</td>
-                        <td>@item.Phone_number_1</td>
-                        <td>@item.Phone_number_2</td>
-                        <td>@item.Email</td>
-                        <td><button type="button" class="btn btn-warning" onclick="Editar(@item.IdDoctor)">Editar</button></td>
-                        <td><button type="button" class="btn btn-danger" onclick="Excluir(@item.IdDoctor)">Excluir</button></td>
+                        <td>@item.descMedicalConsultation</td>
+                        <td>@item.valueConsultation</td>
+                        <td><button type="button" class="btn btn-warning" onclick="Editar(@item.IdMedicalConsultation)">Editar</button></td>
+                        <td><button type="button" class="btn btn-danger" onclick="Excluir(@item.IdMedicalConsultation)">Excluir</button></td>
                     </tr>
                 }
             }
@@ -37,7 +29,7 @@
     </table>
     <br />
 
-    <button class="btn btn-block btn-primary" type="button" onclick="Cadastrar()">Cadastrar novo Medico</button>
+    <button class="btn btn-block btn-primary" type="button" onclick="Cadastrar()">Cadastrar novo tipo de consulta</button>
 }
 else
 {
@@ -66,7 +58,7 @@ else
         if (!navigator.onLine) {
             alert("Sem conexão com a internet. Verifique sua rede e tente novamente.");
         } else {
-            window.location.href = "../Medico/CadastroMedico";
+            window.location.href = "../TipoConsulta/CadastroTipoConsulta";
         }
     }
 
@@ -74,7 +66,7 @@ else
         if (!navigator.onLine) {
             alert("Sem conexão com a internet. Verifique sua rede e tente novamente.");
         } else {
-            window.location.href = "../Medico/CadastroMedico/" + id;
+            window.location.href = "../TipoConsulta/CadastroTipoConsulta/" + id;
         }
     }
 
@@ -82,7 +74,7 @@ else
         if (!navigator.onLine) {
             alert("Sem conexão com a internet. Verifique sua rede e tente novamente.");
         } else {
-            window.location.href = "../Medico/Excluir/" + id;
+            window.location.href = "../TipoConsulta/Excluir/" + id;
         }
     }
 </script>

@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace DentalPlus.Controllers
 {
-    public class PlanoSaudeController : Controller
+    public class TipoConsultaController : Controller
     {
         private InternetConnection internetConnection = new InternetConnection();
 
@@ -15,7 +15,7 @@ namespace DentalPlus.Controllers
             return internetConnection.VerificarConexaoInternet();
         }
 
-        public PlanoSaudeController(IHttpContextAccessor httpContextAccessor)
+        public TipoConsultaController(IHttpContextAccessor httpContextAccessor)
         {
             _httpContextAccessor = httpContextAccessor;
         }
@@ -30,47 +30,48 @@ namespace DentalPlus.Controllers
             }
             else
             {
-                ViewBag.ListaPlanos = new PlanoSaudeModel().ListarTodosPlanos();
+                ViewBag.ListaTipoConsultas = new TipoConsultaModel().ListarTodosTiposConsultas();
                 return View();
             }
         }
 
         [HttpGet]
-        public IActionResult CadastroPlanoSaude(int? id)
+        public IActionResult CadastroTipoConsulta(int? id)
         {
             if (!VerificarConexaoInternet())
             {
                 TempData["ErrorLogin"] = "Sem conexão com a internet. Verifique sua rede e tente novamente.";
-                return RedirectToAction("Index", "PlanoSaude");
+                return RedirectToAction("Index", "TipoConsulta");
             }
             else
             {
-                PlanoSaudeModel plano = new PlanoSaudeModel();
+                TipoConsultaModel consulta = new TipoConsultaModel();
 
                 if (id != null)
                 {
-                    plano = new PlanoSaudeModel().RetornarPlano(id);
+
+                    consulta = new TipoConsultaModel().RetornarTipoConsulta(id);
                 }
 
-                return View(plano);
+                return View(consulta);
             }
 
         }
 
         // Vai receber os dados do medico
         [HttpPost]
-        public IActionResult CadastroPlanoSaude(PlanoSaudeModel plano)
+        public IActionResult CadastroTipoConsulta(TipoConsultaModel consulta)
         {
             if (!VerificarConexaoInternet())
             {
                 TempData["ErrorLogin"] = "Sem conexão com a internet. Verifique sua rede e tente novamente.";
-                return RedirectToAction("Index", "PlanoSaude");
+                return RedirectToAction("Index", "TipoConsulta");
             }
             else
             {
-                    plano.userId = _httpContextAccessor.HttpContext?.Session.GetString("IdUsuarioLogado");
-                    plano.Gravar();
-                    return RedirectToAction("Index", "PlanoSaude");
+                consulta.userId = _httpContextAccessor.HttpContext?.Session.GetString("IdUsuarioLogado");
+                consulta.Gravar();
+                return RedirectToAction("Index", "TipoConsulta");
             }
         }
 
@@ -79,25 +80,25 @@ namespace DentalPlus.Controllers
             if (!VerificarConexaoInternet())
             {
                 TempData["ErrorLogin"] = "Sem conexão com a internet. Verifique sua rede e tente novamente.";
-                return RedirectToAction("Index", "PlanoSaude");
+                return RedirectToAction("Index", "TipoConsulta");
             }
             else
             {
-                ViewData["IdPlan"] = id;
+                ViewData["IdMedicalConsultation"] = id;
                 return View();
             }
         }
 
-        public IActionResult ExcluirPlanoSaude(int id)
+        public IActionResult ExcluirTipoConsulta(int id)
         {
             if (!VerificarConexaoInternet())
             {
                 TempData["ErrorLogin"] = "Sem conexão com a internet. Verifique sua rede e tente novamente.";
-                return RedirectToAction("Index", "PlanoSaude");
+                return RedirectToAction("Index", "TipoConsulta");
             }
             else
             {
-                new PlanoSaudeModel().Excluir(id);
+                new TipoConsultaModel().Excluir(id);
                 return View();
             }
         }
