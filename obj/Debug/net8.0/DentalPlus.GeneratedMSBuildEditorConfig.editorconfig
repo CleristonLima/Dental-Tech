@@ -18,6 +18,10 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = C:\Projetos\DentalPlus\DentalPlus
 build_property._RazorSourceGeneratorDebug = 
 
+[C:/Projetos/DentalPlus/DentalPlus/Views/Agendamento/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWdlbmRhbWVudG9cSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Projetos/DentalPlus/DentalPlus/Views/Configuracoes/Acesso.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQ29uZmlndXJhY29lc1xBY2Vzc28uY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
