@@ -1,5 +1,40 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿<h2>Excluir esse paciente?</h2>
+
+<h3> Deseja realmente excluir este paciente?</h3>
+<br />
+<button type="button" class="btn btn-danger" onclick="Nao()">Não</button>
+<button type="button" class="btn btn-success" onclick="Sim()">Sim</button>
+
+<script>
+    function checkInternetConnection() {
+        if (!navigator.onLine) {
+            alert("Sem conexao com a internet. Verifique sua rede e tente novamente.");
+        }
+    }
+
+    window.addEventListener('load', checkInternetConnection);
+    window.addEventListener('offline', checkInternetConnection);
+
+    document.addEventListener('DOMContentLoaded', function () {
+        var errorMessage = '@TempData["ErrorLogin"]';
+        if (errorMessage) {
+            alert(errorMessage);
+        }
+    });
+
+    function Sim() {
+        if (!navigator.onLine) {
+            alert("Sem conexão com a internet. Verifique sua rede e tente novamente.");
+        } else {
+            window.location.href = '../../Paciente/ExcluirPaciente/' + '@ViewData["IdPatients"].ToString()';
+        }
+    }
+
+    function Nao() {
+        if (!navigator.onLine) {
+            alert("Sem conexão com a internet. Verifique sua rede e tente novamente.");
+        } else {
+            window.location.href = '../../Paciente/Index';
+        }
+    }
+</script>

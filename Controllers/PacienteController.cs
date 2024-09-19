@@ -89,5 +89,33 @@ namespace DentalPlus.Controllers
                 }
             }
         }
+
+        public IActionResult Excluir(int id)
+        {
+            if (!VerificarConexaoInternet())
+            {
+                TempData["ErrorLogin"] = "Sem conexão com a internet. Verifique sua rede e tente novamente.";
+                return RedirectToAction("Index", "Paciente");
+            }
+            else
+            {
+                ViewData["IdPatients"] = id;
+                return View();
+            }
+        }
+
+        public IActionResult ExcluirPaciente(int id)
+        {
+            if (!VerificarConexaoInternet())
+            {
+                TempData["ErrorLogin"] = "Sem conexão com a internet. Verifique sua rede e tente novamente.";
+                return RedirectToAction("Index", "Paciente");
+            }
+            else
+            {
+                new PacienteModel().Excluir(id);
+                return View();
+            }
+        }
     }
 }

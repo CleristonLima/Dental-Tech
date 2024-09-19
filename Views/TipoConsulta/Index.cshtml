@@ -1,11 +1,12 @@
-﻿<h3>Lista de tipos de consultas</h3>
+﻿<h3 class="titulo-cadastro">Lista de tipos de consultas</h3>
 
 @if (ViewBag.ListaTipoConsultas != null)
 {
+    <div class="table-container">
     <table class="table table-bordered">
         <thead>
             <tr>
-                <th>Nome do consulta médica</th>
+                <th>Nome da consulta médica</th>
                 <th>R$ - Valor da consulta</th>
                 <th>#</th>
                 <th>#</th>
@@ -27,6 +28,7 @@
         </tbody>
 
     </table>
+    </div>
     <br />
 
     <button class="btn btn-block btn-primary" type="button" onclick="Cadastrar()">Cadastrar novo tipo de consulta</button>
@@ -36,7 +38,40 @@ else
     <p>Sem conexão com a internet! Verifique sua conexão com a internet e tente novamente.</p>
 }
 <br />
+<style>
+    .titulo-cadastro {
+        white-space: nowrap; /* Impede a quebra de linha */
+        text-align: center; /* Centraliza o texto */
+        margin-bottom: 20px; /* Adiciona um espaço abaixo do título */
+    }
 
+    .table-container {
+        white-space: nowrap;
+        width: 100%;
+        overflow-x: auto;
+        margin: 0; /* Remove margens */
+        padding: 0; /* Remove padding */
+    }
+
+    .table {
+        white-space: nowrap;
+        width: 100%;
+        border-collapse: collapse;
+        margin: 0; /* Remove margens */
+        padding: 0; /* Remove padding */
+    }
+
+    .table th, .table td {
+        white-space: nowrap;
+        padding: 8px;
+        text-align: center;
+        border: 1px solid #ddd;
+    }
+
+    .table th {
+        background-color: #f2f2f2;
+    }
+</style>
 <script>
     function checkInternetConnection() {
         if (!navigator.onLine) {

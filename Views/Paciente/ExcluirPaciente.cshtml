@@ -1,5 +1,16 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿<h2>Paciente Excluído com Sucesso!</h2>
+<br />
+<button type="button" class="btn btn-primary" onclick="Voltar()">Listagem de pacientes</button>
+
+<script>
+    function Voltar()
+    {
+        if (!navigator.onLine) {
+            alert("Sem conexão com a internet. Verifique sua rede e tente novamente.");
+        }
+        else {
+            window.location.href = '../../Paciente/Index';
+        }
+
+    }
+</script>

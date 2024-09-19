@@ -23,9 +23,11 @@ namespace DentalPlus.Models
         }
 
         public string IdPatients { get; set; }
-        
+
+        [Required(ErrorMessage = "Informe o CPF ou CNPJ do paciente!")]
         public string CpfCnpj { get; set; }
 
+        [Required(ErrorMessage = "Informe o nome completo do paciente!")]
         public string NamePatient { get; set; }
 
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
@@ -33,26 +35,34 @@ namespace DentalPlus.Models
         [Range(typeof(DateOnly), "1900-01-01", "3100-12-31", ErrorMessage = "A data de nascimento deve estar entre 01/01/1900 e 31/12/3100.")]
         public DateOnly BornDate { get; set; }
 
+        [Required(ErrorMessage = "Informe o CEP do paciente!")]
         public string ZipCode { get; set; }
 
+        [Required(ErrorMessage = "Informe o endereço do paciente!")]
         public string AddressPatient { get; set; }
 
+        [Required(ErrorMessage = "Informe o número do paciente!")]
         public string Number { get; set; }
 
         public string Complement { get; set; }
 
+        [Required(ErrorMessage = "Informe o bairro do paciente!")]
         public string District { get; set; }
 
+        [Required(ErrorMessage = "Informe a cidade do paciente!")]
         public string City { get; set; }
 
+        [Required(ErrorMessage = "Informe o estado do paciente!")]
         public string IdUf { get; set; }
 
         public string CodeUf {  get; set; }
 
+        [Required(ErrorMessage = "Informe o telefone do paciente!")]
         public string PhoneNumber1 { get; set; }
 
         public string PhoneNumber2 { get; set; }
 
+        [Required(ErrorMessage = "Informe o email do paciente!")]
         public string Email { get; set; }
 
         public string IdPlan { get; set; }
@@ -146,7 +156,7 @@ namespace DentalPlus.Models
                         $"CP.CARD_NUMBER_PLAN " +
                         $"FROM TB_CLI_PATIENTS CP " +
                         $"INNER JOIN TB_UF U ON U.ID_UF = CP.UF_ID " +
-                        $"INNER JOIN TB_CLI_DENTAL_PLAN CDP ON CDP.ID_PLAN = CP.ID_PLAN " +
+                        $"LEFT JOIN TB_CLI_DENTAL_PLAN CDP ON CDP.ID_PLAN = CP.ID_PLAN " +
                         $"WHERE CP.ID_PATIENTS = '{id}' ORDER BY CP.NAME_PATIENT ASC";
             DataTable dt = objDAL.RetDataTable(sql);
 
@@ -185,11 +195,25 @@ namespace DentalPlus.Models
 
             return item;
         }
-        public bool CPF_CNPJExiste(string crm_cro)
+        public bool CPF_CNPJExiste(string CpfCnpj, string idPatients = null)
         {
             DAL objDAL = new DAL();
-            string sql = $"SELECT COUNT(*) FROM TB_CLI_PATIENTS WHERE CPF_CNPJ = '{CpfCnpj}'";
-            int count = Convert.ToInt32(objDAL.RetornarValor(sql));
+            string sql = "SELECT COUNT(*) FROM TB_CLI_PATIENTS WHERE CPF_CNPJ = @CpfCnpj";
+
+            if (!string.IsNullOrEmpty(idPatients))
+            {
+                sql += " AND ID_PATIENTS != @IdPatients";
+            }
+
+            MySqlCommand command = new MySqlCommand(sql);
+            command.Parameters.AddWithValue("@CpfCnpj", CpfCnpj);
+
+            if (!string.IsNullOrEmpty(idPatients))
+            {
+                command.Parameters.AddWithValue("@IdPatients", idPatients);
+            }
+
+            int count = Convert.ToInt32(objDAL.RetDataTable(command).Rows[0][0]);
             return count > 0;
         }
 
@@ -200,13 +224,13 @@ namespace DentalPlus.Models
 
             string currentDateTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
 
-            if (CPF_CNPJExiste(CpfCnpj))
-            {
-                throw new Exception("CPF ou CNPJ já existe cadastrado no sistema.");
-            }
-
             if (!string.IsNullOrEmpty(IdPatients))
             {
+                // Verifica duplicidade excluindo o registro atual
+                if (CPF_CNPJExiste(CpfCnpj, IdPatients))
+                {
+                    throw new Exception("CPF ou CNPJ já existe cadastrado no sistema.");
+                }
                 // Se for uma atualização, preenche o campo USER_UPDATE
                 sql = "UPDATE TB_CLI_PATIENTS SET CPF_CNPJ = @CpfCnpj, " +
                     "NAME_PATIENT = @NamePatient, " +
@@ -282,6 +306,17 @@ namespace DentalPlus.Models
 
                 objDAL.ExecutarComandoSQL(command);
             }
+        }
+
+        public void Excluir(int id)
+        {
+            DAL objDAL = new DAL();
+            string sql = "DELETE FROM TB_CLI_PATIENTS WHERE ID_PATIENTS = @IdPatients";
+
+            MySqlCommand command = new MySqlCommand(sql);
+            command.Parameters.AddWithValue("@IdPatients", id);
+
+            objDAL.ExecutarComandoSQL(command);
         }
     }
 }
