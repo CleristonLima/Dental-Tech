@@ -38,6 +38,14 @@ namespace DentalPlus.Models
         [Required(ErrorMessage = "Informe o email referente ao plano!")]
         public string Email { get; set; }
 
+        public string PlanoComCobertura
+        {
+            get
+            {
+                return $"{Operator} - ({Coverage})";
+            }
+        }
+
         public string userId { get; set; }
 
         public List<PlanoSaudeModel> ListarTodosPlanos()

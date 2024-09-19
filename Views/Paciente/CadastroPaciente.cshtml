@@ -1,0 +1,138 @@
+﻿@model PacienteModel
+
+<h3>Cadastro de Paciente</h3>
+
+<br />
+
+@if (ViewData.ModelState.ContainsKey("CPF_CNPJ") && ViewData.ModelState["CPF_CNPJ"].Errors.Count > 0)
+{
+    <div class="alert alert-danger">
+        @foreach (var error in ViewData.ModelState["CPF_CNPJ"].Errors)
+        {
+            <p>@error.ErrorMessage</p>
+        }
+    </div>
+}
+
+<form asp-controller="Paciente" asp-action="CadastroPaciente" method="post">
+    <!-- Campo oculto para IdProfile -->
+    <input type="hidden" asp-for="IdPatients" />
+
+    <div class="form-group">
+        <label>CPF ou CNPJ</label>
+        <br />
+        <input asp-for="CpfCnpj" type="text" class="form-control" required="required" />
+        <span asp-validation-for="CpfCnpj" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <br />
+        <label>Nome completo</label>
+        <br />
+        <input asp-for="NamePatient" type="text" class="form-control" required="required" />
+        <span asp-validation-for="NamePatient" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <br />
+        <label>Data de nascimento</label>
+        <br />
+        <input asp-for="BornDate" type="date" class="form-control" required="required" min="1900-01-01" />
+        <span asp-validation-for="BornDate" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <br />
+        <label>CEP</label>
+        <br />
+        <input asp-for="ZipCode" type="text" class="form-control" required="required" />
+        <span asp-validation-for="ZipCode" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <br />
+        <label>Endereço</label>
+        <br />
+        <input asp-for="AddressPatient" type="text" class="form-control" required="required" />
+        <span asp-validation-for="AddressPatient" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <br />
+        <label>Numero</label>
+        <br />
+        <input asp-for="Number" type="number" class="form-control" required="required" />
+        <span asp-validation-for="Number" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <br />
+        <label>Complemento</label>
+        <br />
+        <input asp-for="Complement" type="text" class="form-control" />
+        <span asp-validation-for="Complement" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <br />
+        <label>Bairro</label>
+        <br />
+        <input asp-for="District" type="text" class="form-control" required="required" />
+        <span asp-validation-for="District" class="text-danger"></span>
+    </div>
+    
+    <div class="form-group">
+        <br />
+        <label>Cidade</label>
+        <input asp-for="City" type="text" class="form-control" required="required" />
+        <span asp-validation-for="City" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <br />
+        <label>Estado</label>
+        <select asp-for="IdUf" class="form-control" asp-items="ViewBag.ListaEstado">
+            <option value="">Selecione o estado</option>
+        </select>
+        <span asp-validation-for="IdUf" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <br />
+        <label>Telefone 1</label>
+        <input asp-for="PhoneNumber1" type="text" class="form-control" required="required" />
+        <span asp-validation-for="PhoneNumber1" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <br />
+        <label>Telefone 2</label>
+        <input asp-for="PhoneNumber2" type="text" class="form-control" />
+        <span asp-validation-for="PhoneNumber2" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <br />
+        <label>Email</label>
+        <input asp-for="Email" type="text" class="form-control" required="required" />
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <br />
+        <label>Plano</label>
+        <select asp-for="IdPlan" class="form-control" asp-items="ViewBag.ListaPlanos">
+            <option value="">Selecione o Plano - Caso tenha</option>
+        </select>
+        <span asp-validation-for="IdPlan" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <br />
+        <label>Número do cartão do plano</label>
+        <input asp-for="CardNumberPlan" type="text" class="form-control" />
+        <span asp-validation-for="CardNumberPlan" class="text-danger"></span>
+    </div>
+
+    <br />
+    <br />
+    <button type="submit" class="btn btn-block btn-success">Salvar</button>
+</form>

@@ -1,0 +1,108 @@
+﻿<h3>Lista de pacientes</h3>
+
+@if (ViewBag.ListaPacientes != null)
+{
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>CPF_CNPJ</th>
+                <th>Nome do paciente</th>
+                <th>Data de nascimento</th>
+                <th>CEP</th>
+                <th>Endereço</th>
+                <th>N°</th>
+                <th>Complemento</th>
+                <th>Bairro</th>
+                <th>Cidade</th>
+                <th>Estado</th>
+                <th>Telefone 1</th>
+                <th>Telefone 2</th>
+                <th>Email</th>
+                <th>Plano de saude</th>
+                <th>Cobertura</th>
+                <th>Numero do cartao</th>
+                <th>#</th>
+                <th>#</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @{
+                foreach (var item in (List<PacienteModel>)ViewBag.ListaPacientes)
+                {
+                    <tr>
+                        <td>@item.CpfCnpj</td>
+                        <td>@item.NamePatient</td>
+                        <td>@item.BornDate</td>
+                        <td>@item.ZipCode</td>
+                        <td>@item.AddressPatient</td>
+                        <td>@item.Number</td>
+                        <td>@item.Complement</td>
+                        <td>@item.District</td>
+                        <td>@item.City</td>
+                        <td>@item.CodeUf</td>
+                        <td>@item.PhoneNumber1</td>
+                        <td>@item.PhoneNumber2</td>
+                        <td>@item.Email</td>
+                        <td>@item.NamePlan</td>
+                        <td>@item.Coverage</td>
+                        <td>@item.CardNumberPlan</td>
+                        <td><button type="button" class="btn btn-warning" onclick="Editar(@item.IdPatients)">Editar</button></td>
+                        <td><button type="button" class="btn btn-danger" onclick="Excluir(@item.IdPatients)">Excluir</button></td>
+                    </tr>
+                }
+            }
+        </tbody>
+
+    </table>
+    <br />
+
+    <button class="btn btn-block btn-primary" type="button" onclick="Cadastrar()">Cadastrar novo Paciente</button>
+}
+else
+{
+    <p>Sem conexão com a internet! Verifique sua conexão com a internet e tente novamente.</p>
+}
+<br />
+
+<script>
+    function checkInternetConnection() {
+        if (!navigator.onLine) {
+            alert("Sem conexao com a internet. Verifique sua rede e tente novamente.");
+        }
+    }
+
+    window.addEventListener('load', checkInternetConnection);
+    window.addEventListener('offline', checkInternetConnection);
+
+    document.addEventListener('DOMContentLoaded', function () {
+        var errorMessage = '@TempData["ErrorLogin"]';
+        if (errorMessage) {
+            alert(errorMessage);
+        }
+    });
+
+    function Cadastrar() {
+        if (!navigator.onLine) {
+            alert("Sem conexão com a internet. Verifique sua rede e tente novamente.");
+        } else {
+            window.location.href = "../Paciente/CadastroPaciente";
+        }
+    }
+
+    function Editar(id) {
+        if (!navigator.onLine) {
+            alert("Sem conexão com a internet. Verifique sua rede e tente novamente.");
+        } else {
+            window.location.href = "../Paciente/CadastroPaciente/" + id;
+        }
+    }
+
+    function Excluir(id) {
+        if (!navigator.onLine) {
+            alert("Sem conexão com a internet. Verifique sua rede e tente novamente.");
+        } else {
+            window.location.href = "../Paciente/Excluir/" + id;
+        }
+    }
+</script>
