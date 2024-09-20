@@ -49,7 +49,7 @@ namespace DentalPlus.Controllers
 
                 if (id != null)
                 {
-                    //Carregar o registro do cliente numa ViewBag
+                    
                     medico = new MedicoModel().RetornarMedico(id);
                 }
 

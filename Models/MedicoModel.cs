@@ -33,6 +33,7 @@ namespace DentalPlus.Models
         public string Phone_number_1 { get; set; }
 
         public string Phone_number_2 { get; set; }
+
         [Required(ErrorMessage = "Informe o Email!")]
         public string Email { get; set; }
 
@@ -93,11 +94,25 @@ namespace DentalPlus.Models
             return item;
         }
 
-        public bool CRM_CROExiste(string crm_cro)
+        public bool CRM_CROExiste(string crm_cro, string idDoctor = null)
         {
             DAL objDAL = new DAL();
-            string sql = $"SELECT COUNT(*) FROM TB_CLI_DOCTORS WHERE CRM_CRO = '{crm_cro}'";
-            int count = Convert.ToInt32(objDAL.RetornarValor(sql));
+            string sql = "SELECT COUNT(*) FROM TB_CLI_DOCTORS WHERE CRM_CRO = @CrmCro";
+
+            if (!string.IsNullOrEmpty(idDoctor))
+            {
+                sql += " AND ID_DOCTOR != @IdDoctor";
+            }
+
+            MySqlCommand command = new MySqlCommand(sql);
+            command.Parameters.AddWithValue("@CrmCro", crm_cro);
+
+            if (!string.IsNullOrEmpty(idDoctor))
+            {
+                command.Parameters.AddWithValue("@IdDoctor", idDoctor);
+            }
+
+            int count = Convert.ToInt32(objDAL.RetDataTable(command).Rows[0][0]);
             return count > 0;
         }
 
@@ -108,13 +123,13 @@ namespace DentalPlus.Models
 
             string currentDateTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
 
-            if (CRM_CROExiste(CRM_CRO))
-            {
-                throw new Exception("CRM/CRO já existe cadastrado no sistema.");
-            }
-
             if (!string.IsNullOrEmpty(IdDoctor))
             {
+                // Verifica duplicidade excluindo o registro atual
+                if (CRM_CROExiste(CRM_CRO, IdDoctor))
+                {
+                    throw new Exception("CPF ou CNPJ já existe cadastrado no sistema.");
+                }
                 // Se for uma atualização, preenche o campo USER_UPDATE
                 sql = "UPDATE TB_CLI_DOCTORS SET NAME_DOCTOR = @nameDoctor, " +
                     "CRM_CRO = @crmCro, " +
@@ -159,7 +174,6 @@ namespace DentalPlus.Models
                 command.Parameters.AddWithValue("@email", Email);
                 command.Parameters.AddWithValue("@userInsert", userId);
                 command.Parameters.AddWithValue("@dateInsert", currentDateTime);
-                command.Parameters.AddWithValue("@idDoctor", IdDoctor);
 
                 objDAL.ExecutarComandoSQL(command);
             }
