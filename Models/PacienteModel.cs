@@ -1,6 +1,7 @@
 ﻿using DentalPlus.Uteis;
 using MySql.Data.MySqlClient;
 using Mysqlx.Crud;
+using Mysqlx.Expr;
 using System.ComponentModel.DataAnnotations;
 using System.Data;
 using System.Globalization;
@@ -72,6 +73,14 @@ namespace DentalPlus.Models
         public string Coverage { get; set; }
 
         public string CardNumberPlan { get; set; }
+
+        public string NomeComCpf
+        {
+            get
+            {
+                return $"{NamePatient} - ({CpfCnpj})";
+            }
+        }
 
         public string userId { get; set; }
 

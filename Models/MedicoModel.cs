@@ -37,6 +37,13 @@ namespace DentalPlus.Models
         [Required(ErrorMessage = "Informe o Email!")]
         public string Email { get; set; }
 
+        public string NomeComCRM
+        {
+            get
+            {
+                return $"{NameDoctor} - ({CRM_CRO})";
+            }
+        }
         public string userId { get; set; }
 
         public List<MedicoModel> ListarTodosMedicos()
