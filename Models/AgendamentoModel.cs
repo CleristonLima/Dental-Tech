@@ -36,6 +36,10 @@ namespace DentalPlus.Models
 
         public DateTime DateConsultationFinish { get; set; }
 
+        public string StatusConsultation { get; set; }
+
+        public string Reason { get; set; }
+
         public List<AgendamentoModel> ListarTodosAgendamentos()
         {
             List<AgendamentoModel> lista = new List<AgendamentoModel>();
@@ -47,7 +51,9 @@ namespace DentalPlus.Models
                                "CD.NAME_DOCTOR, " +
                                "CMC.DESC_MEDICAL_CONSULTATION, " +
                                "CMCP.DATE_CONSULTATION_START, " +
-                               "CMCP.DATE_CONSULTATION_FINISH " +
+                               "CMCP.DATE_CONSULTATION_FINISH, " +
+                               "CMCP.STATUS_CONSULTATION, " +
+                               "CMCP.REASON " +
                         "FROM TB_CLI_MED_CONSUL_X_PATIENT CMCP " +
                         "INNER JOIN TB_CLI_DOCTORS CD ON CD.ID_DOCTOR = CMCP.ID_DOCTOR " +
                         "INNER JOIN TB_CLI_PATIENTS CP ON CP.ID_PATIENTS = CMCP.ID_PATIENTS " +
@@ -64,7 +70,9 @@ namespace DentalPlus.Models
                     NameDoctor = row["NAME_DOCTOR"].ToString(),
                     NameMedicalConsultation = row["DESC_MEDICAL_CONSULTATION"].ToString(),
                     DateConsultationStart = DateTime.Parse(row["DATE_CONSULTATION_START"].ToString()),
-                    DateConsultationFinish = DateTime.Parse(row["DATE_CONSULTATION_FINISH"].ToString())
+                    DateConsultationFinish = DateTime.Parse(row["DATE_CONSULTATION_FINISH"].ToString()),
+                    StatusConsultation = row["STATUS_CONSULTATION"].ToString(),
+                    Reason = row["REASON"].ToString(),
                 };
 
                 lista.Add(item);
@@ -83,7 +91,9 @@ namespace DentalPlus.Models
                                $"CD.ID_DOCTOR, " +
                                $"CMC.ID_MEDICAL_CONSULTATION, " +
                                $"CMCP.DATE_CONSULTATION_START, " +
-                               $"CMCP.DATE_CONSULTATION_FINISH " +
+                               $"CMCP.DATE_CONSULTATION_FINISH, " +
+                               $"CMCP.STATUS_CONSULTATION, " +
+                               $"CMCP.REASON " +
                         $"FROM TB_CLI_MED_CONSUL_X_PATIENT CMCP " +
                         $"INNER JOIN TB_CLI_DOCTORS CD ON CD.ID_DOCTOR = CMCP.ID_DOCTOR " +
                         $"INNER JOIN TB_CLI_PATIENTS CP ON CP.ID_PATIENTS = CMCP.ID_PATIENTS " +
@@ -105,7 +115,9 @@ namespace DentalPlus.Models
                         IdDoctor = dt.Rows[0]["ID_DOCTOR"].ToString(),
                         IdMedicalConsultation = dt.Rows[0]["ID_MEDICAL_CONSULTATION"].ToString(),
                         DateConsultationStart = DateTime.Parse(dt.Rows[0]["DATE_CONSULTATION_START"].ToString()),
-                        DateConsultationFinish = DateTime.Parse(dt.Rows[0]["DATE_CONSULTATION_FINISH"].ToString())
+                        DateConsultationFinish = DateTime.Parse(dt.Rows[0]["DATE_CONSULTATION_FINISH"].ToString()),
+                        StatusConsultation = dt.Rows[0]["STATUS_CONSULTATION"].ToString(),
+                        Reason = dt.Rows[0]["REASON"].ToString()
                     };
                 }
                 else
