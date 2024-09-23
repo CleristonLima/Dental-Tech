@@ -15,7 +15,7 @@
 }
 
 <form asp-controller="Paciente" asp-action="CadastroPaciente" method="post">
-    <!-- Campo oculto para IdProfile -->
+    <!-- Campo oculto para IdPatients -->
     <input type="hidden" asp-for="IdPatients" />
 
     <div class="form-group">
@@ -37,7 +37,7 @@
         <br />
         <label>Data de nascimento</label>
         <br />
-        <input asp-for="BornDate" type="date" class="form-control" required="required" min="1900-01-01" />
+        <input asp-for="BornDate" type="date" class="form-control" required="required" value="@DateTime.Now.ToString("yyyy-MM-dd")/>
         <span asp-validation-for="BornDate" class="text-danger"></span>
     </div>
 

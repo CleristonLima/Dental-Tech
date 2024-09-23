@@ -55,7 +55,7 @@ namespace DentalPlus.Controllers
                 }
 
                 var paciente = new PacienteModel().ListarTodosPacientes();
-                ViewBag.ListarPacientes = new SelectList(paciente, "IdPatients", "NomeComCpf");
+                ViewBag.ListaPacientes = new SelectList(paciente, "IdPatients", "NomeComCpf");
 
                 var medico = new MedicoModel().ListarTodosMedicos();
                 ViewBag.ListaMedicos = new SelectList(medico, "IdDoctor", "NomeComCRM");
@@ -66,6 +66,24 @@ namespace DentalPlus.Controllers
                 return View(agendamento);
             }
 
+        }
+
+        [HttpPost]
+        public IActionResult CadastroAgendamento(AgendamentoModel agendamento)
+        {
+            if (!VerificarConexaoInternet())
+            {
+                TempData["ErrorLogin"] = "Sem conexão com a internet. Verifique sua rede e tente novamente.";
+                return RedirectToAction("Index", "Agendamento");
+            }
+            else
+            {
+              
+                agendamento.userId = _httpContextAccessor.HttpContext?.Session.GetString("IdUsuarioLogado");
+                agendamento.Gravar();
+                return RedirectToAction("Index", "Agendamento");
+                
+            }
         }
     }
 }

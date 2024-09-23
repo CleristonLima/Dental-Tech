@@ -1,1 +1,80 @@
-﻿<h3> Cadastro de agendamento</h3>
+﻿@model AgendamentoModel
+
+<h3> Cadastro de agendamento</h3>
+
+<form asp-controller="Agendamento" asp-action="CadastroAgendamento" method="post">
+     <div class="form-group">
+         <br />
+         <label>Paciente</label>
+        <select asp-for="IdPatients" class="form-control" asp-items="ViewBag.ListaPacientes">
+             <option value="">Selecione o Paciente</option>
+         </select>
+         <span asp-validation-for="IdPatients" class="text-danger"></span>
+     </div>
+     <br />
+    <div class="form-group">
+        <br />
+        <label>Medico</label>
+        <select asp-for="IdDoctor" class="form-control" asp-items="ViewBag.ListaMedicos">
+            <option value="">Selecione o medico</option>
+        </select>
+        <span asp-validation-for="IdDoctor" class="text-danger"></span>
+    </div>
+    <br />
+    <div class="form-group">
+        <br />
+        <label>Consulta</label>
+        <select asp-for="IdMedicalConsultation" class="form-control" asp-items="ViewBag.ListaTipoConsultas">
+            <option value="">Selecione a consulta</option>
+        </select>
+        <span asp-validation-for="IdMedicalConsultation" class="text-danger"></span>
+    </div>
+    <br />
+    <div class="form-group">
+        <br />
+        <label>Data e Hora Inicial da Consulta</label>
+        <input asp-for="DateConsultationStart" class="form-control" type="datetime-local" value="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")" />
+        <span asp-validation-for="DateConsultationStart" class="text-danger"></span>
+    </div>
+    <br />
+    <div class="form-group">
+        <br />
+        <label>Data e Hora Final da Consulta</label>
+        <input asp-for="DateConsultationStart" class="form-control" type="datetime-local" value="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")" />
+        <span asp-validation-for="DateConsultationStart" class="text-danger"></span>
+    </div>
+    <br />
+    <div class="form-group">
+        <br />
+        <label>Status</label>
+        <select asp-for="StatusConsultation" class="form-control">
+            <option value="Agendado">Agendado</option>
+            <option value="Realizada">Realizada</option>
+            <option value="Cancelada">Cancelada</option>
+        </select>
+        <span asp-validation-for="StatusConsultation" class="text-danger"></span>
+    </div>
+    <br />
+
+    <div class="form-group">
+        <br />
+        <label>Observação</label>
+
+        @{
+            var vObs = "";
+
+            try
+            {
+                vObs = ViewBag.Agendamento.Reason;
+            }
+            catch { }
+        }
+
+        @Html.TextArea("Reason", vObs, new { @class = "form-control" })
+
+        <span asp-validation-for="Reason" class="text-danger"></span>
+    </div>
+    <br />
+    <br />
+    <button type="submit" class="btn btn-primary">Salvar</button>
+</form>

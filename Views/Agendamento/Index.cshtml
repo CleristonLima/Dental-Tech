@@ -1,4 +1,4 @@
-﻿<<h3 class="titulo-cadastro">Agendamentos</h3>
+﻿<h3 class="titulo-cadastro">Agendamentos</h3>
 
 @if (ViewBag.ListaAgendamento != null)
 {
@@ -12,7 +12,7 @@
                     <th>Data e hora inicial</th>
                     <th>Data e hora final</th>
                     <th>Status</th>
-                    <th>Motivo do cancelamento</th>
+                    <th>Observacao</th>
                     <th>#</th>
                 </tr>
             </thead>
@@ -27,6 +27,8 @@
                             <td>@item.NameMedicalConsultation</td>
                             <td>@item.DateConsultationStart</td>
                             <td>@item.DateConsultationFinish</td>
+                            <td>@item.StatusConsultation</td>
+                            <td>@item.Reason</td>
                             <td><button type="button" class="btn btn-warning" onclick="Editar(@item.IdPatients)">Editar</button></td>
                         </tr>
                     }

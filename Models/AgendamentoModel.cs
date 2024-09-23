@@ -1,4 +1,5 @@
 ﻿using DentalPlus.Uteis;
+using MySql.Data.MySqlClient;
 using Mysqlx.Crud;
 using System.Data;
 
@@ -39,6 +40,8 @@ namespace DentalPlus.Models
         public string StatusConsultation { get; set; }
 
         public string Reason { get; set; }
+
+        public string userId { get; set; }
 
         public List<AgendamentoModel> ListarTodosAgendamentos()
         {
@@ -128,6 +131,61 @@ namespace DentalPlus.Models
             }
 
             return item;
+        }
+
+        public void Gravar()
+        {
+            DAL objDAL = new DAL();
+            string sql = string.Empty;
+
+            string currentDateTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+
+            if (!string.IsNullOrEmpty(IdMedConsXPat))
+            {
+                // Se for uma atualização, preenche o campo USER_UPDATE
+                sql = "UPDATE TB_CLI_MED_CONSUL_X_PATIENT SET ID_PATIENTS = @IdPatients, " +
+                    "ID_DOCTOR = @IdDoctor, " +
+                    "ID_MEDICAL_CONSULTATION = @IdMedicalConsultation, " +
+                    "DATE_CONSULTATION_START = @DateConsultationStart, " +
+                    "DATE_CONSULTATION_FINISH = @DateConsultationFinish, " +
+                    "STATUS_CONSULTATION = @StatusConsultation, " +
+                    "REASON = @Reason, " +
+                    "USER_UPDATE = @userUpdate, " +
+                    "DATE_UPDATE = @dateUpdate " +
+                    "WHERE ID_MED_CONS_X_PAT = @IdMedConsXPat ";
+
+                MySqlCommand command = new MySqlCommand(sql);
+                command.Parameters.AddWithValue("@IdPatients", IdPatients);
+                command.Parameters.AddWithValue("@IdDoctor", IdDoctor);
+                command.Parameters.AddWithValue("@IdMedicalConsultation", IdMedicalConsultation);
+                command.Parameters.AddWithValue("@DateConsultationStart", DateConsultationStart);
+                command.Parameters.AddWithValue("@DateConsultationFinish", DateConsultationFinish);
+                command.Parameters.AddWithValue("@StatusConsultation", StatusConsultation);
+                command.Parameters.AddWithValue("@Reason", Reason);
+                command.Parameters.AddWithValue("@userUpdate", userId);
+                command.Parameters.AddWithValue("@dateUpdate", currentDateTime);
+                command.Parameters.AddWithValue("@IdMedConsXPat", IdMedConsXPat);
+
+                objDAL.ExecutarComandoSQL(command);
+            }
+            else
+            {
+                // Se for uma inserção, preenche o campo USER_INSERT
+                sql = "INSERT INTO TB_CLI_MED_CONSUL_X_PATIENT (ID_PATIENTS, ID_DOCTOR, ID_MEDICAL_CONSULTATION, DATE_CONSULTATION_START, DATE_CONSULTATION_FINISH, STATUS_CONSULTATION, REASON, USER_INSERT, DATE_INSERT) VALUES (@IdPatients, @IdDoctor, @IdMedicalConsultation, @DateConsultationStart, @DateConsultationFinish, @StatusConsultation, @Reason, @userInsert, @dateInsert)";
+
+                MySqlCommand command = new MySqlCommand(sql);
+                command.Parameters.AddWithValue("@IdPatients", IdPatients);
+                command.Parameters.AddWithValue("@IdDoctor", IdDoctor);
+                command.Parameters.AddWithValue("@IdMedicalConsultation", IdMedicalConsultation);
+                command.Parameters.AddWithValue("@StatusConsultation", StatusConsultation);
+                command.Parameters.AddWithValue("@DateConsultationStart", DateConsultationStart);
+                command.Parameters.AddWithValue("@DateConsultationFinish", DateConsultationFinish);
+                command.Parameters.AddWithValue("@Reason", Reason);
+                command.Parameters.AddWithValue("@userInsert", userId);
+                command.Parameters.AddWithValue("@dateInsert", currentDateTime);
+
+                objDAL.ExecutarComandoSQL(command);
+            }
         }
     }
 }
