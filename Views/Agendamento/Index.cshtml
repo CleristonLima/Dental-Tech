@@ -25,11 +25,11 @@
                             <td>@item.NamePatient</td>
                             <td>@item.NameDoctor</td>
                             <td>@item.NameMedicalConsultation</td>
-                            <td>@item.DateConsultationStart</td>
-                            <td>@item.DateConsultationFinish</td>
+                            <td>@item.DateConsultationStart.ToString("dd/MM/yyyy HH:mm")</td>
+                            <td>@item.DateConsultationFinish.ToString("dd/MM/yyyy HH:mm")</td>
                             <td>@item.StatusConsultation</td>
                             <td>@item.Reason</td>
-                            <td><button type="button" class="btn btn-warning" onclick="Editar(@item.IdPatients)">Editar</button></td>
+                            <td><button type="button" class="btn btn-warning" onclick="Editar(@item.IdMedConsXPat)">Editar</button></td>
                         </tr>
                     }
                 }

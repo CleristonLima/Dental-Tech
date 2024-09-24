@@ -62,6 +62,7 @@ namespace DentalPlus.Models
                         "INNER JOIN TB_CLI_PATIENTS CP ON CP.ID_PATIENTS = CMCP.ID_PATIENTS " +
                         "INNER JOIN TB_CLI_MEDICAL_CONSULTATION CMC ON CMC.ID_MEDICAL_CONSULTATION = CMCP.ID_MEDICAL_CONSULTATION " +
                         "ORDER BY CMCP.DATE_CONSULTATION_START DESC";
+
             DataTable dt = objDAL.RetDataTable(sql);
 
             foreach (DataRow row in dt.Rows)
@@ -86,7 +87,6 @@ namespace DentalPlus.Models
 
         public AgendamentoModel RetornarAgendamento(int? id)
         {
-
             AgendamentoModel item = null;
             DAL objDAL = new DAL();
             string sql = $"SELECT CMCP.ID_MED_CONS_X_PAT, " +
@@ -109,7 +109,7 @@ namespace DentalPlus.Models
                 DateTime dateConsultationStart;
                 DateTime dateConsultationFinish;
 
-                if (DateTime.TryParse(dt.Rows[0]["DATE_CONSULTATION_START"].ToString(), out dateConsultationStart) && DateTime.TryParse(dt.Rows[0]["DATE_CONSULTATION_FINISH"].ToString(), out dateConsultationStart))
+                if (DateTime.TryParse(dt.Rows[0]["DATE_CONSULTATION_START"].ToString(), out dateConsultationStart) && DateTime.TryParse(dt.Rows[0]["DATE_CONSULTATION_FINISH"].ToString(), out dateConsultationFinish))
                 {
                     item = new AgendamentoModel
                     {
@@ -117,16 +117,15 @@ namespace DentalPlus.Models
                         IdPatients = dt.Rows[0]["ID_PATIENTS"].ToString(),
                         IdDoctor = dt.Rows[0]["ID_DOCTOR"].ToString(),
                         IdMedicalConsultation = dt.Rows[0]["ID_MEDICAL_CONSULTATION"].ToString(),
-                        DateConsultationStart = DateTime.Parse(dt.Rows[0]["DATE_CONSULTATION_START"].ToString()),
-                        DateConsultationFinish = DateTime.Parse(dt.Rows[0]["DATE_CONSULTATION_FINISH"].ToString()),
+                        DateConsultationStart = dateConsultationStart,
+                        DateConsultationFinish = dateConsultationFinish,
                         StatusConsultation = dt.Rows[0]["STATUS_CONSULTATION"].ToString(),
                         Reason = dt.Rows[0]["REASON"].ToString()
                     };
                 }
                 else
                 {
-                    // Lidar com o caso em que a data não está no formato esperado
-                    throw new FormatException("A data de nascimento não está no formato correto.");
+                    throw new FormatException("A data de consulta não está no formato correto.");
                 }
             }
 
@@ -144,15 +143,15 @@ namespace DentalPlus.Models
             {
                 // Se for uma atualização, preenche o campo USER_UPDATE
                 sql = "UPDATE TB_CLI_MED_CONSUL_X_PATIENT SET ID_PATIENTS = @IdPatients, " +
-                    "ID_DOCTOR = @IdDoctor, " +
-                    "ID_MEDICAL_CONSULTATION = @IdMedicalConsultation, " +
-                    "DATE_CONSULTATION_START = @DateConsultationStart, " +
-                    "DATE_CONSULTATION_FINISH = @DateConsultationFinish, " +
-                    "STATUS_CONSULTATION = @StatusConsultation, " +
-                    "REASON = @Reason, " +
-                    "USER_UPDATE = @userUpdate, " +
-                    "DATE_UPDATE = @dateUpdate " +
-                    "WHERE ID_MED_CONS_X_PAT = @IdMedConsXPat ";
+                        "ID_DOCTOR = @IdDoctor, " +
+                        "ID_MEDICAL_CONSULTATION = @IdMedicalConsultation, " +
+                        "DATE_CONSULTATION_START = @DateConsultationStart, " +
+                        "DATE_CONSULTATION_FINISH = @DateConsultationFinish, " +
+                        "STATUS_CONSULTATION = @StatusConsultation, " +
+                        "REASON = @Reason, " +
+                        "USER_UPDATE = @userUpdate, " +
+                        "DATE_UPDATE = @dateUpdate " +
+                        "WHERE ID_MED_CONS_X_PAT = @IdMedConsXPat " ;
 
                 MySqlCommand command = new MySqlCommand(sql);
                 command.Parameters.AddWithValue("@IdPatients", IdPatients);

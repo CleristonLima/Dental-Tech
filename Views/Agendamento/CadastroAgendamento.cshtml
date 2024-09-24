@@ -3,13 +3,15 @@
 <h3> Cadastro de agendamento</h3>
 
 <form asp-controller="Agendamento" asp-action="CadastroAgendamento" method="post">
+    <input type="hidden" asp-for="IdMedConsXPat" />
+
      <div class="form-group">
          <br />
          <label>Paciente</label>
         <select asp-for="IdPatients" class="form-control" asp-items="ViewBag.ListaPacientes">
              <option value="">Selecione o Paciente</option>
          </select>
-         <span asp-validation-for="IdPatients" class="text-danger"></span>
+        <span asp-validation-for="IdPatients" class="text-danger"></span>
      </div>
      <br />
     <div class="form-group">
@@ -33,15 +35,15 @@
     <div class="form-group">
         <br />
         <label>Data e Hora Inicial da Consulta</label>
-        <input asp-for="DateConsultationStart" class="form-control" type="datetime-local" value="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")" />
+        <input asp-for="DateConsultationStart" class="form-control" type="datetime-local" value="@Model.DateConsultationStart.ToString("yyyy-MM-ddTHH:mm")" />
         <span asp-validation-for="DateConsultationStart" class="text-danger"></span>
     </div>
     <br />
     <div class="form-group">
         <br />
         <label>Data e Hora Final da Consulta</label>
-        <input asp-for="DateConsultationStart" class="form-control" type="datetime-local" value="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")" />
-        <span asp-validation-for="DateConsultationStart" class="text-danger"></span>
+        <input asp-for="DateConsultationFinish" class="form-control" type="datetime-local" value="@Model.DateConsultationFinish.ToString("yyyy-MM-ddTHH:mm")" />
+        <span asp-validation-for="DateConsultationFinish" class="text-danger"></span>
     </div>
     <br />
     <div class="form-group">
