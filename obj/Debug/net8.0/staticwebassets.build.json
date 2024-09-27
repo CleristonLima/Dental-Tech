@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "X33YWtCzVhFXNqhihlzRxxotQnIyAyoqJ1P5dxlkbgM=",
+  "Hash": "JCmFBEiQY9hkFj2/3vFhexADYhE4Vfot/n2JVtIoDm8=",
   "Source": "DentalPlus",
   "BasePath": "_content/DentalPlus",
   "Mode": "Default",
@@ -110,6 +110,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\images\\Agendamentos.png"
+    },
+    {
+      "Identity": "C:\\Projetos\\DentalPlus\\DentalPlus\\wwwroot\\images\\Comprimido.png",
+      "SourceId": "DentalPlus",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Projetos\\DentalPlus\\DentalPlus\\wwwroot\\",
+      "BasePath": "_content/DentalPlus",
+      "RelativePath": "images/Comprimido.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\Comprimido.png"
     },
     {
       "Identity": "C:\\Projetos\\DentalPlus\\DentalPlus\\wwwroot\\images\\Configuracoes.png",
@@ -300,6 +319,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\images\\TipoConsultas.png"
+    },
+    {
+      "Identity": "C:\\Projetos\\DentalPlus\\DentalPlus\\wwwroot\\images\\Vacina.png",
+      "SourceId": "DentalPlus",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Projetos\\DentalPlus\\DentalPlus\\wwwroot\\",
+      "BasePath": "_content/DentalPlus",
+      "RelativePath": "images/Vacina.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\Vacina.png"
     },
     {
       "Identity": "C:\\Projetos\\DentalPlus\\DentalPlus\\wwwroot\\js\\site.js",

@@ -1,0 +1,41 @@
+﻿@model ProdutosEstoqueModel
+
+<h2>Usar Produto</h2>
+
+<form asp-controller="ProdutosEstoque" asp-action="UsarProduto" method="post">
+    <input type="hidden" asp-for="IdProduct" />
+
+    <div class="form-group">
+        <label>Descrição</label>
+        <br />
+        <input asp-for="DescProduct" type="text" class="form-control" readonly />
+        <span asp-validation-for="DescProduct" class="text-danger"></span>
+    </div>
+    <br />
+    <div class="form-group">
+        <br />
+        <label>Quantidade Estoque</label>
+        <br />
+        <input asp-for="QtyStock" type="text" class="form-control" readonly />
+        <span asp-validation-for="QtyStock" class="text-danger"></span>
+    </div>
+    <br />
+    <div class="form-group">
+        <br />
+        <label>Quantidade a utilizar</label>
+        <br />
+        <input asp-for="QtySubtr" type="text" class="form-control" required="required" />
+        <span asp-validation-for="QtySubtr" class="text-danger"></span>
+    </div>
+    <br />
+    <br />
+    <button type="submit" class="btn btn-block btn-success">Usar</button>
+</form>
+<br />
+<button type="button" class="btn btn-block btn-primary" onclick="Voltar()">Listagem de Produtos em estoque</button>
+
+<script>
+    function Voltar() {
+        window.location.href = "../../ProdutosEstoque/ListaProdutosEstoque";
+    }
+</script>

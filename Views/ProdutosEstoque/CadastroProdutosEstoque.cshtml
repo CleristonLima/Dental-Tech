@@ -1,0 +1,81 @@
+﻿@model ProdutosEstoqueModel
+
+<h2>Cadastro de Produtos</h2>
+
+<br />
+
+<form asp-controller="ProdutosEstoque" asp-action="CadastroProdutosEstoque" method="post">
+
+    <input type="hidden" asp-for="IdProduct" />
+
+    <div class="form-group">
+        <label>Descrição</label>
+        <br />
+        <input asp-for="DescProduct" type="text" class="form-control" required="required" />
+        <span asp-validation-for="DescProduct" class="text-danger"></span>
+    </div>
+    <br />
+    <div class="form-group">
+        <br />
+        <label>Quantidade Estoque</label>
+        <br />
+        <input asp-for="QtyStock" type="text" class="form-control" required="required" />
+        <span asp-validation-for="QtyStock" class="text-danger"></span>
+    </div>
+    <br />
+    <div class="form-group">
+        <br />
+        <label>Quantidade Minima do produto em estoque</label>
+        <br />
+        <input asp-for="QtyMinStock" type="text" class="form-control" required="required" />
+        <span asp-validation-for="QtyMinStock" class="text-danger"></span>
+    </div>
+    <br />
+    <div class="form-group">
+        <br />
+        <label>Unidade Medida</label>
+        @{
+            var vUnidadeMedida = "";
+            try
+            {
+                vUnidadeMedida = ViewBag.ProdutosEstoque.Unitilizer;
+            }
+            catch { }
+        }
+        <select asp-for="Unitilizer" class="form-control">
+            @{
+                if (vUnidadeMedida != "")
+                {
+                    <option value="@vUnidadeMedida" selected>@vUnidadeMedida</option>
+                }
+            }
+            <option value="UN">UN</option>
+            <option value="CX">CX</option>
+            <option value="Kg">KG</option>
+            <option value="COM">COM</option>
+            <option value="LT">LT</option>
+            <option value="ML">ML</option>
+        </select>
+
+        <span asp-validation-for="Unitilizer" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <br />
+        <label>Foto</label>
+        <img src="@Model.LinkPhoto" width="150" height="150" />
+        <br />
+        <br />
+        <input asp-for="LinkPhoto" type="text" class="form-control" />
+        <span asp-validation-for="LinkPhoto" class="text-danger"></span>
+    </div>
+    <br />
+    <button type="submit" class="btn btn-block btn-success">Registrar</button>
+</form>
+<br />
+<button type="button" class="btn btn-block btn-primary" onclick="Voltar()">Listagem de Produtos em estoque</button>
+
+<script>
+    function Voltar() {
+        window.location.href = "../../ProdutosEstoque/ListaProdutosEstoque";
+    }
+</script>

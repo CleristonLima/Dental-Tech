@@ -1,6 +1,7 @@
 ﻿using DentalPlus.Uteis;
 using MySql.Data.MySqlClient;
 using Mysqlx.Crud;
+using System.ComponentModel.DataAnnotations;
 using System.Data;
 
 namespace DentalPlus.Models
@@ -23,20 +24,26 @@ namespace DentalPlus.Models
 
         public string IdPatients { get; set; }
 
+        [Required(ErrorMessage = "Informe o paciente!")]
         public string NamePatient { get; set; }
 
         public string IdDoctor {  get; set; }
 
+        [Required(ErrorMessage = "Informe o médico!")]
         public string NameDoctor { get; set; }
 
         public string IdMedicalConsultation { get; set; }
 
+        [Required(ErrorMessage = "Informe o tipo de consulta medica!")]
         public string NameMedicalConsultation { get; set; }
 
+        [Required(ErrorMessage = "Informe a data e hora do inicio da consulta!")]
         public DateTime DateConsultationStart { get; set; }
 
+        [Required(ErrorMessage = "Informe a data e hora do final da consulta!")]
         public DateTime DateConsultationFinish { get; set; }
 
+        [Required(ErrorMessage = "Informe o status da consulta!")]
         public string StatusConsultation { get; set; }
 
         public string Reason { get; set; }

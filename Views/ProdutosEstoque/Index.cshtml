@@ -1,0 +1,58 @@
+﻿<style>
+
+        .container {
+        max-width: 100%;
+    }
+
+    .img-fluid {
+        width: 150px;
+        height: 150px;
+    }
+
+    .mb-4 {
+        margin-bottom: 1.5rem;
+    }
+
+    .text-center span {
+        display: block;
+        margin-top: 10px;
+    }
+
+</style>
+
+<script>
+    function checkInternetConnection() {
+        if (!navigator.onLine) {
+            alert("Sem conexao com a internet. Verifique sua rede e tente novamente.");
+        }
+    }
+
+    window.addEventListener('load', checkInternetConnection);
+    window.addEventListener('offline', checkInternetConnection);
+
+    document.addEventListener('DOMContentLoaded', function () {
+        var errorMessage = '@TempData["ErrorLogin"]';
+        if (errorMessage) {
+            alert(errorMessage);
+        }
+    });
+</script>
+
+<br />
+<div class="container">
+    <div class="row text-center">
+        <div class="col-lg-7 col-md-7 col-sm-6 mb-4">
+            <a href="../ProdutosEstoque/ListaProdutosEstoque">
+                <img src="~/images/Vacina.png" class="img-fluid" />
+            </a>
+            <span>Cadastro de produtos e estoque</span>
+        </div>
+
+        <div class="col-lg-2 col-md-3 col-sm-6 mb-4">
+            <a href="../ProdutosEstoque/Acesso">
+                <img src="~/images/Comprimido.png" class="img-fluid" />
+            </a>
+            <span>Cadastro de remédios para receita de pacientes</span>
+        </div>
+    </div>
+</div>

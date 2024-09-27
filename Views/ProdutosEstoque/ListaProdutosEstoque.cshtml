@@ -1,0 +1,136 @@
+﻿<h3 class="titulo-cadastro">Lista de produtos e seu estoque</h3>
+
+@if (ViewBag.ListaProdutosEstoque != null)
+{
+    <div class="table-container">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Foto</th>
+                    <th>Produto</th>
+                    <th>Quantidade Atual</th>
+                    <th>Quantidade Minima</th>
+                    <th>Unidade de medida</th>
+                    <th>#</th>
+                    <th>#</th>
+                    <th>#</th>
+                    <th>#</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @{
+                    foreach (var item in (List<ProdutosEstoqueModel>)ViewBag.ListaProdutosEstoque)
+                    {
+                        <tr>
+                            <td><img src="@item.LinkPhoto" width="50" height="50" /></td>
+                            <td>@item.DescProduct</td>
+                            <td>@item.QtyStock</td>
+                            <td>@item.QtyMinStock</td>
+                            <td>@item.Unitilizer</td>
+                            <td><button type="button" class="btn btn-primary" onClick="Abastecer(@item.IdProduct)">Abastecer</button></td>
+                            <td><button type="button" class="btn btn-success" onClick="Usar(@item.IdProduct)">Usar</button></td>
+                            <td><button type="button" class="btn btn-warning" onclick="Editar(@item.IdProduct)">Editar</button></td>
+                            <td><button type="button" class="btn btn-danger" onclick="Excluir(@item.IdProduct)">Excluir</button></td>
+                            
+                        </tr>
+                    }
+                }
+            </tbody>
+
+        </table>
+    </div>
+    <br />
+
+    <button class="btn btn-block btn-primary" type="button" onclick="Cadastrar()">Cadastrar novo produto e estoque</button>
+}
+else
+{
+    <p>Sem conexão com a internet! Verifique sua conexão com a internet e tente novamente.</p>
+}
+<br />
+
+<style>
+    .titulo-cadastro {
+        white-space: nowrap; /* Impede a quebra de linha */
+        text-align: center; /* Centraliza o texto */
+        margin-bottom: 20px; /* Adiciona um espaço abaixo do título */
+    }
+
+    .table-container {
+        white-space: nowrap;
+        width: 100%;
+        overflow-x: auto;
+        margin: 0; /* Remove margens */
+        padding: 0; /* Remove padding */
+    }
+
+    .table {
+        white-space: nowrap;
+        width: 100%;
+        border-collapse: collapse;
+        margin: 0; /* Remove margens */
+        padding: 0; /* Remove padding */
+    }
+
+    .table th, .table td {
+        white-space: nowrap;
+        padding: 8px;
+        text-align: center;
+        border: 1px solid #ddd;
+    }
+
+    .table th {
+        background-color: #f2f2f2;
+    }
+</style>
+<script>
+    function checkInternetConnection() {
+        if (!navigator.onLine) {
+            alert("Sem conexao com a internet. Verifique sua rede e tente novamente.");
+        }
+    }
+
+    window.addEventListener('load', checkInternetConnection);
+    window.addEventListener('offline', checkInternetConnection);
+
+    document.addEventListener('DOMContentLoaded', function () {
+        var errorMessage = '@TempData["ErrorLogin"]';
+        if (errorMessage) {
+            alert(errorMessage);
+        }
+    });
+
+    function Cadastrar() {
+        if (!navigator.onLine) {
+            alert("Sem conexão com a internet. Verifique sua rede e tente novamente.");
+        } else {
+            window.location.href = "../ProdutosEstoque/CadastroProdutosEstoque";
+        }
+    }
+
+    function Usar(id) {
+        if (!navigator.onLine) {
+            alert("Sem conexão com a internet. Verifique sua rede e tente novamente.");
+        } else {
+            window.location.href = "../ProdutosEstoque/UsarProduto/" + id;
+        }
+    }
+
+    function Editar(id) {
+        if (!navigator.onLine) {
+            alert("Sem conexão com a internet. Verifique sua rede e tente novamente.");
+        } else {
+            window.location.href = "../ProdutosEstoque/CadastroProdutosEstoque/" + id;
+        }
+    }
+
+    function Excluir(id) {
+        if (!navigator.onLine) {
+            alert("Sem conexão com a internet. Verifique sua rede e tente novamente.");
+        } else {
+            window.location.href = "../ProdutosEstoque/Excluir/" + id;
+        }
+    }
+
+</script>

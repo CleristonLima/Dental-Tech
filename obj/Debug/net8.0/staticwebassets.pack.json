@@ -17,6 +17,10 @@
       "PackagePath": "staticwebassets\\images\\Agendamentos.png"
     },
     {
+      "Id": "C:\\Projetos\\DentalPlus\\DentalPlus\\wwwroot\\images\\Comprimido.png",
+      "PackagePath": "staticwebassets\\images\\Comprimido.png"
+    },
+    {
       "Id": "C:\\Projetos\\DentalPlus\\DentalPlus\\wwwroot\\images\\Configuracoes.png",
       "PackagePath": "staticwebassets\\images\\Configuracoes.png"
     },
@@ -55,6 +59,10 @@
     {
       "Id": "C:\\Projetos\\DentalPlus\\DentalPlus\\wwwroot\\images\\TipoConsultas.png",
       "PackagePath": "staticwebassets\\images\\TipoConsultas.png"
+    },
+    {
+      "Id": "C:\\Projetos\\DentalPlus\\DentalPlus\\wwwroot\\images\\Vacina.png",
+      "PackagePath": "staticwebassets\\images\\Vacina.png"
     },
     {
       "Id": "C:\\Projetos\\DentalPlus\\DentalPlus\\wwwroot\\js\\site.js",
