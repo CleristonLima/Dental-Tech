@@ -1,15 +1,8 @@
 ﻿@model ProdutosEstoqueModel
 
-<h2>Usar Produto</h2>
+<h2>Abastecer Produto</h2>
 
-@if (TempData["ErrorEstoque"] != null)
-{
-    <div class="alert alert-danger">
-        @TempData["ErrorEstoque"]
-    </div>
-}
-
-<form asp-controller="ProdutosEstoque" asp-action="UsarProduto" method="post">
+<form asp-controller="ProdutosEstoque" asp-action="AbastecerProduto" method="post">
     <input type="hidden" asp-for="IdProduct" />
 
     <div class="form-group">
@@ -29,14 +22,14 @@
     <br />
     <div class="form-group">
         <br />
-        <label>Quantidade a utilizar</label>
+        <label>Quantidade a abastecer</label>
         <br />
-        <input asp-for="QtySubtr" type="text" class="form-control" required="required" />
-        <span asp-validation-for="QtySubtr" class="text-danger"></span>
+        <input asp-for="QtyAdd" type="text" class="form-control" required="required" />
+        <span asp-validation-for="QtyAdd" class="text-danger"></span>
     </div>
     <br />
     <br />
-    <button type="submit" class="btn btn-block btn-success">Usar</button>
+    <button type="submit" class="btn btn-block btn-success">Abastecer</button>
 </form>
 <br />
 <button type="button" class="btn btn-block btn-primary" onclick="Voltar()">Listagem de Produtos em estoque</button>

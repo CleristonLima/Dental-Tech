@@ -118,8 +118,20 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGxhbm9TYXVkZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Projetos/DentalPlus/DentalPlus/Views/ProdutosEstoque/AbastecerProduto.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvZHV0b3NFc3RvcXVlXEFiYXN0ZWNlclByb2R1dG8uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Projetos/DentalPlus/DentalPlus/Views/ProdutosEstoque/CadastroProdutosEstoque.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvZHV0b3NFc3RvcXVlXENhZGFzdHJvUHJvZHV0b3NFc3RvcXVlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Projetos/DentalPlus/DentalPlus/Views/ProdutosEstoque/ExcluirProdutoEstoque.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvZHV0b3NFc3RvcXVlXEV4Y2x1aXJQcm9kdXRvRXN0b3F1ZS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Projetos/DentalPlus/DentalPlus/Views/ProdutosEstoque/ExcluirProdutosOdonto.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvZHV0b3NFc3RvcXVlXEV4Y2x1aXJQcm9kdXRvc09kb250by5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Projetos/DentalPlus/DentalPlus/Views/ProdutosEstoque/Index.cshtml]

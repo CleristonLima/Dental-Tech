@@ -1,4 +1,14 @@
-﻿<h3 class="titulo-cadastro">Lista de produtos e seu estoque</h3>
+﻿<h3 class="titulo-cadastro">Lista de produtos no seu estoque</h3>
+
+@if (ViewBag.ProdutosEstoqueBaixo != null && ViewBag.ProdutosEstoqueBaixo.Count > 0)
+{
+    <div class="alert alert-warning">
+        @foreach (var item in (List<ProdutosEstoqueModel>)ViewBag.ProdutosEstoqueBaixo)
+        {
+            <p>O produto @item.DescProduct está com estoque baixo. Quantidade atual: @item.QtyStock, Quantidade mínima: @item.QtyMinStock.</p>
+        }
+    </div>
+}
 
 @if (ViewBag.ListaProdutosEstoque != null)
 {
@@ -109,6 +119,14 @@ else
         }
     }
 
+    function Abastecer(id) {
+        if (!navigator.onLine) {
+            alert("Sem conexão com a internet. Verifique sua rede e tente novamente.");
+        } else {
+            window.location.href = "../ProdutosEstoque/AbastecerProduto/" + id;
+        }
+    }
+
     function Usar(id) {
         if (!navigator.onLine) {
             alert("Sem conexão com a internet. Verifique sua rede e tente novamente.");
@@ -129,7 +147,7 @@ else
         if (!navigator.onLine) {
             alert("Sem conexão com a internet. Verifique sua rede e tente novamente.");
         } else {
-            window.location.href = "../ProdutosEstoque/Excluir/" + id;
+            window.location.href = "../ProdutosEstoque/ExcluirProdutosOdonto/" + id;
         }
     }
 

@@ -36,6 +36,31 @@ namespace DentalPlus.Models
 
         public string userId { get; set; }
 
+        public List<ProdutosEstoqueModel> VerificarEstoqueBaixo()
+        {
+            List<ProdutosEstoqueModel> lista = new List<ProdutosEstoqueModel>();
+            DAL objDAL = new DAL();
+
+            string sql = "SELECT ID_PRODUCT, DESC_PRODUCT, QTY_STOCK, QTY_MIN_STOCK FROM TB_PR_PRODUCT " +
+                         "WHERE QTY_STOCK <= QTY_MIN_STOCK";
+            DataTable dt = objDAL.RetDataTable(sql);
+
+            foreach (DataRow row in dt.Rows)
+            {
+                ProdutosEstoqueModel item = new ProdutosEstoqueModel(_httpContextAccessor)
+                {
+                    IdProduct = row["ID_PRODUCT"].ToString(),
+                    DescProduct = row["DESC_PRODUCT"].ToString(),
+                    QtyStock = Convert.ToDecimal(row["QTY_STOCK"].ToString()),
+                    QtyMinStock = Convert.ToDecimal(row["QTY_MIN_STOCK"].ToString())
+                };
+
+                lista.Add(item);
+            }
+
+            return lista;
+        }
+
         public List<ProdutosEstoqueModel> ListarTodosProdutosEstoque()
         {
             List<ProdutosEstoqueModel> lista = new List<ProdutosEstoqueModel>();
@@ -179,7 +204,73 @@ namespace DentalPlus.Models
                 {
                     decimal currentStock = Convert.ToDecimal(dt.Rows[0]["QTY_STOCK"]);
 
-                    decimal newStock = currentStock - QtySubtr;
+                    if (currentStock >= QtySubtr)
+                    {
+                        // Subtrai a quantidade do estoque
+                        decimal newStock = currentStock - QtySubtr;
+
+                        // Atualiza apenas o campo QTY_STOCK e os campos de auditoria
+                        sql = "UPDATE TB_PR_PRODUCT SET QTY_STOCK = @newStock, " +
+                              "USER_UPDATE = @userUpdate, " +
+                              "DATE_UPDATE = @dateUpdate " +
+                              "WHERE ID_PRODUCT = @IdProduct";
+
+                        MySqlCommand updateCommand = new MySqlCommand(sql);
+                        updateCommand.Parameters.AddWithValue("@newStock", newStock);
+                        updateCommand.Parameters.AddWithValue("@userUpdate", userId);
+                        updateCommand.Parameters.AddWithValue("@dateUpdate", currentDateTime);
+                        updateCommand.Parameters.AddWithValue("@IdProduct", IdProduct);
+
+                        objDAL.ExecutarComandoSQL(updateCommand);
+                    }
+                    else
+                    {
+                        throw new Exception("Produto não tem saldo em estoque. Favor Abastecer!");
+                    }
+                }
+            }
+        }
+
+        public ProdutosEstoqueModel RetornarProdutosParaAbastecer(int? id)
+        {
+            ProdutosEstoqueModel item = null;
+            DAL objDAL = new DAL();
+            string sql = $"SELECT ID_PRODUCT, DESC_PRODUCT, QTY_STOCK FROM TB_PR_PRODUCT " +
+                        $"WHERE ID_PRODUCT = '{id}' ORDER BY DESC_PRODUCT ASC";
+            DataTable dt = objDAL.RetDataTable(sql);
+
+            if (dt.Rows.Count > 0)
+            {
+                item = new ProdutosEstoqueModel(_httpContextAccessor)
+                {
+                    IdProduct = dt.Rows[0]["ID_PRODUCT"].ToString(),
+                    DescProduct = dt.Rows[0]["DESC_PRODUCT"].ToString(),
+                    QtyStock = Convert.ToDecimal(dt.Rows[0]["QTY_STOCK"].ToString())
+                };
+            }
+
+            return item;
+        }
+
+        public void AbastecerEstoque()
+        {
+            DAL objDAL = new DAL();
+            string sql = string.Empty;
+
+            string currentDateTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+
+            if (!string.IsNullOrEmpty(IdProduct))
+            {
+                sql = "SELECT QTY_STOCK FROM TB_PR_PRODUCT WHERE ID_PRODUCT = @IdProduct";
+                MySqlCommand selectCommand = new MySqlCommand(sql);
+                selectCommand.Parameters.AddWithValue("@IdProduct", IdProduct);
+                DataTable dt = objDAL.RetDataTable(selectCommand);
+
+                if (dt.Rows.Count > 0)
+                {
+                    decimal currentStock = Convert.ToDecimal(dt.Rows[0]["QTY_STOCK"]);
+
+                    decimal newStock = currentStock + QtyAdd;
 
                     sql = "UPDATE TB_PR_PRODUCT SET QTY_STOCK = @newStock, " +
                           "USER_UPDATE = @userUpdate, " +

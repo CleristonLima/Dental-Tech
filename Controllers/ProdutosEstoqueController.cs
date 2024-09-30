@@ -44,6 +44,7 @@ namespace DentalPlus.Controllers
             else
             {
                 ViewBag.ListaProdutosEstoque = new ProdutosEstoqueModel().ListarTodosProdutosEstoque();
+                ViewBag.ProdutosEstoqueBaixo = new ProdutosEstoqueModel().VerificarEstoqueBaixo();
                 return View();
             }
         }
@@ -120,14 +121,60 @@ namespace DentalPlus.Controllers
             }
             else
             {
-                produtosUsar.userId = _httpContextAccessor.HttpContext?.Session.GetString("IdUsuarioLogado");
-                produtosUsar.SubtrairEstoque();
+                try
+                {
+                    produtosUsar.userId = _httpContextAccessor.HttpContext?.Session.GetString("IdUsuarioLogado");
+                    produtosUsar.SubtrairEstoque();
+                    return RedirectToAction("ListaProdutosEstoque", "ProdutosEstoque");
+                }
+                catch (Exception ex)
+                {
+                    TempData["ErrorEstoque"] = ex.Message;
+                    return RedirectToAction("UsarProduto", new { id = produtosUsar.IdProduct });
+                }
+            }
+        }
+
+        [HttpGet]
+        public IActionResult AbastecerProduto(int? id)
+        {
+            if (!VerificarConexaoInternet())
+            {
+                TempData["ErrorLogin"] = "Sem conexão com a internet. Verifique sua rede e tente novamente.";
+                return RedirectToAction("Index", "ProdutosEstoque");
+            }
+            else
+            {
+                ProdutosEstoqueModel produtoAbastecer = new ProdutosEstoqueModel();
+
+                if (id != null)
+                {
+
+                    produtoAbastecer = new ProdutosEstoqueModel().RetornarProdutosParaAbastecer(id);
+                }
+
+                return View(produtoAbastecer);
+            }
+
+        }
+
+        [HttpPost]
+        public IActionResult AbastecerProduto(ProdutosEstoqueModel produtosAbastecer)
+        {
+            if (!VerificarConexaoInternet())
+            {
+                TempData["ErrorLogin"] = "Sem conexão com a internet. Verifique sua rede e tente novamente.";
+                return RedirectToAction("Index", "ProdutosEstoque");
+            }
+            else
+            {
+                produtosAbastecer.userId = _httpContextAccessor.HttpContext?.Session.GetString("IdUsuarioLogado");
+                produtosAbastecer.AbastecerEstoque();
                 return RedirectToAction("ListaProdutosEstoque", "ProdutosEstoque");
             }
         }
 
-        [HttpPost]
-        public IActionResult ExcluirProdutosEstoque(int id)
+        public IActionResult ExcluirProdutosOdonto(int id)
         {
             if (!VerificarConexaoInternet())
             {
@@ -137,6 +184,20 @@ namespace DentalPlus.Controllers
             else
             {
                 ViewData["IdProduct"] = id;
+                return View();
+            }
+        }
+
+        public IActionResult ExcluirProdutoEstoque(int id)
+        {
+            if (!VerificarConexaoInternet())
+            {
+                TempData["ErrorLogin"] = "Sem conexão com a internet. Verifique sua rede e tente novamente.";
+                return RedirectToAction("Index", "ProdutosEstoque");
+            }
+            else
+            {
+                new ProdutosEstoqueModel().ExcluirProdutosEstoque(id);
                 return View();
             }
         }
