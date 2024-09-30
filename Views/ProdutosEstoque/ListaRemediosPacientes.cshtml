@@ -1,44 +1,37 @@
-﻿<h3 class="titulo-cadastro">Agendamentos</h3>
+﻿<h3 class="titulo-cadastro">Lista de remedios para receitas</h3>
 
-@if (ViewBag.ListaAgendamento != null)
+@if (ViewBag.ListaRemedios != null)
 {
     <div class="table-container">
         <table class="table table-bordered">
             <thead>
                 <tr>
-                    <th>Paciente</th>
-                    <th>Médico</th>
-                    <th>Consulta solicitada</th>
-                    <th>Data e hora inicial</th>
-                    <th>Data e hora final</th>
-                    <th>Status</th>
-                    <th>Observacao</th>
+                    <th>Foto</th>
+                    <th>Produto</th>
+                    <th>#</th>
                     <th>#</th>
                 </tr>
             </thead>
 
             <tbody>
                 @{
-                    foreach (var item in (List<AgendamentoModel>)ViewBag.ListaAgendamento)
+                    foreach (var item in (List<ProdutoReceitaModel>)ViewBag.ListaRemedios)
                     {
                         <tr>
-                            <td>@item.NamePatient</td>
-                            <td>@item.NameDoctor</td>
-                            <td>@item.NameMedicalConsultation</td>
-                            <td>@item.DateConsultationStart.ToString("dd/MM/yyyy HH:mm")</td>
-                            <td>@item.DateConsultationFinish.ToString("dd/MM/yyyy HH:mm")</td>
-                            <td>@item.StatusConsultation</td>
-                            <td>@item.Reason</td>
-                            <td><button type="button" class="btn btn-warning" onclick="Editar(@item.IdMedConsXPat)">Editar</button></td>
+                            <td><img src="@item.LinkPhotoRevenue" width="50" height="50" /></td>
+                            <td>@item.NameProduct</td>
+                            <td><button type="button" class="btn btn-warning" onclick="Editar(@item.IdProductRevenue)">Editar</button></td>
+                            <td><button type="button" class="btn btn-danger" onclick="Excluir(@item.IdProductRevenue)">Excluir</button></td>
                         </tr>
                     }
                 }
             </tbody>
+
         </table>
     </div>
     <br />
 
-    <button class="btn btn-block btn-primary" type="button" onclick="Cadastrar()">Cadastrar novo agendamento</button>
+    <button class="btn btn-block btn-primary" type="button" onclick="Cadastrar()">Cadastrar novo remédio</button>
 }
 else
 {
@@ -69,16 +62,16 @@ else
         padding: 0; /* Remove padding */
     }
 
-        .table th, .table td {
-            white-space: nowrap;
-            padding: 8px;
-            text-align: center;
-            border: 1px solid #ddd;
-        }
+    .table th, .table td {
+        white-space: nowrap;
+        padding: 8px;
+        text-align: center;
+        border: 1px solid #ddd;
+    }
 
-        .table th {
-            background-color: #f2f2f2;
-        }
+    .table th {
+        background-color: #f2f2f2;
+    }
 </style>
 
 <script>
@@ -102,7 +95,7 @@ else
         if (!navigator.onLine) {
             alert("Sem conexão com a internet. Verifique sua rede e tente novamente.");
         } else {
-            window.location.href = "../Agendamento/CadastroAgendamento";
+            window.location.href = "../ProdutosEstoque/CadastroRemedio";
         }
     }
 
@@ -110,7 +103,16 @@ else
         if (!navigator.onLine) {
             alert("Sem conexão com a internet. Verifique sua rede e tente novamente.");
         } else {
-            window.location.href = "../Agendamento/CadastroAgendamento/" + id;
+            window.location.href = "../ProdutosEstoque/CadastroRemedio/" + id;
         }
     }
+
+    function Excluir(id) {
+        if (!navigator.onLine) {
+            alert("Sem conexão com a internet. Verifique sua rede e tente novamente.");
+        } else {
+            window.location.href = "../ProdutosEstoque/ExcluirProdutoPaciente/" + id;
+        }
+    }
+
 </script>

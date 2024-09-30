@@ -126,12 +126,24 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvZHV0b3NFc3RvcXVlXENhZGFzdHJvUHJvZHV0b3NFc3RvcXVlLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Projetos/DentalPlus/DentalPlus/Views/ProdutosEstoque/CadastroRemedio.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvZHV0b3NFc3RvcXVlXENhZGFzdHJvUmVtZWRpby5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Projetos/DentalPlus/DentalPlus/Views/ProdutosEstoque/ExcluirProdutoEstoque.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvZHV0b3NFc3RvcXVlXEV4Y2x1aXJQcm9kdXRvRXN0b3F1ZS5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Projetos/DentalPlus/DentalPlus/Views/ProdutosEstoque/ExcluirProdutoPaciente.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvZHV0b3NFc3RvcXVlXEV4Y2x1aXJQcm9kdXRvUGFjaWVudGUuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Projetos/DentalPlus/DentalPlus/Views/ProdutosEstoque/ExcluirProdutosOdonto.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvZHV0b3NFc3RvcXVlXEV4Y2x1aXJQcm9kdXRvc09kb250by5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Projetos/DentalPlus/DentalPlus/Views/ProdutosEstoque/ExcluirRemedio.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvZHV0b3NFc3RvcXVlXEV4Y2x1aXJSZW1lZGlvLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Projetos/DentalPlus/DentalPlus/Views/ProdutosEstoque/Index.cshtml]
@@ -140,6 +152,10 @@ build_metadata.AdditionalFiles.CssScope =
 
 [C:/Projetos/DentalPlus/DentalPlus/Views/ProdutosEstoque/ListaProdutosEstoque.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvZHV0b3NFc3RvcXVlXExpc3RhUHJvZHV0b3NFc3RvcXVlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Projetos/DentalPlus/DentalPlus/Views/ProdutosEstoque/ListaRemediosPacientes.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvZHV0b3NFc3RvcXVlXExpc3RhUmVtZWRpb3NQYWNpZW50ZXMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Projetos/DentalPlus/DentalPlus/Views/ProdutosEstoque/UsarProduto.cshtml]

@@ -20,6 +20,7 @@ namespace DentalPlus.Controllers
             _httpContextAccessor = httpContextAccessor;
         }
 
+        // Para Cadastro de remedios da clinica
         public IActionResult Index()
         {
             if (!VerificarConexaoInternet())
@@ -198,6 +199,93 @@ namespace DentalPlus.Controllers
             else
             {
                 new ProdutosEstoqueModel().ExcluirProdutosEstoque(id);
+                return View();
+            }
+        }
+
+        /*-----------------------------------------------------------------------*/
+
+        // Para Cadastro de remedio em receitas
+
+        [HttpGet]
+        public IActionResult ListaRemediosPacientes()
+        {
+            if (!VerificarConexaoInternet())
+            {
+                TempData["ErrorLogin"] = "Sem conexão com a internet. Verifique sua rede e tente novamente.";
+                return RedirectToAction("Index", "ProdutosEstoque");
+            }
+            else
+            {
+                ViewBag.ListaRemedios = new ProdutoReceitaModel().ListarTodosRemedios();
+                return View();
+            }
+        }
+
+
+        [HttpGet]
+        public IActionResult CadastroRemedio(int? id)
+        {
+            if (!VerificarConexaoInternet())
+            {
+                TempData["ErrorLogin"] = "Sem conexão com a internet. Verifique sua rede e tente novamente.";
+                return RedirectToAction("Index", "ProdutosEstoque");
+            }
+            else
+            {
+                ProdutoReceitaModel produtoRemedio = new ProdutoReceitaModel();
+
+                if (id != null)
+                {
+
+                    produtoRemedio = new ProdutoReceitaModel().RetornarRemedios(id);
+                }
+
+                return View(produtoRemedio);
+            }
+
+        }
+
+        [HttpPost]
+        public IActionResult CadastroRemedio(ProdutoReceitaModel produtosRemedio)
+        {
+            if (!VerificarConexaoInternet())
+            {
+                TempData["ErrorLogin"] = "Sem conexão com a internet. Verifique sua rede e tente novamente.";
+                return RedirectToAction("Index", "ProdutosEstoque");
+            }
+            else
+            {
+                produtosRemedio.userId = _httpContextAccessor.HttpContext?.Session.GetString("IdUsuarioLogado");
+                produtosRemedio.Gravar();
+                return RedirectToAction("ListaRemediosPacientes", "ProdutosEstoque");
+            }
+        }
+
+        public IActionResult ExcluirProdutoPaciente(int id)
+        {
+            if (!VerificarConexaoInternet())
+            {
+                TempData["ErrorLogin"] = "Sem conexão com a internet. Verifique sua rede e tente novamente.";
+                return RedirectToAction("Index", "ProdutosEstoque");
+            }
+            else
+            {
+                ViewData["IdProductRevenue"] = id;
+                return View();
+            }
+        }
+
+        public IActionResult ExcluirRemedio(int id)
+        {
+            if (!VerificarConexaoInternet())
+            {
+                TempData["ErrorLogin"] = "Sem conexão com a internet. Verifique sua rede e tente novamente.";
+                return RedirectToAction("Index", "ProdutosEstoque");
+            }
+            else
+            {
+                new ProdutoReceitaModel().ExcluirRemedios(id);
                 return View();
             }
         }

@@ -1,0 +1,16 @@
+﻿<h2>Remédio Excluído com Sucesso!</h2>
+<br />
+<button type="button" class="btn btn-primary" onclick="Voltar()">Listagem de medicamentos</button>
+
+<script>
+    function Voltar()
+    {
+        if (!navigator.onLine) {
+            alert("Sem conexão com a internet. Verifique sua rede e tente novamente.");
+        }
+        else {
+            window.location.href = '../../ProdutosEstoque/ListaRemediosPacientes';
+        }
+
+    }
+</script>
