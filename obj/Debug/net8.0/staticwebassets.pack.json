@@ -25,6 +25,14 @@
       "PackagePath": "staticwebassets\\images\\Configuracoes.png"
     },
     {
+      "Id": "C:\\Projetos\\DentalPlus\\DentalPlus\\wwwroot\\images\\Conta_Pagar.png",
+      "PackagePath": "staticwebassets\\images\\Conta_Pagar.png"
+    },
+    {
+      "Id": "C:\\Projetos\\DentalPlus\\DentalPlus\\wwwroot\\images\\Conta_Receber.png",
+      "PackagePath": "staticwebassets\\images\\Conta_Receber.png"
+    },
+    {
       "Id": "C:\\Projetos\\DentalPlus\\DentalPlus\\wwwroot\\images\\Estoque.png",
       "PackagePath": "staticwebassets\\images\\Estoque.png"
     },
@@ -55,6 +63,10 @@
     {
       "Id": "C:\\Projetos\\DentalPlus\\DentalPlus\\wwwroot\\images\\PlanoSaude.png",
       "PackagePath": "staticwebassets\\images\\PlanoSaude.png"
+    },
+    {
+      "Id": "C:\\Projetos\\DentalPlus\\DentalPlus\\wwwroot\\images\\Relatorio.png",
+      "PackagePath": "staticwebassets\\images\\Relatorio.png"
     },
     {
       "Id": "C:\\Projetos\\DentalPlus\\DentalPlus\\wwwroot\\images\\TipoConsultas.png",

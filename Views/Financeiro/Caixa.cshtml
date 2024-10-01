@@ -1,0 +1,45 @@
+﻿@model FinanceiroModel
+<h3>Caixa</h3>
+<br />
+<form asp-controller="Financeiro" asp-action="Registrar">
+    <input type="hidden" asp-for="IdMbSale" />
+
+    <div class="form-group">
+        <label>Médico</label>
+        <select asp-for="IdDoctor" class="form-control" asp-items="ViewBag.ListaMedicos">
+            <option value="">Selecione o médico</option>
+        </select>
+        <span asp-validation-for="IdDoctor" class="text-danger"></span>
+    </div>
+    <br />
+    <div class="form-group">
+        <label>Paciente</label>
+        <select asp-for="IdPatients" class="form-control" asp-items="ViewBag.ListaPacientes">
+            <option value="">Selecione o paciente</option>
+        </select>
+        <span asp-validation-for="IdPatients" class="text-danger"></span>
+    </div>
+    <br />
+    <div class="form-group">
+        <label>Consulta com preço</label>
+        <select asp-for="IdMedicalConsultation" class="form-control" asp-items="ViewBag.ListaPacientes">
+            <option value="">Selecione a consulta com preço</option>
+        </select>
+        <span asp-validation-for="IdMedicalConsultation" class="text-danger"></span>
+    </div>
+    <br />
+    <div class="form-group">
+        <label>Quantidade</label>
+        <br />
+        <input asp-for="Qty" type="text" class="form-control" />
+        <span asp-validation-for="Qty" class="text-danger"></span>
+    </div>
+    <br />
+    <div class="form-group">
+        <label>Pagamento</label>
+        <select asp-for="IdPayment" class="form-control" asp-items="ViewBag.ListaPacientes">
+            <option value="">Selecione o tipo de pagamento</option>
+        </select>
+        <span asp-validation-for="IdPayment" class="text-danger"></span>
+    </div>
+</form>

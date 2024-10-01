@@ -8,17 +8,17 @@
 
     <div class="form-group">
         <label>Descrição</label>
-        <br />
         <input asp-for="NameProduct" type="text" class="form-control" required="required" />
         <span asp-validation-for="NameProduct" class="text-danger"></span>
     </div>
+    <br />
     <div class="form-group">
         <br />
         <label>Foto</label>
         <img src="@Model.LinkPhotoRevenue" width="150" height="150" />
         <br />
         <br />
-        <input asp-for="LinkPhotoRevenue" type="text" class="form-control" />
+        <input asp-for="LinkPhotoRevenue" type="text" placeholder="Link da foto" class="form-control" />
         <span asp-validation-for="LinkPhotoRevenue" class="text-danger"></span>
     </div>
     <br />
