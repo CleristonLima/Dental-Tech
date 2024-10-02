@@ -1,4 +1,7 @@
-﻿namespace DentalPlus.Models
+﻿using DentalPlus.Uteis;
+using System.Data;
+
+namespace DentalPlus.Models
 {
     public class FinanceiroModel
     {
@@ -29,6 +32,8 @@
 
         public string IdMedicalConsultation { get; set; }
 
+        public string DescMedicalConsultation { get; set; }
+
         public double Qty {  get; set; }
 
         public double ValueConsultation { get; set; }
@@ -37,19 +42,26 @@
 
         public string userId { get; set; }
 
-        /*public List<PacienteModel> RetornarListaPacientes()
+        public decimal GetConsultaPreco(string idConsulta)
         {
-            return new PacienteModel().ListarTodosPacientes();
+            DAL objDAL = new DAL();
+
+            string query = "SELECT VALUE_CONSULTATION FROM TB_CLI_MEDICAL_CONSULTATION WHERE IdMedicalConsultation = @Id";
+            var parameters = new Dictionary<string, object>
+            {
+                    { "@Id", idConsulta }
+            };
+            DataTable dt = objDAL.RetDataTableObj(query, parameters);
+
+            if (dt.Rows.Count > 0)
+            {
+                return Convert.ToDecimal(dt.Rows[0]["VALUE_CONSULTATION"]);
+            }
+            else
+            {
+                throw new Exception("Consulta não encontrada.");
+            }
         }
 
-        public List<MedicoModel> RetornarListaMedicos()
-        {
-            return new MedicoModel().ListarTodosMedicos();
-        }
-
-        public List<TipoConsultaModel> RetornarListaMedicos()
-        {
-            return new TipoConsultaModel().ListarTodosTiposConsulta();
-        }*/
     }
 }

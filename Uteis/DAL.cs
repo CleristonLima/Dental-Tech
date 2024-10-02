@@ -18,14 +18,34 @@ namespace DentalPlus.Uteis
         }
 
         // Retorna um DataTable com base em uma string SQL
-        public DataTable RetDataTable(string sql)
+         public DataTable RetDataTable(string sql)
+         {
+             using (MySqlConnection conn = GetConnection())
+             {
+                 conn.Open();
+                 using (MySqlCommand Command = new MySqlCommand(sql, conn))
+                 {
+                     MySqlDataAdapter da = new MySqlDataAdapter(Command);
+                     DataTable data = new DataTable();
+                     da.Fill(data);
+                     return data;
+                 }
+             }
+         }
+
+        public DataTable RetDataTableObj(string sql, Dictionary<string, object> parameters)
         {
             using (MySqlConnection conn = GetConnection())
             {
                 conn.Open();
-                using (MySqlCommand Command = new MySqlCommand(sql, conn))
+                using (MySqlCommand command = new MySqlCommand(sql, conn))
                 {
-                    MySqlDataAdapter da = new MySqlDataAdapter(Command);
+                    foreach (var param in parameters)
+                    {
+                        command.Parameters.AddWithValue(param.Key, param.Value);
+                    }
+
+                    MySqlDataAdapter da = new MySqlDataAdapter(command);
                     DataTable data = new DataTable();
                     da.Fill(data);
                     return data;

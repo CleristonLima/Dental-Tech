@@ -22,24 +22,98 @@
     <br />
     <div class="form-group">
         <label>Consulta com preço</label>
-        <select asp-for="IdMedicalConsultation" class="form-control" asp-items="ViewBag.ListaPacientes">
+        <select asp-for="IdMedicalConsultation" class="form-control" asp-items="ViewBag.ListaPacientes" id="consultaPreco" onchange="AtualizarPreco()">
             <option value="">Selecione a consulta com preço</option>
         </select>
-        <span asp-validation-for="IdMedicalConsultation" class="text-danger"></span>
     </div>
     <br />
     <div class="form-group">
         <label>Quantidade</label>
         <br />
-        <input asp-for="Qty" type="text" class="form-control" />
-        <span asp-validation-for="Qty" class="text-danger"></span>
+        <input asp-for="Qty" type="text" class="form-control" value="1" id="txtQuantidade" />
     </div>
+    <br />
+    <div class="col-lg-3">
+        <button type="button" class="btn btn-primary btn-block" onclick="AdicionarVenda()">Adicionar</button>
+    </div>
+    <br />
+    <div class="table-container">
+        <table class="table table-bordered">
+        <thead>
+            <tr>
+                <td>Medico</td>
+                <td>Paciente</td>
+                <td>Consulta realizada</td>
+                <td>Quantidade</td>
+                <td>Preco Unitário</td>
+                <td>Total</td>
+            </tr>
+        </thead>
+
+        @*<tbody>
+                @{
+                    foreach (var item in (List<FinanceiroModel>)ViewBag.ListaProdutosEstoque)
+                    {
+                        <tr>
+                            <td>@item.NameDoctor</td>
+                            <td>@item.NamePatient</td>
+                            <td>@item.DescMedicalConsultation</td>
+                            <td>@item.Qty</td>
+                            <td>@item.ValueConsultation</td>
+                            <td>@item.TotalValue</td>
+                        </tr>
+                    }
+                }
+        </tbody>*@
+
+    </table>
+    </div>
+    <br />
+    <div style="float:left; font-size:22px;">Total: R$</div>
+    <div style="float:left; font-size:22px; margin-left:5px" id="divTotal">0,00</div>
+    <br />
+    <br />
     <br />
     <div class="form-group">
         <label>Pagamento</label>
-        <select asp-for="IdPayment" class="form-control" asp-items="ViewBag.ListaPacientes">
+        <select asp-for="IdPayment" class="form-control" asp-items="ViewBag.ListaPacientes" id="consultaPreco">
             <option value="">Selecione o tipo de pagamento</option>
         </select>
         <span asp-validation-for="IdPayment" class="text-danger"></span>
     </div>
+    <br />
+    <button type="submit" class="btn-block btn btn-success">Registrar</button>
 </form>
+
+
+<script>
+
+    function AtualizarPreco() {
+        var consultaPreco = document.getElementById("consultaPreco").value;
+        if (consultaPreco) {
+            fetch(`/Financeiro/GetConsultaPreco?idConsulta=${consultaPreco}`)
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById("precoUnitario").value = data;
+                });
+        }
+    }
+
+    function AdicionarVenda() {
+
+        var consultaPreco = document.getElementById("consultaPreco");
+        var quantidade = document.getElementById("txtQuantidade").value;
+        var totalDiv = document.getElementById("divTotal");
+
+        // Pegue o preço da consulta selecionada
+        var precoConsulta = consultaPreco.options[consultaPreco.selectedIndex].text.split(' - ')[1]; // Supondo que o texto do option seja "Consulta - 100"
+        precoConsulta = parseFloat(precoConsulta);
+
+        // Calcule o total
+        var totalAtual = parseFloat(totalDiv.innerText.replace(',', '.'));
+        var novoTotal = totalAtual + (precoConsulta * quantidade);
+
+        // Atualize o valor total na div
+        totalDiv.innerText = novoTotal.toFixed(2).replace('.', ',');
+    }
+</script>

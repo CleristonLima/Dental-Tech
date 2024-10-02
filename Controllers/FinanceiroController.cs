@@ -1,4 +1,5 @@
 ﻿using DentalPlus.Connection;
+using DentalPlus.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DentalPlus.Controllers
@@ -43,6 +44,14 @@ namespace DentalPlus.Controllers
             {
                 return View();
             }
+        }
+
+        // Vai pegar o valor das consultas
+        public IActionResult GetConsultaPreco(string idMedicalConsultation)
+        {
+            var model = new FinanceiroModel();
+            var preco = model.GetConsultaPreco(idMedicalConsultation);
+            return Json(preco);
         }
     }
 }
