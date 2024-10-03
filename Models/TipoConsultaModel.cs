@@ -28,6 +28,14 @@ namespace DentalPlus.Models
         [Required(ErrorMessage = "Informe o valor da consulta!")]
         public decimal valueConsultation { get; set; }
 
+        public string ConsultaEValor
+        {
+            get
+            {
+                return $"{descMedicalConsultation} | R$ ({valueConsultation})";
+            }
+        }
+
         public string userId { get; set; }
 
         public List<TipoConsultaModel> ListarTodosTiposConsultas()

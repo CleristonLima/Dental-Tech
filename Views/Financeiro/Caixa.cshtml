@@ -1,13 +1,16 @@
 ﻿@model FinanceiroModel
+
 <h3>Caixa</h3>
+
 <br />
-<form asp-controller="Financeiro" asp-action="Registrar">
+<form asp-controller="Financeiro" asp-action="Caixa" method="post">
     <input type="hidden" asp-for="IdMbSale" />
+    <input type="hidden" asp-for="TotalValue" id="totalValue" />
 
     <div class="form-group">
-        <label>Médico</label>
+        <label>Medico</label>
         <select asp-for="IdDoctor" class="form-control" asp-items="ViewBag.ListaMedicos">
-            <option value="">Selecione o médico</option>
+            <option value="">Selecione o medico</option>
         </select>
         <span asp-validation-for="IdDoctor" class="text-danger"></span>
     </div>
@@ -21,9 +24,9 @@
     </div>
     <br />
     <div class="form-group">
-        <label>Consulta com preço</label>
-        <select asp-for="IdMedicalConsultation" class="form-control" asp-items="ViewBag.ListaPacientes" id="consultaPreco" onchange="AtualizarPreco()">
-            <option value="">Selecione a consulta com preço</option>
+        <label>Consulta medica com preço</label>
+        <select asp-for="IdMedicalConsultation" class="form-control" asp-items="ViewBag.ListaConsulta" id="consultaPreco" onchange="AtualizarPreco()">
+            <option value="">Selecione a consulta medica com preço</option>
         </select>
     </div>
     <br />
@@ -33,40 +36,32 @@
         <input asp-for="Qty" type="text" class="form-control" value="1" id="txtQuantidade" />
     </div>
     <br />
+    <div class="form-group">
+        <label>Preço Unitário</label>
+        <br />
+        <input type="text" class="form-control" id="precoUnitario" readonly />
+    </div>
+    <br />
     <div class="col-lg-3">
         <button type="button" class="btn btn-primary btn-block" onclick="AdicionarVenda()">Adicionar</button>
     </div>
     <br />
     <div class="table-container">
         <table class="table table-bordered">
-        <thead>
-            <tr>
-                <td>Medico</td>
-                <td>Paciente</td>
-                <td>Consulta realizada</td>
-                <td>Quantidade</td>
-                <td>Preco Unitário</td>
-                <td>Total</td>
-            </tr>
-        </thead>
-
-        @*<tbody>
-                @{
-                    foreach (var item in (List<FinanceiroModel>)ViewBag.ListaProdutosEstoque)
-                    {
-                        <tr>
-                            <td>@item.NameDoctor</td>
-                            <td>@item.NamePatient</td>
-                            <td>@item.DescMedicalConsultation</td>
-                            <td>@item.Qty</td>
-                            <td>@item.ValueConsultation</td>
-                            <td>@item.TotalValue</td>
-                        </tr>
-                    }
-                }
-        </tbody>*@
-
-    </table>
+            <thead>
+                <tr>
+                    <td>Medico</td>
+                    <td>Paciente</td>
+                    <td>Consulta realizada</td>
+                    <td>Quantidade</td>
+                    <td>Preco Unitário</td>
+                    <td>Total</td>
+                </tr>
+            </thead>
+            <tbody id="tabelaVendas">
+                <!-- Linhas serão adicionadas dinamicamente aqui -->
+            </tbody>
+        </table>
     </div>
     <br />
     <div style="float:left; font-size:22px;">Total: R$</div>
@@ -76,7 +71,7 @@
     <br />
     <div class="form-group">
         <label>Pagamento</label>
-        <select asp-for="IdPayment" class="form-control" asp-items="ViewBag.ListaPacientes" id="consultaPreco">
+        <select asp-for="IdPayment" class="form-control" asp-items="ViewBag.ListaPagamento">
             <option value="">Selecione o tipo de pagamento</option>
         </select>
         <span asp-validation-for="IdPayment" class="text-danger"></span>
@@ -101,19 +96,41 @@
 
     function AdicionarVenda() {
 
-        var consultaPreco = document.getElementById("consultaPreco");
-        var quantidade = document.getElementById("txtQuantidade").value;
+        var precoUnitario = parseFloat(document.getElementById("precoUnitario").value.replace(',', '.'));
+        var quantidade = parseInt(document.getElementById("txtQuantidade").value);
         var totalDiv = document.getElementById("divTotal");
+        var totalValueField = document.getElementById("totalValue");
 
-        // Pegue o preço da consulta selecionada
-        var precoConsulta = consultaPreco.options[consultaPreco.selectedIndex].text.split(' - ')[1]; // Supondo que o texto do option seja "Consulta - 100"
-        precoConsulta = parseFloat(precoConsulta);
-
-        // Calcule o total
         var totalAtual = parseFloat(totalDiv.innerText.replace(',', '.'));
-        var novoTotal = totalAtual + (precoConsulta * quantidade);
+        var novoTotal = totalAtual + (precoUnitario * quantidade);
 
-        // Atualize o valor total na div
         totalDiv.innerText = novoTotal.toFixed(2).replace('.', ',');
+        totalValueField.value = novoTotal.toFixed(2).replace('.', ',');
+
+        // Obter os nomes selecionados
+        var nomeMedicoElement = document.querySelector('select[asp-for="IdDoctor"] option:checked');
+        var nomePacienteElement = document.querySelector('select[asp-for="IdPatients"] option:checked');
+        var nomeConsultaElement = document.querySelector('select[asp-for="IdMedicalConsultation"] option:checked');
+
+        if (!nomeMedicoElement || !nomePacienteElement || !nomeConsultaElement) {
+            console.error("Um ou mais elementos não foram encontrados.");
+            return;
+        }
+
+        var nomeMedico = nomeMedicoElement.text;
+        var nomePaciente = nomePacienteElement.text;
+        var nomeConsulta = nomeConsultaElement.text;
+
+        // Adicionar a linha na tabela
+        var tabelaVendas = document.getElementById("tabelaVendas");
+        var novaLinha = tabelaVendas.insertRow();
+        novaLinha.innerHTML = "<tr>" +
+            "<td>" + nomeMedico + "</td>" +
+            "<td>" + nomePaciente + "</td>" +
+            "<td>" + nomeConsulta + "</td>" +
+            "<td>" + quantidade + "</td>" +
+            "<td> R$" + precoUnitario.toFixed(2).replace('.', ',') + "</td>" +
+            "<td> R$" + (precoUnitario * quantidade).toFixed(2).replace('.', ',') + "</td>" +
+            "</tr>";
     }
 </script>
