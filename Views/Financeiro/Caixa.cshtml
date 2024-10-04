@@ -1,7 +1,6 @@
 ﻿@model FinanceiroModel
 
 <h3>Caixa</h3>
-
 <br />
 <form asp-controller="Financeiro" asp-action="Caixa" method="post">
     <input type="hidden" asp-for="IdMbSale" />
@@ -9,7 +8,7 @@
 
     <div class="form-group">
         <label>Medico</label>
-        <select asp-for="IdDoctor" class="form-control" asp-items="ViewBag.ListaMedicos">
+        <select asp-for="IdDoctor" class="form-control" asp-items="ViewBag.ListaMedicos" id="txtMedico">
             <option value="">Selecione o medico</option>
         </select>
         <span asp-validation-for="IdDoctor" class="text-danger"></span>
@@ -17,7 +16,7 @@
     <br />
     <div class="form-group">
         <label>Paciente</label>
-        <select asp-for="IdPatients" class="form-control" asp-items="ViewBag.ListaPacientes">
+        <select asp-for="IdPatients" class="form-control" asp-items="ViewBag.ListaPacientes" id="txtPaciente">
             <option value="">Selecione o paciente</option>
         </select>
         <span asp-validation-for="IdPatients" class="text-danger"></span>
@@ -36,13 +35,10 @@
         <input asp-for="Qty" type="text" class="form-control" value="1" id="txtQuantidade" />
     </div>
     <br />
-    <div class="form-group">
-        <label>Preço Unitário</label>
+    <div class="form-preco">
+        <label>Preço Unitário R$:</label>
         <br />
-        <input type="text" class="form-control" id="precoUnitario" readonly />
-    </div>
-    <br />
-    <div class="col-lg-3">
+        <input type="text" class="form-cbxpreco" id="precoUnitario" readonly />
         <button type="button" class="btn btn-primary btn-block" onclick="AdicionarVenda()">Adicionar</button>
     </div>
     <br />
@@ -68,7 +64,6 @@
     <div style="float:left; font-size:22px; margin-left:5px" id="divTotal">0,00</div>
     <br />
     <br />
-    <br />
     <div class="form-group">
         <label>Pagamento</label>
         <select asp-for="IdPayment" class="form-control" asp-items="ViewBag.ListaPagamento">
@@ -80,6 +75,25 @@
     <button type="submit" class="btn-block btn btn-success">Registrar</button>
 </form>
 
+<style>
+    .form-preco {
+        display: flex;
+        align-items: center;
+    }
+
+    #precoUnitario {
+        width: 150px; /* ajusta o tamanho do campo de texto */
+        margin-right: 15px; /* espaçamento entre o campo de texto e o botão */
+    }
+
+    .btn {
+        height: 100%; /* ajusta a altura do botão */
+    }
+
+    .form-cbxpreco {
+        margin-left : 17px;
+    }
+</style>
 
 <script>
 
@@ -96,41 +110,80 @@
 
     function AdicionarVenda() {
 
-        var precoUnitario = parseFloat(document.getElementById("precoUnitario").value.replace(',', '.'));
-        var quantidade = parseInt(document.getElementById("txtQuantidade").value);
-        var totalDiv = document.getElementById("divTotal");
-        var totalValueField = document.getElementById("totalValue");
+        var precoUnitarioStr = document.getElementById("precoUnitario").value;
+        var precoUnitario = parseFloat(precoUnitarioStr.replace(',', '.'));
 
-        var totalAtual = parseFloat(totalDiv.innerText.replace(',', '.'));
-        var novoTotal = totalAtual + (precoUnitario * quantidade);
-
-        totalDiv.innerText = novoTotal.toFixed(2).replace('.', ',');
-        totalValueField.value = novoTotal.toFixed(2).replace('.', ',');
-
-        // Obter os nomes selecionados
-        var nomeMedicoElement = document.querySelector('select[asp-for="IdDoctor"] option:checked');
-        var nomePacienteElement = document.querySelector('select[asp-for="IdPatients"] option:checked');
-        var nomeConsultaElement = document.querySelector('select[asp-for="IdMedicalConsultation"] option:checked');
-
-        if (!nomeMedicoElement || !nomePacienteElement || !nomeConsultaElement) {
-            console.error("Um ou mais elementos não foram encontrados.");
+        // Verificação se o preço unitário foi selecionado
+        if (isNaN(precoUnitario) || precoUnitario <= 0) {
+            console.log("Erro: Preço unitário inválido ou não selecionado");
+            alert("Selecione uma consulta válida com preço.");
             return;
         }
 
-        var nomeMedico = nomeMedicoElement.text;
-        var nomePaciente = nomePacienteElement.text;
-        var nomeConsulta = nomeConsultaElement.text;
+        var quantidade = parseInt(document.getElementById("txtQuantidade").value);
 
-        // Adicionar a linha na tabela
+        // Verificação se a quantidade é válida
+        if (isNaN(quantidade) || quantidade <= 0) {
+            console.log("Erro: Quantidade inválida");
+            alert("Digite uma quantidade válida.");
+            return;
+        }
+
+        // Verificando se o campo de médico foi selecionado corretamente
+        var medicoSelect = document.getElementById("txtMedico");
+        if (!medicoSelect || medicoSelect.value === "") {
+            console.log("Erro: Médico não selecionado");
+            alert("Selecione um médico.");
+            return;
+        }
+        var medico = medicoSelect.options[medicoSelect.selectedIndex].text;
+
+        // Verificando se o campo de paciente foi selecionado corretamente
+        var pacienteSelect = document.getElementById("txtPaciente");
+        if (!pacienteSelect || pacienteSelect.value === "") {
+            console.log("Erro: Paciente não selecionado");
+            alert("Selecione um paciente.");
+            return;
+        }
+        var paciente = pacienteSelect.options[pacienteSelect.selectedIndex].text;
+
+        // Verificando se o campo de consulta foi selecionado corretamente
+        var consultaSelect = document.getElementById("consultaPreco");
+        if (!consultaSelect || consultaSelect.value === "") {
+            console.log("Erro: Consulta não selecionada");
+            alert("Selecione uma consulta.");
+            return;
+        }
+        var consulta = consultaSelect.options[consultaSelect.selectedIndex].text;
+
+        // Calculando o novo total
+        var totalDiv = document.getElementById("divTotal");
+        var totalAtual = parseFloat(totalDiv.innerText.replace(',', '.'));
+
+        // Verificação se o total atual é válido
+        if (isNaN(totalAtual)) {
+            console.log("Erro: Total atual inválido");
+            totalAtual = 0; // Define o total como 0 caso não esteja válido
+        }
+
+        var novoTotal = totalAtual + (precoUnitario * quantidade);
+
+        // Atualizando o total geral
+        totalDiv.innerText = novoTotal.toFixed(2).replace('.', ',');
+        document.getElementById("totalValue").value = novoTotal.toFixed(2).replace('.', ',');
+
+        // Adicionando a nova linha à tabela
         var tabelaVendas = document.getElementById("tabelaVendas");
         var novaLinha = tabelaVendas.insertRow();
         novaLinha.innerHTML = "<tr>" +
-            "<td>" + nomeMedico + "</td>" +
-            "<td>" + nomePaciente + "</td>" +
-            "<td>" + nomeConsulta + "</td>" +
+            "<td>" + medico + "</td>" +        // Nome do médico
+            "<td>" + paciente + "</td>" +      // Nome do paciente
+            "<td>" + consulta + "</td>" +      // Nome da consulta
             "<td>" + quantidade + "</td>" +
             "<td> R$" + precoUnitario.toFixed(2).replace('.', ',') + "</td>" +
             "<td> R$" + (precoUnitario * quantidade).toFixed(2).replace('.', ',') + "</td>" +
             "</tr>";
+
+        console.log("Venda adicionada: Médico:", medico, "Paciente:", paciente, "Consulta:", consulta, "Quantidade:", quantidade, "Preço Unitário:", precoUnitario, "Total Atual:", novoTotal);
     }
 </script>
