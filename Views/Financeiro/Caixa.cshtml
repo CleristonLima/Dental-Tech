@@ -23,9 +23,9 @@
     </div>
     <br />
     <div class="form-group">
-        <label>Consulta medica com preço</label>
+        <label>Consulta medica</label>
         <select asp-for="IdMedicalConsultation" class="form-control" asp-items="ViewBag.ListaConsulta" id="consultaPreco" onchange="AtualizarPreco()">
-            <option value="">Selecione a consulta medica com preço</option>
+            <option value="">Selecione a consulta medica</option>
         </select>
     </div>
     <br />
@@ -38,7 +38,7 @@
     <div class="form-preco">
         <label>Preço Unitário R$:</label>
         <br />
-        <input type="text" class="form-cbxpreco" id="precoUnitario" readonly />
+        <input asp-for="ValueConsultation" type="text" class="form-cbxpreco" id="precoUnitario" readonly />
         <button type="button" class="btn btn-primary btn-block" onclick="AdicionarVenda()">Adicionar</button>
     </div>
     <br />

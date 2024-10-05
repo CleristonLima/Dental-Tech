@@ -78,12 +78,11 @@ namespace DentalPlus.Models
             decimal totalValueFormatted = Math.Round(TotalValue, 2, MidpointRounding.AwayFromZero);
 
             // Inserir na tabela TB_MB_SALE
-            sql = "INSERT INTO TB_MB_SALE (ID_DOCTOR, ID_PATIENTS, ID_PAYMENT, TOTAL_VALUE, USER_INSERT, DATE_INSERT) " +
-                                "VALUES (@IdDoctor, @IdPatients, @IdPayment, @TotalValue, @userInsert, @dateInsert)";
+            sql = "INSERT INTO TB_MB_SALE (ID_DOCTOR, ID_PAYMENT, TOTAL_VALUE, USER_INSERT, DATE_INSERT) " +
+                                "VALUES (@IdDoctor, @IdPayment, @TotalValue, @userInsert, @dateInsert) ";
 
             MySqlCommand command = new MySqlCommand(sql);
             command.Parameters.AddWithValue("@IdDoctor", IdDoctor);
-            command.Parameters.AddWithValue("@IdPatients", IdPatients);
             command.Parameters.AddWithValue("@IdPayment", IdPayment);
             command.Parameters.AddWithValue("@TotalValue", totalValueFormatted);
             command.Parameters.AddWithValue("@userInsert", userId);
@@ -91,7 +90,36 @@ namespace DentalPlus.Models
 
             objDAL.ExecutarComandoSQL(command);
 
+            sql = "SELECT LAST_INSERT_ID();";
 
+            MySqlCommand commandGetId = new MySqlCommand(sql);
+
+            DataTable dt = objDAL.RetDataTable(commandGetId);
+
+            if (dt.Rows.Count > 0)
+            {
+                int lastInsertedId = Convert.ToInt32(dt.Rows[0]["LAST_INSERT_ID()"]);
+
+                decimal ValueConsultationFormatted = Math.Round(ValueConsultation, 2, MidpointRounding.AwayFromZero);
+
+                string sqlItens = "INSERT INTO TB_MB_SALE_ITEM (ID_MB_SALE, ID_MEDICAL_CONSULTATION, QTY, VALUE_CONSULTATION, ID_PATIENTS, USER_INSERT, DATE_INSERT) " +
+                                                   "VALUES (@IdMbSale, @IdMedicalConsultation, @Qty, @ValueConsultation, @IdPatients, @userInsert, @dateInsert)";
+
+                MySqlCommand commandItens = new MySqlCommand(sqlItens);
+                commandItens.Parameters.AddWithValue("@IdMbSale", lastInsertedId);
+                commandItens.Parameters.AddWithValue("@IdMedicalConsultation", IdMedicalConsultation);
+                commandItens.Parameters.AddWithValue("@Qty", Qty);
+                commandItens.Parameters.AddWithValue("@ValueConsultation", ValueConsultationFormatted);
+                commandItens.Parameters.AddWithValue("@IdPatients", IdPatients);
+                commandItens.Parameters.AddWithValue("@userInsert", userId);
+                commandItens.Parameters.AddWithValue("@dateInsert", currentDateTime);
+
+                objDAL.ExecutarComandoSQL(commandItens);
+            }
+            else
+            {
+                throw new Exception("Erro ao inserir a venda e recuperar o último ID.");
+            }
         }
     }
 

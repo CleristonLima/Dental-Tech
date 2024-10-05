@@ -89,6 +89,7 @@ namespace DentalPlus.Controllers
                 financeiro.userId = _httpContextAccessor.HttpContext?.Session.GetString("IdUsuarioLogado");
                 financeiro.Gravar();
                 return RedirectToAction("Caixa");
+
             }
         }
 
