@@ -2,6 +2,7 @@
 using DentalPlus.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Newtonsoft.Json;
 
 namespace DentalPlus.Controllers
 {
@@ -77,17 +78,21 @@ namespace DentalPlus.Controllers
         }
 
         [HttpPost]
-        public IActionResult Caixa(FinanceiroModel financeiro)
+        public IActionResult Caixa(FinanceiroModel financeiro, string VendasJson)
         {
-            if (!VerificarConexaoInternet())
+            if(!VerificarConexaoInternet())
             {
                 TempData["ErrorLogin"] = "Sem conexão com a internet. Verifique sua rede e tente novamente.";
                 return RedirectToAction("Index", "Financeiro");
             }
             else
             {
+                // Adiciona o ID do usuário logado
                 financeiro.userId = _httpContextAccessor.HttpContext?.Session.GetString("IdUsuarioLogado");
+
+                // Grava a venda principal
                 financeiro.Gravar();
+
                 return RedirectToAction("Caixa");
 
             }

@@ -2,6 +2,7 @@
 using MySql.Data.MySqlClient;
 using System.ComponentModel.DataAnnotations;
 using System.Data;
+using System.Diagnostics.Eventing.Reader;
 using System.Globalization;
 
 namespace DentalPlus.Models
@@ -38,6 +39,7 @@ namespace DentalPlus.Models
 
         public string DescMedicalConsultation { get; set; }
 
+        [Required(ErrorMessage = "Informe a quantidade!")]
         public double Qty {  get; set; }
 
         public decimal ValueConsultation { get; set; }
@@ -78,19 +80,20 @@ namespace DentalPlus.Models
             decimal totalValueFormatted = Math.Round(TotalValue, 2, MidpointRounding.AwayFromZero);
 
             // Inserir na tabela TB_MB_SALE
-            sql = "INSERT INTO TB_MB_SALE (ID_DOCTOR, ID_PAYMENT, TOTAL_VALUE, USER_INSERT, DATE_INSERT) " +
-                                "VALUES (@IdDoctor, @IdPayment, @TotalValue, @userInsert, @dateInsert) ";
+            sql = "INSERT INTO TB_MB_SALE (ID_DOCTOR, ID_PAYMENT, TOTAL_VALUE, ID_PATIENTS, USER_INSERT, DATE_INSERT) " +
+                                "VALUES (@IdDoctor, @IdPayment, @TotalValue, @IdPatients, @userInsert, @dateInsert) ";
 
             MySqlCommand command = new MySqlCommand(sql);
             command.Parameters.AddWithValue("@IdDoctor", IdDoctor);
             command.Parameters.AddWithValue("@IdPayment", IdPayment);
             command.Parameters.AddWithValue("@TotalValue", totalValueFormatted);
+            command.Parameters.AddWithValue("@IdPatients", IdPatients);
             command.Parameters.AddWithValue("@userInsert", userId);
             command.Parameters.AddWithValue("@dateInsert", currentDateTime);
 
             objDAL.ExecutarComandoSQL(command);
 
-            sql = "SELECT LAST_INSERT_ID();";
+            /*sql = "SELECT LAST_INSERT_ID();";
 
             MySqlCommand commandGetId = new MySqlCommand(sql);
 
@@ -102,24 +105,46 @@ namespace DentalPlus.Models
 
                 decimal ValueConsultationFormatted = Math.Round(ValueConsultation, 2, MidpointRounding.AwayFromZero);
 
-                string sqlItens = "INSERT INTO TB_MB_SALE_ITEM (ID_MB_SALE, ID_MEDICAL_CONSULTATION, QTY, VALUE_CONSULTATION, ID_PATIENTS, USER_INSERT, DATE_INSERT) " +
-                                                   "VALUES (@IdMbSale, @IdMedicalConsultation, @Qty, @ValueConsultation, @IdPatients, @userInsert, @dateInsert)";
+                foreach (var idPatient in IdPatients)
+                {
 
-                MySqlCommand commandItens = new MySqlCommand(sqlItens);
-                commandItens.Parameters.AddWithValue("@IdMbSale", lastInsertedId);
-                commandItens.Parameters.AddWithValue("@IdMedicalConsultation", IdMedicalConsultation);
-                commandItens.Parameters.AddWithValue("@Qty", Qty);
-                commandItens.Parameters.AddWithValue("@ValueConsultation", ValueConsultationFormatted);
-                commandItens.Parameters.AddWithValue("@IdPatients", IdPatients);
-                commandItens.Parameters.AddWithValue("@userInsert", userId);
-                commandItens.Parameters.AddWithValue("@dateInsert", currentDateTime);
+                    string sqlPatientId = "SELECT ID_PATIENTS FROM TB_CLI_PATIENTS WHERE ID_PATIENTS = @IdPatients "; // Ajustar a condição conforme necessário
+                    MySqlCommand commandGetPatientId = new MySqlCommand(sqlPatientId);
 
-                objDAL.ExecutarComandoSQL(commandItens);
+                    commandGetPatientId.Parameters.AddWithValue("@IdPatients", IdPatients);
+
+                    DataTable dtPatients = objDAL.RetDataTable(commandGetPatientId);
+
+                    if (dtPatients.Rows.Count > 0)
+                    {
+
+                        int idPatients = Convert.ToInt32(dtPatients.Rows[0]["ID_PATIENTS"]);
+
+                        string sqlItens = "INSERT INTO TB_MB_SALE_ITEM (ID_MB_SALE, ID_MEDICAL_CONSULTATION, QTY, VALUE_CONSULTATION, ID_PATIENTS, USER_INSERT, DATE_INSERT) " +
+                                                           "VALUES (@IdMbSale, @IdMedicalConsultation, @Qty, @ValueConsultation, @IdPatients, @userInsert, @dateInsert)";
+
+                        MySqlCommand commandItens = new MySqlCommand(sqlItens);
+                        commandItens.Parameters.AddWithValue("@IdMbSale", lastInsertedId);
+                        commandItens.Parameters.AddWithValue("@IdMedicalConsultation", IdMedicalConsultation);
+                        commandItens.Parameters.AddWithValue("@Qty", Qty);
+                        commandItens.Parameters.AddWithValue("@ValueConsultation", ValueConsultationFormatted);
+                        commandItens.Parameters.AddWithValue("@IdPatients", idPatients);
+                        commandItens.Parameters.AddWithValue("@userInsert", userId);
+                        commandItens.Parameters.AddWithValue("@dateInsert", currentDateTime);
+
+                        objDAL.ExecutarComandoSQL(commandItens);
+                    }
+                    else
+                    {
+                        throw new Exception("Erro ao obter o ID do paciente.");
+                    }
+                }
+
             }
             else
             {
                 throw new Exception("Erro ao inserir a venda e recuperar o último ID.");
-            }
+            }*/
         }
     }
 
