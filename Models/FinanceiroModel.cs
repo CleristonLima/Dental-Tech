@@ -29,12 +29,15 @@ namespace DentalPlus.Models
 
         public string IdPatients { get; set; }
 
+        [Required(ErrorMessage = "Informe o paciente!")]
         public string NamePatient { get; set; }
 
         public string IdPayment { get; set; }
 
+        [Required(ErrorMessage = "Informe a forma de pagamento!")]
         public string DescPayment { get; set; }
 
+        [Required(ErrorMessage = "Informe o tipo de consulta!")]
         public string IdMedicalConsultation { get; set; }
 
         public string DescMedicalConsultation { get; set; }
