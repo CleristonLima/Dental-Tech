@@ -106,6 +106,59 @@ namespace DentalPlus.Controllers
             return Json(preco);
         }
 
-        
+        // Contas a pagar
+
+        public IActionResult ContasPagar()
+        {
+            if (!VerificarConexaoInternet())
+            {
+                TempData["ErrorLogin"] = "Sem conexão com a internet. Verifique sua rede e tente novamente.";
+                return RedirectToAction("Menu", "Home");
+            }
+            else
+            {
+                ViewBag.ListaContas = new ContasPagarModel().ListarTodosContas();
+                return View();
+            }
+        }
+        [HttpGet]
+        public IActionResult CadastroContas(int? id)
+        {
+            if (!VerificarConexaoInternet())
+            {
+                TempData["ErrorLogin"] = "Sem conexão com a internet. Verifique sua rede e tente novamente.";
+                return RedirectToAction("Index", "Financeiro");
+            }
+            else
+            {
+                ContasPagarModel conta = new ContasPagarModel();
+
+                if (id != null)
+                {
+
+                    conta = new ContasPagarModel().RetornarConta(id);
+                }
+
+                return View(conta);
+            }
+
+        }
+
+        // Vai receber os dados do medico
+        [HttpPost]
+        public IActionResult CadastroContas(ContasPagarModel conta)
+        {
+            if (!VerificarConexaoInternet())
+            {
+                TempData["ErrorLogin"] = "Sem conexão com a internet. Verifique sua rede e tente novamente.";
+                return RedirectToAction("Index", "Financeiro");
+            }
+            else
+            {
+                conta.userId = _httpContextAccessor.HttpContext?.Session.GetString("IdUsuarioLogado");
+                conta.Gravar();
+                return RedirectToAction("ContasPagar", "Financeiro");
+            }
+        }
     }
 }
