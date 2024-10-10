@@ -135,7 +135,6 @@ namespace DentalPlus.Controllers
 
                 if (id != null)
                 {
-
                     conta = new ContasPagarModel().RetornarConta(id);
                 }
 
@@ -158,6 +157,34 @@ namespace DentalPlus.Controllers
                 conta.userId = _httpContextAccessor.HttpContext?.Session.GetString("IdUsuarioLogado");
                 conta.Gravar();
                 return RedirectToAction("ContasPagar", "Financeiro");
+            }
+        }
+
+        public IActionResult Excluir(int id)
+        {
+            if (!VerificarConexaoInternet())
+            {
+                TempData["ErrorLogin"] = "Sem conexão com a internet. Verifique sua rede e tente novamente.";
+                return RedirectToAction("Index", "Financeiro");
+            }
+            else
+            {
+                ViewData["IdAccountPay"] = id;
+                return View();
+            }
+        }
+
+        public IActionResult ExcluirContasPagar(int id)
+        {
+            if (!VerificarConexaoInternet())
+            {
+                TempData["ErrorLogin"] = "Sem conexão com a internet. Verifique sua rede e tente novamente.";
+                return RedirectToAction("Index", "Financeiro");
+            }
+            else
+            {
+                new ContasPagarModel().Excluir(id);
+                return View();
             }
         }
     }

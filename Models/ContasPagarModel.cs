@@ -168,5 +168,16 @@ namespace DentalPlus.Models
                 objDAL.ExecutarComandoSQL(command);
             }
         }
+
+        public void Excluir(int id)
+        {
+            DAL objDAL = new DAL();
+            string sql = "DELETE FROM TB_MB_ACCOUNTS_PAYABLE WHERE ID_ACCOUNT_PAY = @IdAccountPay";
+
+            MySqlCommand command = new MySqlCommand(sql);
+            command.Parameters.AddWithValue("@IdAccountPay", id);
+
+            objDAL.ExecutarComandoSQL(command);
+        }
     }
 }

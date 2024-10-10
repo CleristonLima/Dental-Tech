@@ -31,9 +31,9 @@ namespace DentalPlus.Models
         [Required(ErrorMessage = "Informe o nome completo do paciente!")]
         public string NamePatient { get; set; }
 
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        /*[DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         [DataType(DataType.Date)]
-        [Range(typeof(DateOnly), "1900-01-01", "3100-12-31", ErrorMessage = "A data de nascimento deve estar entre 01/01/1900 e 31/12/3100.")]
+        [Range(typeof(DateOnly), "1900-01-01", "3100-12-31", ErrorMessage = "A data de nascimento deve estar entre 01/01/1900 e 31/12/3100.")]*/
         public DateOnly BornDate { get; set; }
 
         [Required(ErrorMessage = "Informe o CEP do paciente!")]

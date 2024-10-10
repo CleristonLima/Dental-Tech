@@ -51,7 +51,9 @@
         <br />
         <label>Data de vencimento</label>
         <br />
-        <input asp-for="Expiration_Date" type="date" class="form-control" required="required" value="@DateTime.Now.ToString("yyyy-MM-dd")"/>
+        <input type="date" name="Expiration_Date"
+               min="@DateTime.Now.ToString("yyyy-MM-dd")"
+               value="@Model.Expiration_Date.ToString("yyyy-MM-dd")" />
         <span asp-validation-for="Expiration_Date" class="text-danger"></span>
     </div>
 

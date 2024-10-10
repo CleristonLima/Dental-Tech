@@ -34,15 +34,19 @@
     <br />
     <div class="form-group">
         <br />
-        <label>Data e Hora Inicial da Consulta</label>
-        <input asp-for="DateConsultationStart" class="form-control" type="datetime-local" value="@Model.DateConsultationStart.ToString("yyyy-MM-ddTHH:mm")" />
+        <label>Data e Hora Inicial da Consulta:</label>
+        <input type="datetime-local" name="DateConsultationStart" id="dataHoraInicial"
+               min="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")"
+               value="@Model.DateConsultationStart.ToString("yyyy-MM-ddTHH:mm")" />
         <span asp-validation-for="DateConsultationStart" class="text-danger"></span>
     </div>
     <br />
     <div class="form-group">
         <br />
         <label>Data e Hora Final da Consulta</label>
-        <input asp-for="DateConsultationFinish" class="form-control" type="datetime-local" value="@Model.DateConsultationFinish.ToString("yyyy-MM-ddTHH:mm")" />
+        <input type="datetime-local" name="DateConsultationFinish" id="dataHoraInicial"
+               min="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")"
+               value="@Model.DateConsultationFinish.ToString("yyyy-MM-ddTHH:mm")" />
         <span asp-validation-for="DateConsultationFinish" class="text-danger"></span>
     </div>
     <br />
@@ -80,3 +84,12 @@
     <br />
     <button type="submit" class="btn btn-primary">Salvar</button>
 </form>
+
+<style>
+
+    #dataHoraInicial {
+        width: 150px; /* ajusta o tamanho do campo de texto */
+        margin-right: 15px; /* espaçamento entre o campo de texto e o botão */
+    }
+
+</style>
