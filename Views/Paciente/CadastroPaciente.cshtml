@@ -37,7 +37,7 @@
         <br />
         <label>Data de nascimento</label>
         <br />
-        <input type="date" name="BornDate" 
+        <input asp-for="BornDate" type="date" name="BornDate" class="form-control date-field"
                min="@DateTime.MinValue.ToString("yyyy-MM-dd")"
                value="@Model.BornDate.ToString("yyyy-MM-dd")" />
         <span asp-validation-for="BornDate" class="text-danger"></span>
@@ -138,3 +138,10 @@
     <br />
     <button type="submit" class="btn btn-block btn-success">Salvar</button>
 </form>
+
+<style>
+    .date-field {
+        max-width: 200px; /* Defina a largura desejada */
+        display: inline-block;
+    }
+</style>

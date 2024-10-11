@@ -80,7 +80,7 @@ namespace DentalPlus.Controllers
         [HttpPost]
         public IActionResult Caixa(FinanceiroModel financeiro, string VendasJson)
         {
-            if(!VerificarConexaoInternet())
+            if (!VerificarConexaoInternet())
             {
                 TempData["ErrorLogin"] = "Sem conexão com a internet. Verifique sua rede e tente novamente.";
                 return RedirectToAction("Index", "Financeiro");
@@ -186,6 +186,19 @@ namespace DentalPlus.Controllers
                 new ContasPagarModel().Excluir(id);
                 return View();
             }
+        }
+
+        // Relatórios
+
+        public IActionResult Relatorio()
+        {
+            if (!VerificarConexaoInternet())
+            {
+                TempData["ErrorLogin"] = "Sem conexão com a internet. Verifique sua rede e tente novamente.";
+                return RedirectToAction("Menu", "Home");
+            }
+            
+                return View(); 
         }
     }
 }

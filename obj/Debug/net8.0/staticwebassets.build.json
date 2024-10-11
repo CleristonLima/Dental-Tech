@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "qK6H0uxBLw5SQV9vfNedApU3R/OaFz2fA7kIAauxm6Y=",
+  "Hash": "l2r2WWyDB21Efaap3FIT4hhDqjmvoHGyS7URg3OKTCE=",
   "Source": "DentalPlus",
   "BasePath": "_content/DentalPlus",
   "Mode": "Default",
@@ -264,25 +264,6 @@
       "OriginalItemSpec": "wwwroot\\images\\Medicos.png"
     },
     {
-      "Identity": "C:\\Projetos\\DentalPlus\\DentalPlus\\wwwroot\\images\\Mensagem.png",
-      "SourceId": "DentalPlus",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Projetos\\DentalPlus\\DentalPlus\\wwwroot\\",
-      "BasePath": "_content/DentalPlus",
-      "RelativePath": "images/Mensagem.png",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "AssetMergeBehavior": "PreferTarget",
-      "AssetMergeSource": "",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\images\\Mensagem.png"
-    },
-    {
       "Identity": "C:\\Projetos\\DentalPlus\\DentalPlus\\wwwroot\\images\\Pacientes.png",
       "SourceId": "DentalPlus",
       "SourceType": "Discovered",
@@ -338,6 +319,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\images\\PlanoSaude.png"
+    },
+    {
+      "Identity": "C:\\Projetos\\DentalPlus\\DentalPlus\\wwwroot\\images\\ReceitaMedica.png",
+      "SourceId": "DentalPlus",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Projetos\\DentalPlus\\DentalPlus\\wwwroot\\",
+      "BasePath": "_content/DentalPlus",
+      "RelativePath": "images/ReceitaMedica.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\ReceitaMedica.png"
     },
     {
       "Identity": "C:\\Projetos\\DentalPlus\\DentalPlus\\wwwroot\\images\\Relatorio.png",

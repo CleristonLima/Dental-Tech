@@ -51,7 +51,7 @@
         <br />
         <label>Data de vencimento</label>
         <br />
-        <input type="date" name="Expiration_Date"
+        <input asp-for="Expiration_Date" type="date" name="Expiration_Date" class="form-control date-field"
                min="@DateTime.Now.ToString("yyyy-MM-dd")"
                value="@Model.Expiration_Date.ToString("yyyy-MM-dd")" />
         <span asp-validation-for="Expiration_Date" class="text-danger"></span>
@@ -72,3 +72,10 @@
     <br />
     <button type="submit" class="btn btn-block btn-success">Salvar</button>
 </form>
+
+<style>
+    .date-field {
+        max-width: 200px; /* Defina a largura desejada */
+        display: inline-block;
+    }
+</style>
