@@ -1,0 +1,35 @@
+﻿@model ReceituarioModel
+
+<h3>Prontuário</h3>
+
+<div>
+    <strong>Paciente:</strong> @Model.IdPatients
+</div>
+
+<div>
+    <strong>Sintomas:</strong>
+    <p>@Model.Symptoms</p>
+</div>
+
+<div>
+    <strong>Data de Emissão:</strong>
+    <p>@Model.dateIssue.ToString("dd/MM/yyyy")</p>
+</div>
+
+<hr />
+
+<h3>Catálogo dos Dentes</h3>
+<div>
+    <img src="~/images/Dentes.png" id="Dentes" />
+</div>
+
+<style>
+
+#Dentes {
+        display: block;
+        margin-left: auto;
+        margin-right: auto;
+        max-width: 100%; /* Garante que a imagem não ultrapasse o tamanho da tela */
+        height: auto; /* Mantém a proporção da imagem */
+    }
+</style>

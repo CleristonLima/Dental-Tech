@@ -194,8 +194,12 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvbnR1YXJpb1xJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
-[C:/Projetos/DentalPlus/DentalPlus/Views/Prontuario/Receituario.cshtml]
-build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvbnR1YXJpb1xSZWNlaXR1YXJpby5jc2h0bWw=
+[C:/Projetos/DentalPlus/DentalPlus/Views/Prontuario/ProntuarioInicial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvbnR1YXJpb1xQcm9udHVhcmlvSW5pY2lhbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Projetos/DentalPlus/DentalPlus/Views/Prontuario/ProntuarioPDF.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUHJvbnR1YXJpb1xQcm9udHVhcmlvUERGLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Projetos/DentalPlus/DentalPlus/Views/Shared/Error.cshtml]

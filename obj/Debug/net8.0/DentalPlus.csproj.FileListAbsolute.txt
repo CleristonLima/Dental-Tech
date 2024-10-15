@@ -92,3 +92,5 @@ C:\Projetos\DentalPlus\DentalPlus\bin\Debug\net8.0\Newtonsoft.Json.dll
 C:\Projetos\DentalPlus\DentalPlus\bin\Debug\net8.0\DocumentFormat.OpenXml.dll
 C:\Projetos\DentalPlus\DentalPlus\bin\Debug\net8.0\DocumentFormat.OpenXml.Framework.dll
 C:\Projetos\DentalPlus\DentalPlus\bin\Debug\net8.0\System.IO.Packaging.dll
+C:\Projetos\DentalPlus\DentalPlus\bin\Debug\net8.0\Rotativa.AspNetCore.dll
+C:\Projetos\DentalPlus\DentalPlus\obj\Debug\net8.0\DentalPlus.MvcApplicationPartsAssemblyInfo.cs

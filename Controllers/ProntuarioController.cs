@@ -2,6 +2,7 @@
 using DentalPlus.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Rotativa.AspNetCore;
 
 namespace DentalPlus.Controllers
 {
@@ -37,7 +38,7 @@ namespace DentalPlus.Controllers
         }
 
         // Receituario
-        public IActionResult Receituario()
+        public IActionResult ProntuarioInicial()
         {
             if (!VerificarConexaoInternet())
             {
@@ -51,7 +52,7 @@ namespace DentalPlus.Controllers
         }
 
         [HttpGet]
-        public IActionResult Receituario(int? id)
+        public IActionResult ProntuarioInicial(int? id)
         {
             if (!VerificarConexaoInternet())
             {
@@ -66,11 +67,11 @@ namespace DentalPlus.Controllers
                 {
 
                     //receita = new ReceituarioModel().RetornarPaciente(id);
-                    var paciente = new PacienteModel().ListarTodosPacientes();
-                    ViewBag.ListaPacientes = new SelectList(paciente, "IdPatients", "NomeComCpf");
-
-                    
+                                        
                 }
+
+                var paciente = new PacienteModel().ListarTodosPacientes();
+                ViewBag.ListaPacientes = new SelectList(paciente, "IdPatients", "NomeComCpf");
 
                 return View(receita);
 
@@ -80,7 +81,7 @@ namespace DentalPlus.Controllers
 
         // Vai receber os dados do paciente
         [HttpPost]
-        public IActionResult Receituario(ReceituarioModel receita)
+        public IActionResult ProntuarioInicial(ReceituarioModel receita)
         {
             if (!VerificarConexaoInternet())
             {
@@ -89,17 +90,29 @@ namespace DentalPlus.Controllers
             }
             else
             {
-                try
+                receita.userId = _httpContextAccessor.HttpContext?.Session.GetString("IdUsuarioLogado");
+                receita.Gravar();
+                return RedirectToAction("ProntuarioPDF", "Prontuario");
+                
+                
+            }
+        }
+
+        public IActionResult ProntuarioPDF()
+        {
+            if (!VerificarConexaoInternet())
+            {
+                TempData["ErrorLogin"] = "Sem conexão com a internet. Verifique sua rede e tente novamente.";
+                return RedirectToAction("Index", "Prontuario");
+            }
+            else
+            {
+                ReceituarioModel receita = new ReceituarioModel();
+
+                return new ViewAsPdf("ProntuarioPDF", receita)
                 {
-                    receita.userId = _httpContextAccessor.HttpContext?.Session.GetString("IdUsuarioLogado");
-                   // receita.Gravar();
-                    return RedirectToAction("Receituario", "Prontuario");
-                }
-                catch (Exception ex)
-                {
-                    ModelState.AddModelError("CPF_CNPJ", ex.Message);
-                    return View(receita);
-                }
+                    FileName = "Receituario.pdf"
+                };
             }
         }
     }
