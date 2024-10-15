@@ -1,0 +1,41 @@
+﻿@model ReceituarioModel
+
+<h3>Receituario</h3>
+
+<form asp-controller="Prontuario" asp-action="Receituario" method="post">
+    <input type="hidden" asp-for="IdMrRecipe" />
+
+    <div class="form-group">
+        <label>Paciente</label>
+        <select asp-for="IdPatients" class="form-control" asp-items="ViewBag.ListaPacientes">
+            <option value="">Selecione o paciente</option>
+        </select>
+        <span asp-validation-for="IdPatients" class="text-danger"></span>
+    </div>
+    <br />
+    <div class="form-group">
+        <label>Sintomas</label>
+        <textarea asp-for="Symptoms" class="form-control"></textarea>
+    </div>
+
+    <div class="form-group">
+        <br />
+        <label>Data de Emissão:</label>
+        <input type="date" name="dateIssue" id="dataEmissao"
+               min="@DateTime.Now.ToString("yyyy-MM-dd")"
+               value="@Model.dateIssue.ToString("yyyy-MM-dd")" />
+        <span asp-validation-for="dateIssue" class="text-danger"></span>
+    </div>
+
+    <hr />
+
+</form>
+
+<style>
+
+    #dataEmissao {
+        width: 150px; /* ajusta o tamanho do campo de texto */
+        margin-right: 15px; /* espaçamento entre o campo de texto e o botão */
+    }
+
+</style>

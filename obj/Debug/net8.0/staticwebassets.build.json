@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "l2r2WWyDB21Efaap3FIT4hhDqjmvoHGyS7URg3OKTCE=",
+  "Hash": "a6CRj/CVjasNQBMKzmnGu8QSVnSyNLCeQlfaNr3eB+g=",
   "Source": "DentalPlus",
   "BasePath": "_content/DentalPlus",
   "Mode": "Default",
@@ -110,6 +110,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\images\\Agendamentos.png"
+    },
+    {
+      "Identity": "C:\\Projetos\\DentalPlus\\DentalPlus\\wwwroot\\images\\Calendario.png",
+      "SourceId": "DentalPlus",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Projetos\\DentalPlus\\DentalPlus\\wwwroot\\",
+      "BasePath": "_content/DentalPlus",
+      "RelativePath": "images/Calendario.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\Calendario.png"
     },
     {
       "Identity": "C:\\Projetos\\DentalPlus\\DentalPlus\\wwwroot\\images\\Comprimido.png",
@@ -321,6 +340,25 @@
       "OriginalItemSpec": "wwwroot\\images\\PlanoSaude.png"
     },
     {
+      "Identity": "C:\\Projetos\\DentalPlus\\DentalPlus\\wwwroot\\images\\Prontuario.png",
+      "SourceId": "DentalPlus",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Projetos\\DentalPlus\\DentalPlus\\wwwroot\\",
+      "BasePath": "_content/DentalPlus",
+      "RelativePath": "images/Prontuario.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\Prontuario.png"
+    },
+    {
       "Identity": "C:\\Projetos\\DentalPlus\\DentalPlus\\wwwroot\\images\\ReceitaMedica.png",
       "SourceId": "DentalPlus",
       "SourceType": "Discovered",
@@ -357,6 +395,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\images\\Relatorio.png"
+    },
+    {
+      "Identity": "C:\\Projetos\\DentalPlus\\DentalPlus\\wwwroot\\images\\Relogio.png",
+      "SourceId": "DentalPlus",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Projetos\\DentalPlus\\DentalPlus\\wwwroot\\",
+      "BasePath": "_content/DentalPlus",
+      "RelativePath": "images/Relogio.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\Relogio.png"
     },
     {
       "Identity": "C:\\Projetos\\DentalPlus\\DentalPlus\\wwwroot\\images\\TipoConsultas.png",

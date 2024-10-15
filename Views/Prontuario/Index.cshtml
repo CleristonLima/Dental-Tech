@@ -1,0 +1,65 @@
+﻿<style>
+    .container {
+        max-width: 100%;
+    }
+
+    .img-fluid {
+        width: 150px;
+        height: 150px;
+        margin-left: 20px; /* Ajuste o valor conforme necessário */
+        margin-right: 20px; /* Ajuste o valor conforme necessário */
+    }
+
+    .mb-4 {
+        margin-bottom: 1.5rem;
+    }
+
+    .text-center span {
+        display: block;
+        margin-top: 10px;
+    }
+</style>
+
+<script>
+    function checkInternetConnection() {
+        if (!navigator.onLine) {
+            alert("Sem conexao com a internet. Verifique sua rede e tente novamente.");
+        }
+    }
+
+    window.addEventListener('load', checkInternetConnection);
+    window.addEventListener('offline', checkInternetConnection);
+
+    document.addEventListener('DOMContentLoaded', function () {
+        var errorMessage = '@TempData["ErrorLogin"]';
+        if (errorMessage) {
+            alert(errorMessage);
+        }
+    });
+</script>
+
+<br />
+<div class="container">
+    <div class="row text-center">
+        <div class="col-lg-4 col-md-3 col-sm-6 mb-4">
+            <a href="../Prontuario/Receituario">
+                <img src="~/images/Prontuario.png" class="img-fluid" />
+            </a>
+            <span>Receituario</span>
+        </div>
+
+        <div class="col-lg-4 col-md-3 col-sm-6 mb-4">
+            <a href="../Prontuario/DeclaracaoHoras">
+                <img src="~/images/Relogio.png" class="img-fluid" />
+            </a>
+            <span>Declaração de horas</span>
+        </div>
+
+        <div class="col-lg-4 col-md-3 col-sm-6 mb-4">
+            <a href="../Prontuario/DeclaracaoDias">
+                <img src="~/images/Calendario.png" class="img-fluid" />
+            </a>
+            <span>Declaração de dias</span>
+        </div>
+    </div>
+</div>

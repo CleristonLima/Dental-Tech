@@ -17,6 +17,10 @@
       "PackagePath": "staticwebassets\\images\\Agendamentos.png"
     },
     {
+      "Id": "C:\\Projetos\\DentalPlus\\DentalPlus\\wwwroot\\images\\Calendario.png",
+      "PackagePath": "staticwebassets\\images\\Calendario.png"
+    },
+    {
       "Id": "C:\\Projetos\\DentalPlus\\DentalPlus\\wwwroot\\images\\Comprimido.png",
       "PackagePath": "staticwebassets\\images\\Comprimido.png"
     },
@@ -61,12 +65,20 @@
       "PackagePath": "staticwebassets\\images\\PlanoSaude.png"
     },
     {
+      "Id": "C:\\Projetos\\DentalPlus\\DentalPlus\\wwwroot\\images\\Prontuario.png",
+      "PackagePath": "staticwebassets\\images\\Prontuario.png"
+    },
+    {
       "Id": "C:\\Projetos\\DentalPlus\\DentalPlus\\wwwroot\\images\\ReceitaMedica.png",
       "PackagePath": "staticwebassets\\images\\ReceitaMedica.png"
     },
     {
       "Id": "C:\\Projetos\\DentalPlus\\DentalPlus\\wwwroot\\images\\Relatorio.png",
       "PackagePath": "staticwebassets\\images\\Relatorio.png"
+    },
+    {
+      "Id": "C:\\Projetos\\DentalPlus\\DentalPlus\\wwwroot\\images\\Relogio.png",
+      "PackagePath": "staticwebassets\\images\\Relogio.png"
     },
     {
       "Id": "C:\\Projetos\\DentalPlus\\DentalPlus\\wwwroot\\images\\TipoConsultas.png",
