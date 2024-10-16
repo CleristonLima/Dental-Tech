@@ -3,27 +3,40 @@
 <h3>Prontuário</h3>
 
 <div>
-    <strong>Paciente:</strong> @Model.IdPatients
+    <strong>Paciente</strong> <p>@Model.NamePatient</p>
 </div>
-
+<br />
 <div>
-    <strong>Sintomas:</strong>
-    <p>@Model.Symptoms</p>
+    <strong>Sintomas</strong> <p>@Model.Symptoms</p>
 </div>
-
+<br />
 <div>
-    <strong>Data de Emissão:</strong>
-    <p>@Model.dateIssue.ToString("dd/MM/yyyy")</p>
+    <strong>Data de Emissão</strong> <p>@Model.dateIssue.ToString("dd/MM/yyyy")</p>
 </div>
 
 <hr />
+<br />
 
 <h3>Catálogo dos Dentes</h3>
+<hr />
+<br />
 <div>
     <img src="~/images/Dentes.png" id="Dentes" />
 </div>
 
 <style>
+    body {
+    font-size: 20px; /* Ajusta o tamanho geral do texto */
+    }
+
+    h3 {
+    font-size: 35px; /* Ajusta o tamanho dos títulos */
+    text-align: center;
+    }
+
+    p {
+    font-size: 20px; /* Ajusta o tamanho dos parágrafos */
+    }
 
 #Dentes {
         display: block;

@@ -1,6 +1,7 @@
 ﻿using DentalPlus.Uteis;
 using DocumentFormat.OpenXml.Spreadsheet;
 using MySql.Data.MySqlClient;
+using System.Data;
 
 namespace DentalPlus.Models
 {
@@ -21,6 +22,8 @@ namespace DentalPlus.Models
         public string IdMrRecipe { get; set; }
 
         public string IdPatients { get; set; }
+
+        public string NamePatient {  get; set; }
 
         public string Symptoms { get; set; }
 
@@ -55,6 +58,25 @@ namespace DentalPlus.Models
 
             objDAL.ExecutarComandoSQL(command);
 
+        }
+
+        public void ConsultarNome()
+        {
+            DAL objDAL = new DAL();
+            string sql = string.Empty;
+
+            sql = "SELECT NAME_PATIENT FROM TB_CLI_PATIENTS WHERE ID_PATIENTS = @IdPatients";
+
+            MySqlCommand command = new MySqlCommand(sql);
+            command.Parameters.AddWithValue("@IdPatients", IdPatients);
+
+            DataTable dt = objDAL.RetDataTable(command);
+
+            if (dt.Rows.Count > 0)
+            {
+                NamePatient = dt.Rows[0]["NAME_PATIENT"].ToString();
+            
+            }
         }
     }
 }

@@ -92,13 +92,15 @@ namespace DentalPlus.Controllers
             {
                 receita.userId = _httpContextAccessor.HttpContext?.Session.GetString("IdUsuarioLogado");
                 receita.Gravar();
-                return RedirectToAction("ProntuarioPDF", "Prontuario");
-                
-                
+                receita.ConsultarNome();
+                return new ViewAsPdf("ProntuarioPDF", receita)
+                {
+                    FileName = "Receituario.pdf"
+                };
             }
         }
 
-        public IActionResult ProntuarioPDF()
+        public IActionResult ProntuarioPDF(ReceituarioModel receita)
         {
             if (!VerificarConexaoInternet())
             {
@@ -107,12 +109,7 @@ namespace DentalPlus.Controllers
             }
             else
             {
-                ReceituarioModel receita = new ReceituarioModel();
-
-                return new ViewAsPdf("ProntuarioPDF", receita)
-                {
-                    FileName = "Receituario.pdf"
-                };
+                return View();
             }
         }
     }
