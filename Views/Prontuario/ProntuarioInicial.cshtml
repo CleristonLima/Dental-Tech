@@ -2,9 +2,17 @@
 
 <h3>Prontuario</h3>
 
-<form id="receituarioForm" asp-controller="Prontuario" asp-action="ProntuarioInicial" method="post">
+<form id="prontuarioForm" asp-controller="Prontuario" asp-action="ProntuarioInicial" method="post">
     <input type="hidden" asp-for="IdMrRecipe" />
 
+    <div class="form-group">
+        <label>Dr(a)</label>
+        <select asp-for="IdDoctor" class="form-control" asp-items="ViewBag.ListaMedicos">
+            <option value="">Selecione o medico</option>
+        </select>
+        <span asp-validation-for="IdPatients" class="text-danger"></span>
+    </div>
+    <br />
     <div class="form-group">
         <label>Paciente</label>
         <select asp-for="IdPatients" class="form-control" asp-items="ViewBag.ListaPacientes">
@@ -28,6 +36,7 @@
     </div>
     <br />
     <button type="submit" class="btn btn-primary" onclick="Imprimir()">Imprimir Prontuário</button>
+    <button type="button" class="btn btn-success" onclick="GerarReceita()" id="gerarReceita">Gerar Receita Médica</button>
 </form>
 
 <style>
@@ -37,24 +46,41 @@
         margin-right: 15px; /* espaçamento entre o campo de texto e o botão */
     }
 
+    #gerarReceita {
+        margin-left: 30px;
+    }
+
 </style>
 
-<!--<script>
-    function Imprimir() {
-        if (!navigator.onLine) {
-            alert("Sem conexão com a internet. Verifique sua rede e tente novamente.");
-        } else {
-            window.location.href = "../Prontuario/ProntuarioPDF";
-        }
-    }
-</script>-->
+
 <script>
+
+    window.addEventListener('load', checkInternetConnection);
+    window.addEventListener('offline', checkInternetConnection);
+
+    document.addEventListener('DOMContentLoaded', function () {
+        var errorMessage = '@TempData["ErrorLogin"]';
+        if (errorMessage) {
+            alert(errorMessage);
+        }
+    });
+
     function submitAndPrint() {
-        var form = document.getElementById('receituarioForm');
+        var form = document.getElementById('prontuarioForm');
         form.submit(); // Submete o formulário para salvar os dados
 
         setTimeout(function () {
             window.print(); // Aguarda um tempo e depois chama a impressão
         }, 1000); // Tempo de espera para garantir que o salvamento foi feito antes de imprimir
+    }
+
+    function GerarReceita() {
+
+        if (!navigator.onLine) {
+            alert("Sem conexão com a internet. Verifique sua rede e tente novamente.");
+        } else {
+            window.location.href = "../Prontuario/Receita";
+        }
+
     }
 </script>

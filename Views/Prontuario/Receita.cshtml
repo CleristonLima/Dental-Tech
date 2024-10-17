@@ -1,0 +1,134 @@
+﻿@model ReceituarioModel
+
+<h3>Receita Médica</h3>
+
+<form id="receitaForm" asp-controller="Prontuario" asp-action="ReceitaMedica" method="post">
+    <input type="hidden" asp-for="IdMedicinePrescription" />
+
+    <div class="form-group">
+        <label>Dr(a)</label>
+        <select asp-for="IdDoctor" class="form-control" asp-items="ViewBag.ListaMedicos">
+            <option value="">Selecione o medico</option>
+        </select>
+        <span asp-validation-for="IdPatients" class="text-danger"></span>
+    </div>
+    <br />
+    <div class="form-group">
+        <label>Paciente</label>
+        <select asp-for="IdPatients" class="form-control" asp-items="ViewBag.ListaPacientes">
+            <option value="">Selecione o paciente</option>
+        </select>
+        <span asp-validation-for="IdPatients" class="text-danger"></span>
+    </div>
+    <br />
+    <div class="form-group">
+        <br />
+        <label>Data de Emissão:</label>
+        <input type="date" name="dateIssue" id="dataEmissao"
+               min="@DateTime.Now.ToString("yyyy-MM-dd")"
+        @*value="@Model.dateIssue.ToString("yyyy-MM-dd")"*@ />
+        <span asp-validation-for="dateIssue" class="text-danger"></span>
+    </div>
+    <br />
+
+    <!-- Dropdown de medicamentos -->
+    <div class="form-group">
+        <label for="IdProductRevenue">Medicamento:</label>
+        <select id="IdProductRevenue" asp-for="IdProductRevenue" class="form-control">
+            <option value="">Selecione um Medicamento</option>
+            @foreach (var remedio in ViewBag.ProdutosReceita)
+            {
+                <option value="@remedio.Value">@remedio.Text</option>
+            }
+        </select>
+    </div>
+    <br />
+    <div class="form-group">
+        <label>Quantidade:</label>
+        <input type="number" id="quantidadeMedicamento" class="form-control" />
+    </div>
+    <br />
+    <div class="form-group">
+        <label>Unidade Medida</label>
+
+        <select asp-for="TypeMedication" class="form-control">
+            <option value="CP">Comprimido(s)</option>
+            <option value="CX">Caixa(s)</option>
+            <option value="Ml">Ml</option>
+            <option value="GT">Gotas</option>
+        </select>
+
+        <span asp-validation-for="TypeMedication" class="text-danger"></span>
+    </div>
+    <br />
+    <div class="form-group">
+        <label>Intervalo (em horas):</label>
+        <input type="number" id="intervaloMedicamento" class="form-control" />
+    </div>
+    <br />
+    <div class="form-group">
+        <label>Intervalo (vez por dia)</label>
+        <input type="number" id="intervaloVezesDias" class="form-control" />
+    </div>
+    <br />
+    <div class="form-group">
+        <label>Duração (Dia(s))</label>
+        <input type="number" id="dias" class="form-control" />
+    </div>
+    <br />
+    <div class="form-group">
+        <button type="button" class="btn btn-primary" onclick="adicionarMedicamento()">Adicionar Medicamento</button>
+    </div>
+    <br />
+    <div id="listaMedicamentos" class="form-group">
+        <!-- Aqui serão exibidos os medicamentos adicionados -->
+    </div>
+    <br />
+    <button type="submit" class="btn btn-success">Salvar Receita</button>
+</form>
+
+<script>
+    let medicamentos = [];
+
+    // Função para adicionar medicamento
+    function adicionarMedicamento() {
+        var medicamentoSelect = document.getElementById("IdProductRevenue");
+        var medicamentoNome = medicamentoSelect.options[medicamentoSelect.selectedIndex].text;
+        var medicamentoId = medicamentoSelect.value;
+        var quantidade = document.getElementById("quantidadeMedicamento").value;
+        var intervalo = document.getElementById("intervaloMedicamento").value;
+        var dias = document.getElementById("dias").value;
+
+        if (medicamentoId && quantidade && intervalo) {
+            // Adicionar os dados ao array
+            medicamentos.push({
+                IdProductRevenue: medicamentoId,
+                Qty: quantidade,
+                Reason: "Tomar de " + intervalo + " em " + intervalo + " horas"
+            });
+
+            // Exibir o medicamento na página
+            var lista = document.getElementById("listaMedicamentos");
+            var medicamentoHTML = "<p>" + medicamentoNome + " - " + quantidade + " unidades - " + intervalo + " em " + intervalo + " horas " + " durante " + dias + " dias</p>"
+            lista.innerHTML += medicamentoHTML;
+
+            // Limpar os campos
+            medicamentoSelect.selectedIndex = 0;
+            document.getElementById("quantidadeMedicamento").value = '';
+            document.getElementById("intervaloMedicamento").value = '';
+        }
+        else {
+            alert("Por favor, preencha todos os campos.");
+        }
+    }
+
+    document.getElementById("receitaForm").onsubmit = function () {
+        // Criar um campo oculto para enviar os medicamentos como JSON
+        var inputMedicamentos = document.createElement("input");
+        inputMedicamentos.type = "hidden";
+        inputMedicamentos.name = "Medicamentos";
+        inputMedicamentos.value = JSON.stringify(medicamentos);
+
+        this.appendChild(inputMedicamentos);
+    };
+</script>
