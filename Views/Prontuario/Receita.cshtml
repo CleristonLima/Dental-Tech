@@ -4,13 +4,14 @@
 
 <form id="receitaForm" asp-controller="Prontuario" asp-action="ReceitaMedica" method="post">
     <input type="hidden" asp-for="IdMedicinePrescription" />
+    <input type="hidden" asp-for="Reason" id="Reason" />
 
     <div class="form-group">
         <label>Dr(a)</label>
         <select asp-for="IdDoctor" class="form-control" asp-items="ViewBag.ListaMedicos">
             <option value="">Selecione o medico</option>
         </select>
-        <span asp-validation-for="IdPatients" class="text-danger"></span>
+        <span asp-validation-for="IdDoctor" class="text-danger"></span>
     </div>
     <br />
     <div class="form-group">
@@ -24,10 +25,10 @@
     <div class="form-group">
         <br />
         <label>Data de Emissão:</label>
-        <input type="date" name="dateIssue" id="dataEmissao"
+        <input type="date" name="DateIssuePrescriptions" id="dataEmissao"
                min="@DateTime.Now.ToString("yyyy-MM-dd")"
         @*value="@Model.dateIssue.ToString("yyyy-MM-dd")"*@ />
-        <span asp-validation-for="dateIssue" class="text-danger"></span>
+        <span asp-validation-for="DateIssuePrescriptions" class="text-danger"></span>
     </div>
     <br />
 
@@ -41,23 +42,24 @@
                 <option value="@remedio.Value">@remedio.Text</option>
             }
         </select>
+        <span asp-validation-for="IdProductRevenue" class="text-danger"></span>
     </div>
     <br />
     <div class="form-group">
         <label>Quantidade:</label>
         <input type="number" id="quantidadeMedicamento" class="form-control" />
+        <span asp-validation-for="Qty" class="text-danger"></span>
     </div>
     <br />
     <div class="form-group">
         <label>Unidade Medida</label>
 
-        <select asp-for="TypeMedication" class="form-control">
+        <select asp-for="TypeMedication" class="form-control" id="tipoMedicacao">
             <option value="CP">Comprimido(s)</option>
             <option value="CX">Caixa(s)</option>
             <option value="Ml">Ml</option>
             <option value="GT">Gotas</option>
         </select>
-
         <span asp-validation-for="TypeMedication" class="text-danger"></span>
     </div>
     <br />
@@ -82,9 +84,11 @@
     <br />
     <div id="listaMedicamentos" class="form-group">
         <!-- Aqui serão exibidos os medicamentos adicionados -->
+        <span asp-validation-for="Reason"></span>
     </div>
+    
     <br />
-    <button type="submit" class="btn btn-success">Salvar Receita</button>
+    <button type="submit" class="btn btn-success" onclick="Imprimir()">Imprimir Receita</button>
 </form>
 
 <script>
@@ -96,30 +100,78 @@
         var medicamentoNome = medicamentoSelect.options[medicamentoSelect.selectedIndex].text;
         var medicamentoId = medicamentoSelect.value;
         var quantidade = document.getElementById("quantidadeMedicamento").value;
-        var intervalo = document.getElementById("intervaloMedicamento").value;
-        var dias = document.getElementById("dias").value;
+        var tipoMedicacao = document.getElementById("tipoMedicacao").value;  // Tipo de medicacao (CP, GT, etc.)
+        var intervaloHoras = document.getElementById("intervaloMedicamento").value; // Intervalo em horas
+        var intervaloDeVezes = document.getElementById("intervaloVezesDias").value; // Vezes por dia
+        var dias = document.getElementById("dias").value; // Duração em dias
 
-        if (medicamentoId && quantidade && intervalo) {
-            // Adicionar os dados ao array
-            medicamentos.push({
-                IdProductRevenue: medicamentoId,
-                Qty: quantidade,
-                Reason: "Tomar de " + intervalo + " em " + intervalo + " horas"
-            });
-
-            // Exibir o medicamento na página
-            var lista = document.getElementById("listaMedicamentos");
-            var medicamentoHTML = "<p>" + medicamentoNome + " - " + quantidade + " unidades - " + intervalo + " em " + intervalo + " horas " + " durante " + dias + " dias</p>"
-            lista.innerHTML += medicamentoHTML;
-
-            // Limpar os campos
-            medicamentoSelect.selectedIndex = 0;
-            document.getElementById("quantidadeMedicamento").value = '';
-            document.getElementById("intervaloMedicamento").value = '';
-        }
-        else {
+        // Validação básica
+        if (!medicamentoId || !quantidade || (!intervaloHoras && !intervaloDeVezes)) {
             alert("Por favor, preencha todos os campos.");
+            return;
         }
+
+        // Definir a descrição com base no tipo de medicação
+        var descricaoUso = "";
+        switch (tipoMedicacao) {
+            case "CP": // Comprimidos
+                if (intervaloDeVezes) {
+                    descricaoUso = `Tomar ${quantidade} comprimido(s) de ${medicamentoNome}, ${intervaloDeVezes} vez(es) por dia durante ${dias} dia(s).`;
+                } else if (intervaloHoras) {
+                    descricaoUso = `Tomar ${quantidade} comprimido(s) de ${medicamentoNome} de ${intervaloHoras} em ${intervaloHoras} horas durante ${dias} dia(s).`;
+                }
+                break;
+            case "GT": // Gotas
+                if (intervaloDeVezes) {
+                    descricaoUso = `Tomar ${quantidade} gotas de ${medicamentoNome}, ${intervaloDeVezes} vez(es) por dia durante ${dias} dia(s).`;
+                } else if (intervaloHoras) {
+                    descricaoUso = `Tomar ${quantidade} gotas de ${medicamentoNome} de ${intervaloHoras} em ${intervaloHoras} horas durante ${dias} dia(s).`;
+                }
+                break;
+            case "Ml": // Mililitros
+                if (intervaloDeVezes) {
+                    descricaoUso = `Tomar ${quantidade} ml de ${medicamentoNome}, ${intervaloDeVezes} vez(es) por dia durante ${dias} dia(s).`;
+                } else if (intervaloHoras) {
+                    descricaoUso = `Tomar ${quantidade} ml de ${medicamentoNome} de ${intervaloHoras} em ${intervaloHoras} horas durante ${dias} dia(s).`;
+                }
+                break;
+            case "CX": // Caixa
+                if (intervaloDeVezes) {
+                    descricaoUso = `Tomar ${quantidade} caixa(s) de ${medicamentoNome}, ${intervaloDeVezes} vez(es) por dia durante ${dias} dia(s).`;
+                } else if (intervaloHoras) {
+                    descricaoUso = `Tomar ${quantidade} caixa(s) de ${medicamentoNome} de ${intervaloHoras} em ${intervaloHoras} horas durante ${dias} dia(s).`;
+                }
+                break;
+            default: // Outros tipos de medicação
+                if (intervaloDeVezes) {
+                    descricaoUso = `${quantidade} unidade(s) de ${medicamentoNome}, ${intervaloDeVezes} vez(es) por dia durante ${dias} dia(s).`;
+                } else if (intervalo) {
+                    descricaoUso = `${quantidade} unidade(s) de ${medicamentoNome} a cada ${intervaloHoras} horas durante ${dias} dia(s).`;
+                }
+                break;
+        }
+
+        // Adicionar os dados ao array
+        medicamentos.push({
+            IdProductRevenue: medicamentoId,
+            Qty: quantidade,
+            TypeMedication: tipoMedicacao,
+            Reason: descricaoUso
+        });
+
+        // Exibir o medicamento na página
+        var lista = document.getElementById("listaMedicamentos");
+        var medicamentoHTML = `<p>${descricaoUso}</p>`;
+        lista.innerHTML += medicamentoHTML;
+
+        document.getElementById("Reason").value = medicamentos.map(m => m.Reason).join("\n");
+
+        // Limpar os campos
+        medicamentoSelect.selectedIndex = 0;
+        document.getElementById("quantidadeMedicamento").value = '';
+        document.getElementById("intervaloMedicamento").value = '';
+        document.getElementById("intervaloVezesDias").value = '';
+        document.getElementById("dias").value = '';
     }
 
     document.getElementById("receitaForm").onsubmit = function () {

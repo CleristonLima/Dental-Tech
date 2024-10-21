@@ -2,6 +2,7 @@
 using DentalPlus.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Newtonsoft.Json;
 using Rotativa.AspNetCore;
 
 namespace DentalPlus.Controllers
@@ -107,19 +108,6 @@ namespace DentalPlus.Controllers
             }
         }
 
-        /*public IActionResult ProntuarioPDF(ReceituarioModel receita)
-        {
-            if (!VerificarConexaoInternet())
-            {
-                TempData["ErrorLogin"] = "Sem conexão com a internet. Verifique sua rede e tente novamente.";
-                return RedirectToAction("Index", "Prontuario");
-            }
-            else
-            {
-                return View();
-            }
-        }*/
-
         public IActionResult Receita(string medicoId, string pacienteId)
         {
             if (!VerificarConexaoInternet())
@@ -165,12 +153,12 @@ namespace DentalPlus.Controllers
             {
                 ReceituarioModel receita = new ReceituarioModel();
 
-                if (id != null)
+               /* if (id != null)
                 {
 
                     //receita = new ReceituarioModel().RetornarPaciente(id);
 
-                }
+                }*/
 
                 var medicamentos = new ProdutoReceitaModel().ListarTodosRemedios();
                 ViewBag.ListaMedicamentos = new SelectList(medicamentos, "IdProductRevenue", "NameProduct");
@@ -190,12 +178,19 @@ namespace DentalPlus.Controllers
                 return RedirectToAction("Index", "Prontuario");
             }
 
-            // Salvar a receita no banco de dados
             receita.userId = _httpContextAccessor.HttpContext?.Session.GetString("IdUsuarioLogado");
+
             receita.GravarRemedios();
 
-            // Redirecionar após o salvamento
-            return RedirectToAction("Index", "Prontuario");
+            receita.ConsultarNomePaciente();
+            receita.ConsultarNomeMedico();
+
+            string nomeArquivo = $"{receita.NamePatient}_Receita.pdf";
+
+            return new ViewAsPdf("ReceitaPDF", receita)
+            {
+                FileName = nomeArquivo
+            };
         }
     }
    

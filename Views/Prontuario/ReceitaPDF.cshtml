@@ -1,0 +1,44 @@
+﻿@model ReceituarioModel
+
+<h3>Receituario</h3>
+
+<div>
+    <strong>Dr(a)</strong> <p>@Model.NameDoctor</p>
+</div>
+<br />
+<div>
+    <strong>Paciente</strong> <p>@Model.NamePatient</p>
+</div>
+<br />
+<div>
+    <strong>Data de Emissão</strong> <p>@Model.DateIssuePrescriptions.ToString("dd/MM/yyyy")</p>
+</div>
+
+<hr />
+<br />
+
+<h3>Medicamentos e dosagens</h3>
+<hr />
+
+<p id="Remedios">@Model.Reason</p>
+
+<style>
+        body {
+        font-size: 20px; /* Ajusta o tamanho geral do texto */
+        }
+
+        h3 {
+        font-size: 35px; /* Ajusta o tamanho dos títulos */
+        text-align: center;
+        }
+
+        p {
+        font-size: 20px; /* Ajusta o tamanho dos parágrafos */
+        }
+
+        #Remedios {
+        white-space: pre-wrap; /* Permite quebras de linha automáticas no texto */
+        }
+        
+
+</style>

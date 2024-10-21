@@ -32,25 +32,21 @@ namespace DentalPlus.Models
 
         public string Symptoms { get; set; }
 
-        public DateOnly dateIssue { get; set; }
+        public DateOnly DateIssue { get; set; }
+
+        public string userId { get; set; }
 
         public string IdMedicinePrescription { get; set; }
 
         public string IdProductRevenue { get; set; }
 
-        public double Qty { get; set; }
+        public decimal Qty { get; set; }
+
+        public DateOnly DateIssuePrescriptions{ get; set; }
 
         public string TypeMedication { get; set; }
 
-        public string HourMedication { get; set; }
-
-        public string TimeMedication { get; set; }
-
-        public string DaysMedication { get; set; }
-
-        public string userId { get; set; }
-
-        public List<ProdutoReceitaModel> Medicamentos { get; set; } = new List<ProdutoReceitaModel>();
+        public string Reason { get; set; }
 
 
         public void Gravar()
@@ -62,13 +58,13 @@ namespace DentalPlus.Models
 
             // Se for uma inserção, preenche o campo USER_INSERT
             sql = "INSERT INTO TB_MR_RECIPE (ID_PATIENTS, ID_DOCTOR, SYMPTOMS, DATE_ISSUE, USER_INSERT, DATE_INSERT) " +
-                                 "VALUES (@IdPatients, @IdDoctor, @Symptoms, @dateIssue, @userInsert, @dateInsert)";
+                                 "VALUES (@IdPatients, @IdDoctor, @Symptoms, @DateIssue, @userInsert, @dateInsert)";
 
             MySqlCommand command = new MySqlCommand(sql);
             command.Parameters.AddWithValue("@IdPatients", IdPatients);
             command.Parameters.AddWithValue("@IdDoctor", IdDoctor);
             command.Parameters.AddWithValue("@Symptoms", Symptoms);
-            command.Parameters.AddWithValue("@dateIssue", dateIssue.ToDateTime(TimeOnly.MinValue));
+            command.Parameters.AddWithValue("@DateIssue", DateIssue.ToDateTime(TimeOnly.MinValue));
             command.Parameters.AddWithValue("@userInsert", userId);
             command.Parameters.AddWithValue("@dateInsert", currentDateTime);
 
@@ -144,23 +140,19 @@ namespace DentalPlus.Models
 
             string currentDateTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
 
-           /* foreach (var medicamento in Medicamentos)
-            {
-                // Se for uma inserção, preenche o campo USER_INSERT
-                sql = "INSERT INTO TB_MR_MEDICINE_PRESCRIPTIONS (ID_MR_RECIPE, ID_PRODUCT_REVENUE, QTY, REASON, USER_INSERT, DATE_INSERT) " +
-                                 "VALUES (@IdMrRecipe, @IdProductRevenue, @Qty, @Reason, @userInsert, @dateInsert)";
+                sql = "INSERT INTO TB_MR_MEDICINE_PRESCRIPTIONS (ID_DOCTOR, ID_PATIENTS, DATE_ISSUE, REASON, USER_INSERT, DATE_INSERT) " +
+                                                    "VALUES (@IdDoctor, @IdPatients, @DateIssue, @Reason, @userInsert, @dateInsert)";
 
                 MySqlCommand command = new MySqlCommand(sql);
-                command.Parameters.AddWithValue("@IdMrRecipe", IdMrRecipe);
-                command.Parameters.AddWithValue("@IdProductRevenue", IdProductRevenue);
-                command.Parameters.AddWithValue("@Qty", Qty);
+                command.Parameters.AddWithValue("@IdDoctor", IdDoctor);
+                command.Parameters.AddWithValue("@IdPatients", IdPatients);
+                command.Parameters.AddWithValue("@DateIssue", DateIssuePrescriptions.ToDateTime(TimeOnly.MinValue));
                 command.Parameters.AddWithValue("@Reason", Reason);
                 command.Parameters.AddWithValue("@userInsert", userId);
                 command.Parameters.AddWithValue("@dateInsert", currentDateTime);
 
                 objDAL.ExecutarComandoSQL(command);
-            }*/
-
+            
         }
     }
 }

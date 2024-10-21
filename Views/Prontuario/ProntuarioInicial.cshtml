@@ -29,10 +29,10 @@
     <div class="form-group">
         <br />
         <label>Data de Emissão:</label>
-        <input type="date" name="dateIssue" id="dataEmissao"
+        <input type="date" name="DateIssue" id="dataEmissao"
                min="@DateTime.Now.ToString("yyyy-MM-dd")"
               @*value="@Model.dateIssue.ToString("yyyy-MM-dd")"*@ />
-        <span asp-validation-for="dateIssue" class="text-danger"></span>
+        <span asp-validation-for="DateIssue" class="text-danger"></span>
     </div>
     <br />
     <button type="submit" class="btn btn-primary" onclick="Imprimir()">Imprimir Prontuário</button>
@@ -64,15 +64,6 @@
             alert(errorMessage);
         }
     });
-
-    function submitAndPrint() {
-        var form = document.getElementById('prontuarioForm');
-        form.submit(); // Submete o formulário para salvar os dados
-
-        setTimeout(function () {
-            window.print(); // Aguarda um tempo e depois chama a impressão
-        }, 1000); // Tempo de espera para garantir que o salvamento foi feito antes de imprimir
-    }
 
     function GerarReceita() {
 
