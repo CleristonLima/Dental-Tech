@@ -1,0 +1,53 @@
+﻿@model DeclaracaoHorasModel
+
+<h3>Declaracao Horas</h3>
+
+<form id="prontuarioForm" asp-controller="Declaracao" asp-action="DeclaracaoHoras" method="post">
+    <input type="hidden" asp-for="IdHoursDeclaration" />
+
+    <div class="form-group">
+        <label>Paciente</label>
+        <select asp-for="IdPatients" class="form-control" asp-items="ViewBag.ListaPacientes">
+            <option value="">Selecione o paciente</option>
+        </select>
+        <span asp-validation-for="IdPatients" class="text-danger"></span>
+    </div>
+    <br />
+
+    <div class="form-group">
+        <br />
+        <label>Data de Emissão:</label>
+        <input type="date" name="DateIssue" id="dataEmissao"
+               min="@DateTime.Now.ToString("yyyy-MM-dd")"
+        @*value="@Model.dateIssue.ToString("yyyy-MM-dd")"*@ />
+        <span asp-validation-for="DateIssue" class="text-danger"></span>
+    </div>
+    <br />
+
+    <div class="form-group row">
+        <label>Hora Início:</label>
+        <div class="col-2">
+            <input type="time" name="HourStart" class="form-control short-time-input" id="Hora" />
+            <span asp-validation-for="HourStart" class="text-danger"></span>
+        </div>
+    </div>
+    <br />
+
+    <div class="form-group row">
+        <label>Hora Fim:</label>
+        <div class="col-2">
+            <input type="time" name="HourFinish" class="form-control short-time-input" id="Hora" />
+            <span asp-validation-for="HourFinish" class="text-danger"></span>
+        </div>
+    </div>
+    <br />
+    <br />
+    <button type="submit" class="btn btn-primary">Salvar</button>
+</form>
+
+<style>
+    #Hora {
+        width: 100px; /* Ajuste a largura conforme necessário */
+        /* display: inline-block;*/
+    }
+</style>
