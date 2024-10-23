@@ -1,0 +1,22 @@
+﻿@model DeclaracaoHorasModel
+
+<h3>Declaração de horas</h3>
+<br />
+<div>
+    <p>Declaro que o paciente: @Model.NamePatient, compareceu na clinica odontologica por motivo: @Model.Reason </p>
+    <p>No dia @Model.DateIssue, no horario das @Model.HourStart.ToString(@"hh\:mm") as @Model.HourFinish.ToString(@"hh\:mm") .</p>
+    <br />
+    <br />
+    <br />
+    <p>São Paulo, @Model.DateIssue.ToString("dd 'de' MMMM 'de' yyyy")</p>
+    <br />
+    <br />
+    <p>Assinatura do médico: </p>
+</div>
+
+<style>
+    .h3 {
+        text-align: center;
+        margin-left: 100px;
+    }
+</style>

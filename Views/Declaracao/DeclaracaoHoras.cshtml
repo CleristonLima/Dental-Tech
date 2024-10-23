@@ -41,13 +41,22 @@
         </div>
     </div>
     <br />
+    <div class="form-group">
+        <label>Motivo:</label>
+        <textarea asp-for="Reason" class="form-control"></textarea>
+    </div>
     <br />
-    <button type="submit" class="btn btn-primary">Salvar</button>
+    <button type="submit" class="btn btn-primary" onclick="Imprimir()">Imprimir</button>
 </form>
 
 <style>
     #Hora {
         width: 100px; /* Ajuste a largura conforme necessário */
         /* display: inline-block;*/
+    }
+
+    .h3 {
+        text-align: center;
+        margin-left: 100px;
     }
 </style>

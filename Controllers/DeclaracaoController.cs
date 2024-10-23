@@ -17,6 +17,11 @@ namespace DentalPlus.Controllers
             return internetConnection.VerificarConexaoInternet();
         }
 
+        public DeclaracaoController(IHttpContextAccessor httpContextAccessor)
+        {
+            _httpContextAccessor = httpContextAccessor;
+        }
+
         // Processo para gerar a declaração de horas
         public IActionResult DeclaracaoHoras()
         {
@@ -42,6 +47,13 @@ namespace DentalPlus.Controllers
             else
             {
                 DeclaracaoHorasModel horas = new DeclaracaoHorasModel();
+
+                if (id != null)
+                {
+
+                    //receita = new ReceituarioModel().RetornarPaciente(id);
+
+                }
 
                 var paciente = new PacienteModel().ListarTodosPacientes();
                 ViewBag.ListaPacientes = new SelectList(paciente, "IdPatients", "NomeComCpf");
@@ -73,7 +85,7 @@ namespace DentalPlus.Controllers
                     horas.GravarHoras();
                     horas.ConsultarNomePaciente();
 
-                    string nomeArquivo = $"{horas.NamePatient}_Prontuario.pdf";
+                    string nomeArquivo = $"{horas.NamePatient}_DeclaracaoHoras.pdf";
 
                     return new ViewAsPdf("DeclaracaoHorasPDF", horas)
                     {
