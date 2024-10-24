@@ -6,6 +6,7 @@
         <table class="table table-bordered">
             <thead>
                 <tr>
+                    <th>Foto</th>
                     <th>Paciente</th>
                     <th>Médico</th>
                     <th>Consulta solicitada</th>
@@ -22,6 +23,7 @@
                     foreach (var item in (List<AgendamentoModel>)ViewBag.ListaAgendamento)
                     {
                         <tr>
+                            <td><img src="@item.LinkPhoto" width="50" height="50" /></td>
                             <td>@item.NamePatient</td>
                             <td>@item.NameDoctor</td>
                             <td>@item.NameMedicalConsultation</td>

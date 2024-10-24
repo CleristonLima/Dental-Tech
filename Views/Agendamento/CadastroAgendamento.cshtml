@@ -36,7 +36,7 @@
         <br />
         <label>Data e Hora Inicial da Consulta:</label>
         <input type="datetime-local" name="DateConsultationStart" id="dataHora"
-               min="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")"
+               min="@DateTime.MinValue.ToString("yyyy-MM-ddTHH:mm")"
                value="@Model.DateConsultationStart.ToString("yyyy-MM-ddTHH:mm")" />
         <span asp-validation-for="DateConsultationStart" class="text-danger"></span>
     </div>
@@ -45,7 +45,7 @@
         <br />
         <label>Data e Hora Final da Consulta:</label>
         <input type="datetime-local" name="DateConsultationFinish" id="dataHora"
-               min="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")"
+               min="@DateTime.MinValue.ToString("yyyy-MM-ddTHH:mm")"
                value="@Model.DateConsultationFinish.ToString("yyyy-MM-ddTHH:mm")" />
         <span asp-validation-for="DateConsultationFinish" class="text-danger"></span>
     </div>

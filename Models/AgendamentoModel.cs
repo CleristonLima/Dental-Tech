@@ -48,6 +48,8 @@ namespace DentalPlus.Models
 
         public string Reason { get; set; }
 
+        public string LinkPhoto { get; set; }
+
         public string userId { get; set; }
 
         public List<AgendamentoModel> ListarTodosAgendamentos()
@@ -57,6 +59,7 @@ namespace DentalPlus.Models
             DAL objDAL = new DAL();
 
             string sql = "SELECT CMCP.ID_MED_CONS_X_PAT, " +
+                               "CP.LINK_PHOTO, " +
                                "CP.NAME_PATIENT, " +
                                "CD.NAME_DOCTOR, " +
                                "CMC.DESC_MEDICAL_CONSULTATION, " +
@@ -68,6 +71,7 @@ namespace DentalPlus.Models
                         "INNER JOIN TB_CLI_DOCTORS CD ON CD.ID_DOCTOR = CMCP.ID_DOCTOR " +
                         "INNER JOIN TB_CLI_PATIENTS CP ON CP.ID_PATIENTS = CMCP.ID_PATIENTS " +
                         "INNER JOIN TB_CLI_MEDICAL_CONSULTATION CMC ON CMC.ID_MEDICAL_CONSULTATION = CMCP.ID_MEDICAL_CONSULTATION " +
+                        "WHERE CMCP.STATUS_CONSULTATION NOT IN ('Cancelada') " +
                         "ORDER BY CMCP.DATE_CONSULTATION_START DESC";
 
             DataTable dt = objDAL.RetDataTable(sql);
@@ -77,6 +81,7 @@ namespace DentalPlus.Models
                 item = new AgendamentoModel(_httpContextAccessor)
                 {
                     IdMedConsXPat = row["ID_MED_CONS_X_PAT"].ToString(),
+                    LinkPhoto = row["LINK_PHOTO"].ToString(),
                     NamePatient = row["NAME_PATIENT"].ToString(),
                     NameDoctor = row["NAME_DOCTOR"].ToString(),
                     NameMedicalConsultation = row["DESC_MEDICAL_CONSULTATION"].ToString(),
