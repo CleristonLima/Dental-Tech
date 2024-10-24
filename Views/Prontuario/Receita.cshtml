@@ -8,7 +8,7 @@
 
     <div class="form-group">
         <label>Dr(a)</label>
-        <select asp-for="IdDoctor" class="form-control" asp-items="ViewBag.ListaMedicos">
+        <select asp-for="IdDoctor" class="form-control" asp-items="ViewBag.ListaMedicos" required="required">
             <option value="">Selecione o medico</option>
         </select>
         <span asp-validation-for="IdDoctor" class="text-danger"></span>
@@ -16,7 +16,7 @@
     <br />
     <div class="form-group">
         <label>Paciente</label>
-        <select asp-for="IdPatients" class="form-control" asp-items="ViewBag.ListaPacientes">
+        <select asp-for="IdPatients" class="form-control" asp-items="ViewBag.ListaPacientes" required="required">
             <option value="">Selecione o paciente</option>
         </select>
         <span asp-validation-for="IdPatients" class="text-danger"></span>
@@ -25,7 +25,7 @@
     <div class="form-group">
         <br />
         <label>Data de Emissão:</label>
-        <input type="date" name="DateIssuePrescriptions" id="dataEmissao"
+        <input type="date" name="DateIssuePrescriptions" id="dataEmissao" required="required"
                min="@DateTime.Now.ToString("yyyy-MM-dd")"
         @*value="@Model.dateIssue.ToString("yyyy-MM-dd")"*@ />
         <span asp-validation-for="DateIssuePrescriptions" class="text-danger"></span>
@@ -35,7 +35,7 @@
     <!-- Dropdown de medicamentos -->
     <div class="form-group">
         <label for="IdProductRevenue">Medicamento:</label>
-        <select id="IdProductRevenue" asp-for="IdProductRevenue" class="form-control">
+        <select id="IdProductRevenue" asp-for="IdProductRevenue" class="form-control" required="required">
             <option value="">Selecione um Medicamento</option>
             @foreach (var remedio in ViewBag.ProdutosReceita)
             {
@@ -45,16 +45,16 @@
         <span asp-validation-for="IdProductRevenue" class="text-danger"></span>
     </div>
     <br />
-    <div class="form-group">
+    <div class="col-2">
         <label>Quantidade:</label>
-        <input type="number" id="quantidadeMedicamento" class="form-control" />
+        <input type="number" id="quantidadeMedicamento" class="form-control short-time-input" required="required" />
         <span asp-validation-for="Qty" class="text-danger"></span>
     </div>
     <br />
     <div class="form-group">
         <label>Unidade Medida</label>
 
-        <select asp-for="TypeMedication" class="form-control" id="tipoMedicacao">
+        <select asp-for="TypeMedication" class="form-control" id="tipoMedicacao" required="required">
             <option value="CP">Comprimido(s)</option>
             <option value="CX">Caixa(s)</option>
             <option value="Ml">Ml</option>
@@ -63,19 +63,19 @@
         <span asp-validation-for="TypeMedication" class="text-danger"></span>
     </div>
     <br />
-    <div class="form-group">
+    <div class="col-2">
         <label>Intervalo (em horas):</label>
-        <input type="number" id="intervaloMedicamento" class="form-control" />
+        <input type="number" id="intervaloMedicamento" class="form-control short-time-input" />
     </div>
     <br />
-    <div class="form-group">
+    <div class="col-2">
         <label>Intervalo (vez por dia)</label>
-        <input type="number" id="intervaloVezesDias" class="form-control" />
+        <input type="number" id="intervaloVezesDias" class="form-control short-time-input" />
     </div>
     <br />
-    <div class="form-group">
+    <div class="col-2">
         <label>Duração (Dia(s))</label>
-        <input type="number" id="dias" class="form-control" />
+        <input type="number" id="dias" class="form-control short-time-input" />
     </div>
     <br />
     <div class="form-group">
@@ -90,6 +90,13 @@
     <br />
     <button type="submit" class="btn btn-success" onclick="Imprimir()">Imprimir Receita</button>
 </form>
+
+<style>
+    h3 {
+        text-align: center;
+        font-size: 35px; /* Ajusta o tamanho dos títulos */
+    }
+</style>
 
 <script>
     let medicamentos = [];

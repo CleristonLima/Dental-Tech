@@ -1,14 +1,15 @@
-﻿@model DeclaracaoHorasModel
+﻿@model DeclaracaoDiasModel
 
-<h3>Declaração de horas</h3>
+<h3>Declaração de dias</h3>
 <br />
 <div>
     <p>Declaro que o paciente: @Model.NamePatient, compareceu na clinica odontologica por motivo(s): @Model.Reason </p>
-    <p>No horario das @Model.HourStart.ToString(@"hh\:mm") as @Model.HourFinish.ToString(@"hh\:mm").</p>
+    <p>E por esse motivo solicitamos o repouso médico de @Model.DaysDeclaration dia(s) perante o(s) motivo(s) informado(s).</p>
     <br />
     <br />
     <br />
     <p>São Paulo, @Model.DateIssue.ToString("dd 'de' MMMM 'de' yyyy")</p>
+    <br />
     <p>Ass do médico: </p>
     <br />
     <div class="linha-assinatura"></div>
@@ -18,10 +19,10 @@
 </div>
 
 <style>
-   
+
     h3 {
-        font-size: 35px; /* Ajusta o tamanho dos títulos */
         text-align: center;
+        font-size: 35px; /* Ajusta o tamanho dos títulos */
     }
 
     .linha-assinatura {

@@ -1,5 +1,6 @@
 ﻿using DentalPlus.Uteis;
 using MySql.Data.MySqlClient;
+using System.ComponentModel.DataAnnotations;
 using System.Data;
 
 namespace DentalPlus.Models
@@ -20,6 +21,7 @@ namespace DentalPlus.Models
 
         public string IdProductRevenue { get; set; }
 
+        [Required(ErrorMessage = "Por favor informe o medicamento!")]
         public string NameProduct { get; set; }
 
         public string LinkPhotoRevenue { get; set; }

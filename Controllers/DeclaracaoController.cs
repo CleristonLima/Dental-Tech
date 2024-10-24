@@ -48,15 +48,18 @@ namespace DentalPlus.Controllers
             {
                 DeclaracaoHorasModel horas = new DeclaracaoHorasModel();
 
-                if (id != null)
+                /*if (id != null)
                 {
 
-                    //receita = new ReceituarioModel().RetornarPaciente(id);
+                    receita = new ReceituarioModel().RetornarPaciente(id);
 
-                }
+                }*/
 
                 var paciente = new PacienteModel().ListarTodosPacientes();
                 ViewBag.ListaPacientes = new SelectList(paciente, "IdPatients", "NomeComCpf");
+
+                var medico = new MedicoModel().ListarTodosMedicos();
+                ViewBag.ListaMedicos = new SelectList(medico, "IdDoctor", "NomeComCRM");
 
                 return View(horas);
 
@@ -83,6 +86,7 @@ namespace DentalPlus.Controllers
                 {
                     horas.userId = _httpContextAccessor.HttpContext?.Session.GetString("IdUsuarioLogado");
                     horas.GravarHoras();
+                    horas.ConsultarNomeMedico();
                     horas.ConsultarNomePaciente();
 
                     string nomeArquivo = $"{horas.NamePatient}_DeclaracaoHoras.pdf";
@@ -106,6 +110,69 @@ namespace DentalPlus.Controllers
             else
             {
                 return View();
+            }
+        }
+
+        [HttpGet]
+        public IActionResult DeclaracaoDias(int? id)
+        {
+            if (!VerificarConexaoInternet())
+            {
+                TempData["ErrorLogin"] = "Sem conexão com a internet. Verifique sua rede e tente novamente.";
+                return RedirectToAction("Index", "Prontuario");
+            }
+            else
+            {
+                DeclaracaoDiasModel dias = new DeclaracaoDiasModel();
+
+                /*if (id != null)
+                {
+
+                    receita = new ReceituarioModel().RetornarPaciente(id);
+
+                }*/
+
+                var paciente = new PacienteModel().ListarTodosPacientes();
+                ViewBag.ListaPacientes = new SelectList(paciente, "IdPatients", "NomeComCpf");
+
+                var medico = new MedicoModel().ListarTodosMedicos();
+                ViewBag.ListaMedicos = new SelectList(medico, "IdDoctor", "NomeComCRM");
+
+                return View(dias);
+
+            }
+
+        }
+
+        [HttpPost]
+        public IActionResult DeclaracaoDias(DeclaracaoDiasModel dias)
+        {
+            if (!VerificarConexaoInternet())
+            {
+                TempData["ErrorLogin"] = "Sem conexão com a internet. Verifique sua rede e tente novamente.";
+                return RedirectToAction("Index", "Prontuario");
+            }
+            else
+            {
+                if (!VerificarConexaoInternet())
+                {
+                    TempData["ErrorLogin"] = "Sem conexão com a internet. Verifique sua rede e tente novamente.";
+                    return RedirectToAction("Index", "Prontuario");
+                }
+                else
+                {
+                    dias.userId = _httpContextAccessor.HttpContext?.Session.GetString("IdUsuarioLogado");
+                    dias.GravarDias();
+                    dias.ConsultarNomeMedico();
+                    dias.ConsultarNomePaciente();
+
+                    string nomeArquivo = $"{dias.NamePatient}_DeclaracaoDias.pdf";
+
+                    return new ViewAsPdf("DeclaracaoDiasPDF", dias)
+                    {
+                        FileName = nomeArquivo
+                    };
+                }
             }
         }
     }

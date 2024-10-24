@@ -1,5 +1,6 @@
 ﻿using DentalPlus.Uteis;
 using MySql.Data.MySqlClient;
+using System.ComponentModel.DataAnnotations;
 using System.Data;
 
 namespace DentalPlus.Models
@@ -20,12 +21,16 @@ namespace DentalPlus.Models
 
         public string IdProduct { get; set; }
 
+        [Required(ErrorMessage = "Por favor selecione o nome do medicamento!")]
         public string DescProduct { get; set; }
 
+        [Required(ErrorMessage = "Por favor informe a quantidade para o estoque!")]
         public decimal QtyStock { get; set; }
 
+        [Required(ErrorMessage = "Por favor informe a quantidade minima para o estoque!")]
         public decimal QtyMinStock { get; set; }
 
+        [Required(ErrorMessage = "Por favor informe o unitlizador!")]
         public string Unitilizer { get; set; }
 
         public string LinkPhoto { get; set; }

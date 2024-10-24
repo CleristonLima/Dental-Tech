@@ -58,6 +58,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGVjbGFyYWNhb1xEZWNsYXJhY2FvRGlhcy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
+[C:/Projetos/DentalPlus/DentalPlus/Views/Declaracao/DeclaracaoDiasPDF.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGVjbGFyYWNhb1xEZWNsYXJhY2FvRGlhc1BERi5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Projetos/DentalPlus/DentalPlus/Views/Declaracao/DeclaracaoHoras.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcRGVjbGFyYWNhb1xEZWNsYXJhY2FvSG9yYXMuY3NodG1s
 build_metadata.AdditionalFiles.CssScope = 

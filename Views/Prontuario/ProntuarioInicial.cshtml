@@ -7,15 +7,15 @@
 
     <div class="form-group">
         <label>Dr(a)</label>
-        <select asp-for="IdDoctor" class="form-control" asp-items="ViewBag.ListaMedicos">
+        <select asp-for="IdDoctor" class="form-control" asp-items="ViewBag.ListaMedicos" required="required">
             <option value="">Selecione o medico</option>
         </select>
-        <span asp-validation-for="IdPatients" class="text-danger"></span>
+        <span asp-validation-for="IdDoctor" class="text-danger"></span>
     </div>
     <br />
     <div class="form-group">
         <label>Paciente</label>
-        <select asp-for="IdPatients" class="form-control" asp-items="ViewBag.ListaPacientes">
+        <select asp-for="IdPatients" class="form-control" asp-items="ViewBag.ListaPacientes" required="required">
             <option value="">Selecione o paciente</option>
         </select>
         <span asp-validation-for="IdPatients" class="text-danger"></span>
@@ -23,13 +23,13 @@
     <br />
     <div class="form-group">
         <label>Sintomas</label>
-        <textarea asp-for="Symptoms" class="form-control"></textarea>
+        <textarea asp-for="Symptoms" class="form-control" required="required"></textarea>
     </div>
 
     <div class="form-group">
         <br />
         <label>Data de Emissão:</label>
-        <input type="date" name="DateIssue" id="dataEmissao"
+        <input type="date" name="DateIssue" id="dataEmissao" required="required"
                min="@DateTime.Now.ToString("yyyy-MM-dd")"
               @*value="@Model.dateIssue.ToString("yyyy-MM-dd")"*@ />
         <span asp-validation-for="DateIssue" class="text-danger"></span>
@@ -48,6 +48,11 @@
 
     #gerarReceita {
         margin-left: 30px;
+    }
+
+    h3 {
+        text-align: center;
+        font-size: 35px; /* Ajusta o tamanho dos títulos */
     }
 
 </style>

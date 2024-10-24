@@ -1,13 +1,21 @@
 ﻿@model DeclaracaoHorasModel
 
-<h3>Declaracao Horas</h3>
+<h3>Declaração de Horas</h3>
 
 <form id="prontuarioForm" asp-controller="Declaracao" asp-action="DeclaracaoHoras" method="post">
     <input type="hidden" asp-for="IdHoursDeclaration" />
 
     <div class="form-group">
+        <label>Dr(a)</label>
+        <select asp-for="IdDoctor" class="form-control" asp-items="ViewBag.ListaMedicos" required="required">
+            <option value="">Selecione o medico</option>
+        </select>
+        <span asp-validation-for="IdDoctor" class="text-danger"></span>
+    </div>
+    <br />
+    <div class="form-group">
         <label>Paciente</label>
-        <select asp-for="IdPatients" class="form-control" asp-items="ViewBag.ListaPacientes">
+        <select asp-for="IdPatients" class="form-control" asp-items="ViewBag.ListaPacientes" required="required">
             <option value="">Selecione o paciente</option>
         </select>
         <span asp-validation-for="IdPatients" class="text-danger"></span>
@@ -17,7 +25,7 @@
     <div class="form-group">
         <br />
         <label>Data de Emissão:</label>
-        <input type="date" name="DateIssue" id="dataEmissao"
+        <input type="date" name="DateIssue" id="dataEmissao" required="required"
                min="@DateTime.Now.ToString("yyyy-MM-dd")"
         @*value="@Model.dateIssue.ToString("yyyy-MM-dd")"*@ />
         <span asp-validation-for="DateIssue" class="text-danger"></span>
@@ -25,25 +33,25 @@
     <br />
 
     <div class="form-group row">
-        <label>Hora Início:</label>
+        <label>Hora de chegada:</label>
         <div class="col-2">
-            <input type="time" name="HourStart" class="form-control short-time-input" id="Hora" />
+            <input type="time" name="HourStart" class="form-control short-time-input" id="Hora" required="required" />
             <span asp-validation-for="HourStart" class="text-danger"></span>
         </div>
     </div>
     <br />
 
     <div class="form-group row">
-        <label>Hora Fim:</label>
+        <label>Hora da saída:</label>
         <div class="col-2">
-            <input type="time" name="HourFinish" class="form-control short-time-input" id="Hora" />
+            <input type="time" name="HourFinish" class="form-control short-time-input" id="Hora" required="required" />
             <span asp-validation-for="HourFinish" class="text-danger"></span>
         </div>
     </div>
     <br />
     <div class="form-group">
         <label>Motivo:</label>
-        <textarea asp-for="Reason" class="form-control"></textarea>
+        <textarea asp-for="Reason" class="form-control" required="required"></textarea>
     </div>
     <br />
     <button type="submit" class="btn btn-primary" onclick="Imprimir()">Imprimir</button>

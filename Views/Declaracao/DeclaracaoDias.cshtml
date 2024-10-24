@@ -1,3 +1,61 @@
-﻿@model DeclaracaoHorasModel
+﻿@model DeclaracaoDiasModel
 
 <h3>Declaracao Dias</h3>
+
+<form id="prontuarioForm" asp-controller="Declaracao" asp-action="DeclaracaoDias" method="post">
+    <input type="hidden" asp-for="IdDaysDeclaration" />
+
+    <div class="form-group">
+        <label>Dr(a)</label>
+        <select asp-for="IdDoctor" class="form-control" asp-items="ViewBag.ListaMedicos" required="required">
+            <option value="">Selecione o medico</option>
+        </select>
+        <span asp-validation-for="IdDoctor" class="text-danger"></span>
+    </div>
+    <br />
+    <div class="form-group">
+        <label>Paciente</label>
+        <select asp-for="IdPatients" class="form-control" asp-items="ViewBag.ListaPacientes" required="required">
+            <option value="">Selecione o paciente</option>
+        </select>
+        <span asp-validation-for="IdPatients" class="text-danger"></span>
+    </div>
+    <br />
+
+    <div class="form-group">
+        <br />
+        <label>Data de Emissão:</label>
+        <input type="date" name="DateIssue" id="dataEmissao" required="required"
+               min="@DateTime.Now.ToString("yyyy-MM-dd")"
+        @*value="@Model.dateIssue.ToString("yyyy-MM-dd")"*@ />
+        <span asp-validation-for="DateIssue" class="text-danger"></span>
+    </div>
+    <br />
+
+    <div class="form-group row">
+        <label>Dias de licença:</label>
+        <div class="col-2">
+            <input type="number" name="DaysDeclaration" class="form-control short-time-input" id="Dias" required="required" />
+            <span asp-validation-for="DaysDeclaration" class="text-danger"></span>
+        </div>
+    </div>
+    <br />
+    <div class="form-group">
+        <label>Motivo:</label>
+        <textarea asp-for="Reason" class="form-control" required="required"></textarea>
+    </div>
+    <br />
+    <button type="submit" class="btn btn-primary" onclick="Imprimir()">Imprimir</button>
+</form>
+
+<style>
+    #Dias {
+        width: 100px; /* Ajuste a largura conforme necessário */
+        /* display: inline-block;*/
+    }
+
+    h3 {
+        text-align: center;
+        font-size: 35px; /* Ajusta o tamanho dos títulos */
+    }
+</style>
