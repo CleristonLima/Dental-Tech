@@ -145,7 +145,7 @@
     <div class="form-group">
         <br />
         <label>Foto</label>
-        <img src="@Model.LinkPhoto" width="150" height="150" />
+        <img src="@(string.IsNullOrEmpty(Model.LinkPhoto) ? "/images/SemFoto.png " : Model.LinkPhoto)" class="foto-perfil" width="150" height="150" />  
         <br />
         <br />
         <input asp-for="LinkPhoto" type="text" placeholder="Link da foto" class="form-control" />
@@ -158,6 +158,14 @@
 </form>
 
 <style>
+
+    .foto-perfil {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%; /* Deixa a imagem redonda */
+        object-fit: cover; /* Garante que a imagem ocupe o espaço definido sem distorções */
+    }
+
     .date-field {
         max-width: 200px; /* Defina a largura desejada */
         display: inline-block;

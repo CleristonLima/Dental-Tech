@@ -1,5 +1,16 @@
 ﻿<h3 class="titulo-cadastro">Lista de pacientes</h3>
 
+@if (ViewBag.PacientesAniversariantes != null && ViewBag.PacientesAniversariantes.Count > 0)
+{
+    <div id="alerta-aniversariantes" class="alert alert-warning">
+        @foreach (var item in (List<PacienteModel>)ViewBag.PacientesAniversariantes)
+        {
+            <p>O paciente @item.NamePatient faz aniversário no dia @item.BornDate.ToString("dd/MM/yyyy"), não esqueça de dar os parabéns! 🎉</p>
+        }
+    </div>
+}
+
+
 @if (ViewBag.ListaPacientes != null)
 {
     <div class="table-container">
@@ -34,7 +45,7 @@
                     foreach (var item in (List<PacienteModel>)ViewBag.ListaPacientes)
                     {
                         <tr>
-                            <td><img src="@item.LinkPhoto" width="50" height="50" /></td>
+                            <td><img src="@(string.IsNullOrEmpty(item.LinkPhoto) ?"/images/SemFoto.png " : item.LinkPhoto)" width="50" height="50" /></td>
                             <td>@item.CpfCnpj</td>
                             <td>@item.RgRne</td>
                             <td>@item.NamePatient</td>
@@ -63,6 +74,7 @@
     <br />
 
     <button class="btn btn-block btn-primary" type="button" onclick="Cadastrar()">Cadastrar novo Paciente</button>
+    <button type="button" class="btn btn-success" onclick="Aniversariantes()" id="btnAniversariantes">Aniversariantes do mês</button>
 }
 else
 {
@@ -71,6 +83,11 @@ else
 <br />
 
 <style>
+
+    #btnAniversariantes {
+        margin-left: 20px;
+    }
+
     .titulo-cadastro {
         white-space: nowrap; /* Impede a quebra de linha */
         text-align: center; /* Centraliza o texto */
@@ -100,12 +117,28 @@ else
         border: 1px solid #ddd;
     }
 
+    .table td img {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%; /* Deixa a imagem redonda */
+        object-fit: cover; /* Ajusta a imagem para cobrir o espaço sem distorcer */
+    }
+
     .table th {
         background-color: #f2f2f2;
     }
 </style>
 
 <script>
+
+    // Esconde o balão após 5 segundos (5000 ms)
+    setTimeout(function () {
+        var alerta = document.getElementById("alerta-aniversariantes");
+        if (alerta) {
+            alerta.style.display = "none";
+        }
+    }, 5000); // Tempo em milissegundos
+
     function checkInternetConnection() {
         if (!navigator.onLine) {
             alert("Sem conexao com a internet. Verifique sua rede e tente novamente.");
@@ -143,6 +176,14 @@ else
             alert("Sem conexão com a internet. Verifique sua rede e tente novamente.");
         } else {
             window.location.href = "../Paciente/Excluir/" + id;
+        }
+    }
+
+    function Aniversariantes(){
+        if (!navigator.onLine) {
+            alert("Sem conexão com a internet. Verifique sua rede e tente novamente.");
+        } else {
+            window.location.href = "../Paciente/Aniversariantes";
         }
     }
 </script>

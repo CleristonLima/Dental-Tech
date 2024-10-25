@@ -1,11 +1,11 @@
 ﻿<h3 class="titulo-cadastro">Lista de produtos no seu estoque</h3>
 
-@if (ViewBag.ProdutosEstoqueBaixo != null && ViewBag.ProdutosEstoqueBaixo.Count > 0)
+@if (ViewBag.ListaPacienteAniversariantes != null && ViewBag.ListaPacienteAniversariantes.Count > 0)
 {
     <div class="alert alert-warning">
-        @foreach (var item in (List<ProdutosEstoqueModel>)ViewBag.ProdutosEstoqueBaixo)
+        @foreach (var item in (List<ProdutosEstoqueModel>)ViewBag.ListaPacienteAniversariantes)
         {
-            <p>O produto @item.DescProduct está com estoque baixo. Quantidade atual: @item.QtyStock, Quantidade mínima: @item.QtyMinStock.</p>
+            <p>O paciente @item.DescProduct está com estoque baixo. Quantidade atual: @item.QtyStock, Quantidade mínima: @item.QtyMinStock.</p>
         }
     </div>
 }

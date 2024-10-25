@@ -151,6 +151,37 @@ namespace DentalPlus.Models
             return lista;
         }
 
+        public List<PacienteModel> ListarTodosPacientesAniversariantes()
+        {
+            List<PacienteModel> lista = new List<PacienteModel>();
+            PacienteModel item;
+            DAL objDAL = new DAL();
+
+            string sql = "SELECT ID_PATIENTS, " +
+                               "LINK_PHOTO, " +
+	                           "NAME_PATIENT, " +
+                               "BORN_DATE " +
+                        "FROM TB_CLI_PATIENTS " +
+                        "WHERE MONTH(BORN_DATE) = MONTH(CURDATE()) " +
+                        "ORDER BY BORN_DATE ASC";
+            DataTable dt = objDAL.RetDataTable(sql);
+
+            foreach (DataRow row in dt.Rows)
+            {
+                item = new PacienteModel(_httpContextAccessor)
+                {
+                    IdPatients = row["ID_PATIENTS"].ToString(),
+                    LinkPhoto = row["LINK_PHOTO"].ToString(),
+                    NamePatient = row["NAME_PATIENT"].ToString(),
+                    BornDate = DateOnly.FromDateTime(DateTime.Parse(row["BORN_DATE"].ToString()))
+                };
+
+                lista.Add(item);
+            }
+
+            return lista;
+        }
+
         public PacienteModel RetornarPaciente(int? id)
         {
 

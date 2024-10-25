@@ -23,7 +23,7 @@
                     foreach (var item in (List<AgendamentoModel>)ViewBag.ListaAgendamento)
                     {
                         <tr>
-                            <td><img src="@item.LinkPhoto" width="50" height="50" /></td>
+                            <td><img src="@(string.IsNullOrEmpty(item.LinkPhoto) ?"/images/SemFoto.png " : item.LinkPhoto)" width="50" height="50" /></td>
                             <td>@item.NamePatient</td>
                             <td>@item.NameDoctor</td>
                             <td>@item.NameMedicalConsultation</td>
@@ -71,16 +71,23 @@ else
         padding: 0; /* Remove padding */
     }
 
-        .table th, .table td {
-            white-space: nowrap;
-            padding: 8px;
-            text-align: center;
-            border: 1px solid #ddd;
-        }
+    .table th, .table td {
+        white-space: nowrap;
+        padding: 8px;
+        text-align: center;
+        border: 1px solid #ddd;
+    }
 
-        .table th {
-            background-color: #f2f2f2;
-        }
+    .table td img {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%; /* Deixa a imagem redonda */
+        object-fit: cover; /* Ajusta a imagem para cobrir o espaço sem distorcer */
+    }
+
+    .table th {
+        background-color: #f2f2f2;
+    }
 </style>
 
 <script>

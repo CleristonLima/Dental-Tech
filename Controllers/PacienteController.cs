@@ -32,6 +32,11 @@ namespace DentalPlus.Controllers
             else
             {
                 ViewBag.ListaPacientes = new PacienteModel().ListarTodosPacientes();
+
+                
+                var aniversariantes = new PacienteModel().ListarTodosPacientesAniversariantes();
+                ViewBag.PacientesAniversariantes = aniversariantes;
+
                 return View();
             }
         }
@@ -114,6 +119,23 @@ namespace DentalPlus.Controllers
             else
             {
                 new PacienteModel().Excluir(id);
+                return View();
+            }
+        }
+
+        //
+
+        [HttpGet]
+        public IActionResult Aniversariantes()
+        {
+            if (!VerificarConexaoInternet())
+            {
+                TempData["ErrorLogin"] = "Sem conexão com a internet. Verifique sua rede e tente novamente.";
+                return RedirectToAction("Menu", "Home");
+            }
+            else
+            {
+                ViewBag.ListaPacienteAniversariantes = new PacienteModel().ListarTodosPacientesAniversariantes();
                 return View();
             }
         }

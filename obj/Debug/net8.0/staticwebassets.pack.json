@@ -89,6 +89,10 @@
       "PackagePath": "staticwebassets\\images\\Relogio.png"
     },
     {
+      "Id": "C:\\Projetos\\DentalPlus\\DentalPlus\\wwwroot\\images\\SemFoto.png",
+      "PackagePath": "staticwebassets\\images\\SemFoto.png"
+    },
+    {
       "Id": "C:\\Projetos\\DentalPlus\\DentalPlus\\wwwroot\\images\\TipoConsultas.png",
       "PackagePath": "staticwebassets\\images\\TipoConsultas.png"
     },

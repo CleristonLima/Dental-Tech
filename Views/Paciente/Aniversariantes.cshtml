@@ -1,0 +1,76 @@
+﻿@model PacienteModel
+
+<h3 class="titulo-cadastro">Aniversariantes do mês</h3>
+
+<br />
+
+@if (ViewBag.ListaPacienteAniversariantes != null)
+{
+    <div class="table-container">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Foto</th>
+                    <th>Nome</th>
+                    <th>Data de Nascimento</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @{
+                    foreach (var item in (List<PacienteModel>)ViewBag.ListaPacienteAniversariantes)
+                    {
+                        <tr>
+                            <td><img src="@(string.IsNullOrEmpty(item.LinkPhoto) ?"/images/SemFoto.png " : item.LinkPhoto)" width="50" height="50" /></td>
+                            <td>@item.NamePatient</td>
+                            <td>@item.BornDate</td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+    <br />
+}
+
+<style>
+    .titulo-cadastro {
+        white-space: nowrap; /* Impede a quebra de linha */
+        text-align: center; /* Centraliza o texto */
+        margin-bottom: 20px; /* Adiciona um espaço abaixo do título */
+    }
+
+    .table-container {
+        white-space: nowrap;
+        width: 100%;
+        overflow-x: auto;
+        margin: 0; /* Remove margens */
+        padding: 0; /* Remove padding */
+    }
+
+    .table {
+        white-space: nowrap;
+        width: 100%;
+        border-collapse: collapse;
+        margin: 0; /* Remove margens */
+        padding: 0; /* Remove padding */
+    }
+
+    .table th, .table td {
+        white-space: nowrap;
+        padding: 8px;
+        text-align: center;
+        border: 1px solid #ddd;
+    }
+
+    .table td img {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%; /* Deixa a imagem redonda */
+        object-fit: cover; /* Ajusta a imagem para cobrir o espaço sem distorcer */
+    }
+
+    .table th {
+        background-color: #f2f2f2;
+     }
+</style>
