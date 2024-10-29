@@ -29,11 +29,11 @@ namespace DentalPlus.Controllers
                 TempData["ErrorLogin"] = "Sem conexão com a internet. Verifique sua rede e tente novamente.";
                 return RedirectToAction("Menu", "Home");
             }
+
             else
             {
                 ViewBag.ListaPacientes = new PacienteModel().ListarTodosPacientes();
 
-                
                 var aniversariantes = new PacienteModel().ListarTodosPacientesAniversariantes();
                 ViewBag.PacientesAniversariantes = aniversariantes;
 

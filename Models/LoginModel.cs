@@ -48,7 +48,7 @@ namespace DentalPlus.Models
             }
             else
             {
-                ErrorMessage = "Email ou senha inválidos!";
+                ErrorMessage = "Login ou senha inválidos!";
 
                 return false;
             }

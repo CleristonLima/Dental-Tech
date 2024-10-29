@@ -52,6 +52,8 @@ namespace DentalPlus.Models
 
         public string userId { get; set; }
 
+        public string ErrorMessage { get; set; }
+
         public List<AgendamentoModel> ListarTodosAgendamentos()
         {
             List<AgendamentoModel> lista = new List<AgendamentoModel>();
@@ -95,6 +97,60 @@ namespace DentalPlus.Models
             }
 
             return lista;
+        }
+
+        public List<Tuple<DateTime, DateTime>> ObterHorariosOcupados(DateTime data, string idDoctor)
+        {
+            List<Tuple<DateTime, DateTime>> horariosOcupados = new List<Tuple<DateTime, DateTime>>();
+            DAL objDAL = new DAL();
+
+            string sql = "SELECT DATE_CONSULTATION_START, DATE_CONSULTATION_FINISH " +
+                         "FROM TB_CLI_MED_CONSUL_X_PATIENT " +
+                         "WHERE DATE_CONSULTATION_START >= @dataInicio " +
+                         "AND DATE_CONSULTATION_START < @dataFim " +
+                         "AND ID_DOCTOR = @idDoctor " +
+                         "AND STATUS_CONSULTATION != 'Cancelada'";
+
+            MySqlCommand command = new MySqlCommand(sql);
+            command.Parameters.AddWithValue("@dataInicio", data.Date);
+            command.Parameters.AddWithValue("@dataFim", data.Date.AddDays(1));
+            command.Parameters.AddWithValue("@idDoctor", idDoctor);
+
+            DataTable dt = objDAL.RetDataTable(command);
+
+            foreach (DataRow row in dt.Rows)
+            {
+                DateTime inicio = DateTime.Parse(row["DATE_CONSULTATION_START"].ToString());
+                DateTime fim = DateTime.Parse(row["DATE_CONSULTATION_FINISH"].ToString());
+                horariosOcupados.Add(new Tuple<DateTime, DateTime>(inicio, fim));
+            }
+
+            return horariosOcupados;
+        }
+
+        public bool HorarioDisponivel(DateTime inicio, DateTime fim, string idDoctor)
+        {
+            DAL objDAL = new DAL();
+
+            string sql = "SELECT COUNT(*) " +
+                   "FROM TB_CLI_MED_CONSUL_X_PATIENT " +
+                   "WHERE ID_DOCTOR = @IdDoctor " +
+                   "AND STATUS_CONSULTATION != 'Cancelada' " +
+                   "AND((DATE_CONSULTATION_START < @Fim AND DATE_CONSULTATION_FINISH > @Inicio))" ;
+
+            MySqlCommand command = new MySqlCommand(sql);
+            command.Parameters.AddWithValue("@IdDoctor", idDoctor);
+            command.Parameters.AddWithValue("@Inicio", inicio);
+            command.Parameters.AddWithValue("@Fim", fim);
+
+            int count = Convert.ToInt32(objDAL.RetDataTable(command).Rows[0][0]);
+
+            if (count > 0) {
+
+                ErrorMessage = "Não é possivel agendar nesse horário pois ja existe paciente com consulta nesse horario ";
+            }
+
+            return count == 0; // Retorna verdadeiro se não houver conflito
         }
 
         public AgendamentoModel RetornarAgendamento(int? id)

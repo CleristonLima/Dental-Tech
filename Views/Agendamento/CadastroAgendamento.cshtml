@@ -2,6 +2,13 @@
 
 <h3> Cadastro de agendamento</h3>
 
+@if (TempData["ErrorHorario"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["ErrorHorario"]
+    </div>
+}
+
 <form asp-controller="Agendamento" asp-action="CadastroAgendamento" method="post">
     <input type="hidden" asp-for="IdMedConsXPat" />
 
@@ -33,19 +40,17 @@
     </div>
     <br />
     <div class="form-group">
-        <br />
         <label>Data e Hora Inicial da Consulta:</label>
-        <input type="datetime-local" name="DateConsultationStart" id="dataHora"
-               min="@DateTime.MinValue.ToString("yyyy-MM-ddTHH:mm")"
+        <input type="datetime-local" name="DateConsultationStart" id="dataHoraInicio"
+               min="@DateTime.MinValue.ToString("yyyy-MM-ddTHH:mm")" 
                value="@Model.DateConsultationStart.ToString("yyyy-MM-ddTHH:mm")" />
         <span asp-validation-for="DateConsultationStart" class="text-danger"></span>
     </div>
     <br />
     <div class="form-group">
-        <br />
         <label>Data e Hora Final da Consulta:</label>
-        <input type="datetime-local" name="DateConsultationFinish" id="dataHora"
-               min="@DateTime.MinValue.ToString("yyyy-MM-ddTHH:mm")"
+        <input type="datetime-local" name="DateConsultationFinish" id="dataHoraFim"
+               min="@DateTime.MinValue.ToString("yyyy-MM-ddTHH:mm")" 
                value="@Model.DateConsultationFinish.ToString("yyyy-MM-ddTHH:mm")" />
         <span asp-validation-for="DateConsultationFinish" class="text-danger"></span>
     </div>
@@ -71,6 +76,7 @@
 
             try
             {
+
                 vObs = ViewBag.Agendamento.Reason;
             }
             catch { }
@@ -78,7 +84,7 @@
 
         @Html.TextArea("Reason", vObs, new { @class = "form-control" })
 
-        <span asp-validation-for="Reason" class="text-danger"></span>
+        <!--<span asp-validation-for="Reason" class="text-danger"></span>-->
     </div>
     <br />
     <br />
@@ -93,3 +99,41 @@
     }
 
 </style>
+
+<script>
+
+    function checkInternetConnection() {
+        if (!navigator.onLine) {
+            alert("Sem conexao com a internet. Verifique sua rede e tente novamente.");
+        }
+    }
+
+    document.getElementById("dataConsulta").addEventListener("change", function () {
+        var data = this.value;
+
+        // Chamada AJAX para obter horários disponíveis e a duração da consulta
+        fetch(`/AgendamentoController/ObterHorariosDisponiveis?data=${data}`)
+            .then(response => response.json())
+            .then(result => {
+                var horarios = result.Horarios;
+                var horarioConsultaInicio = document.getElementById("horarioConsultaInicio");
+                horarioConsultaInicio.innerHTML = "<option value=''>Selecione um horário</option>";
+
+                horarios.forEach(horario => {
+                    var option = document.createElement("option");
+                    option.value = horario.Inicio;
+                    option.text = new Date(horario.Inicio).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                    option.setAttribute("data-fim", horario.Fim);
+                    horarioConsultaInicio.appendChild(option);
+                });
+
+                // Evento para atualizar o horário final quando o início for selecionado
+                horarioConsultaInicio.addEventListener("change", function () {
+                    var horarioSelecionado = horarioConsultaInicio.options[horarioConsultaInicio.selectedIndex];
+                    var horarioFim = horarioSelecionado.getAttribute("data-fim");
+                    document.getElementById("horarioConsultaFim").value = horarioFim;
+                });
+            })
+            .catch(error => console.error('Erro ao buscar horários:', error));
+    });
+</script>
