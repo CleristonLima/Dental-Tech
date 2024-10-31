@@ -33,6 +33,7 @@ namespace DentalPlus.Controllers
             else
             {
                 ViewBag.ListaAgendamento = new AgendamentoModel().ListarTodosAgendamentos();
+                ViewBag.ListaAgendamentoAmanha = new AgendamentoModel().ListarTodasConsultasAmanha();
                 return View();
             }
         }

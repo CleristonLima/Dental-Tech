@@ -5,7 +5,7 @@
     <div id="alerta-aniversariantes" class="alert alert-warning">
         @foreach (var item in (List<PacienteModel>)ViewBag.PacientesAniversariantes)
         {
-            <p>O paciente @item.NamePatient faz aniversário no dia @item.BornDate.ToString("dd/MM/yyyy"), não esqueça de dar os parabéns! 🎉</p>
+            <p>O paciente @item.NamePatient faz aniversário no dia @item.BornDate.ToString("dd/MM/yyyy"), não esqueça de dar os parabéns! 🎉<br /></p>
         }
     </div>
 }

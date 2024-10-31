@@ -1,5 +1,15 @@
 ﻿<h3 class="titulo-cadastro">Agendamentos</h3>
 
+@if (ViewBag.ListaAgendamentoAmanha != null && ViewBag.ListaAgendamentoAmanha.Count > 0)
+{
+    <div id="alerta-consultaamanha" class="alert alert-warning">
+        @foreach (var item in (List<AgendamentoModel>)ViewBag.ListaAgendamentoAmanha)
+        {
+            <p>O paciente @item.NamePatient tem agendamento amanhã das @item.DateConsultationStart.ToString("dd/MM/yyyy HH:mm") até as @item.DateConsultationFinish.ToString("dd/MM/yyyy HH:mm"), para fazer uma @item.NameMedicalConsultation, não esqueça de enviar a mensagem para ele 😉<br /></p>
+        }
+    </div>
+}
+
 @if (ViewBag.ListaAgendamento != null)
 {
     <div class="table-container">
@@ -91,6 +101,21 @@ else
 </style>
 
 <script>
+
+    // Esconde o balão após 5 segundos (5000 ms)
+    setTimeout(function () {
+        var alerta = document.getElementById("alerta-consultaamanha");
+        if (alerta) {
+            alerta.style.display = "none";
+        }
+    }, 5000); // Tempo em milissegundos
+
+    function checkInternetConnection() {
+        if (!navigator.onLine) {
+            alert("Sem conexao com a internet. Verifique sua rede e tente novamente.");
+        }
+    }
+
     function checkInternetConnection() {
         if (!navigator.onLine) {
             alert("Sem conexao com a internet. Verifique sua rede e tente novamente.");

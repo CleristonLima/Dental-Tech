@@ -1,8 +1,12 @@
 ﻿using DentalPlus.Uteis;
+using DocumentFormat.OpenXml.Bibliography;
+using DocumentFormat.OpenXml.Drawing.Charts;
+using Microsoft.VisualBasic;
 using MySql.Data.MySqlClient;
 using Mysqlx.Crud;
 using System.ComponentModel.DataAnnotations;
 using System.Data;
+using DataTable = System.Data.DataTable;
 
 namespace DentalPlus.Models
 {
@@ -198,6 +202,49 @@ namespace DentalPlus.Models
             }
 
             return item;
+        }
+
+        public List<AgendamentoModel> ListarTodasConsultasAmanha()
+        {
+            List<AgendamentoModel> lista = new List<AgendamentoModel>();
+            AgendamentoModel item;
+            DAL objDAL = new DAL();
+
+            string sql = "SELECT CMCP.ID_MED_CONS_X_PAT, " +
+                               "CP.ID_PATIENTS, " +
+                               "CP.NAME_PATIENT, " +
+                               "CMC.ID_MEDICAL_CONSULTATION, " +
+                               "CMC.DESC_MEDICAL_CONSULTATION, " +
+                               "CMCP.DATE_CONSULTATION_START, " +
+                               "CMCP.DATE_CONSULTATION_FINISH " +
+                        "FROM TB_CLI_MED_CONSUL_X_PATIENT CMCP " +
+                        "INNER JOIN TB_CLI_PATIENTS CP " +
+                                "ON CP.ID_PATIENTS = CMCP.ID_PATIENTS " +
+                        "INNER JOIN TB_CLI_MEDICAL_CONSULTATION CMC " +
+                                "ON CMC.ID_MEDICAL_CONSULTATION = CMCP.ID_MEDICAL_CONSULTATION " +
+                        "WHERE CMCP.DATE_CONSULTATION_START BETWEEN DATE_ADD(CURDATE(), INTERVAL 1 DAY)" +
+                        "AND DATE_ADD(CURDATE(), INTERVAL 2 DAY) -INTERVAL 1 SECOND " +
+                        "ORDER BY CMCP.DATE_CONSULTATION_START ASC";
+
+            DataTable dt = objDAL.RetDataTable(sql);
+
+            foreach (DataRow row in dt.Rows)
+            {
+                item = new AgendamentoModel(_httpContextAccessor)
+                {
+                    IdMedConsXPat = row["ID_MED_CONS_X_PAT"].ToString(),
+                    IdPatients = row["ID_PATIENTS"].ToString(),
+                    NamePatient = row["NAME_PATIENT"].ToString(),
+                    IdMedicalConsultation = row["ID_MEDICAL_CONSULTATION"].ToString(),
+                    NameMedicalConsultation = row["DESC_MEDICAL_CONSULTATION"].ToString(),
+                    DateConsultationStart = DateTime.Parse(row["DATE_CONSULTATION_START"].ToString()),
+                    DateConsultationFinish = DateTime.Parse(row["DATE_CONSULTATION_FINISH"].ToString())
+                };
+
+                lista.Add(item);
+            }
+
+            return lista;
         }
 
         public void Gravar()
