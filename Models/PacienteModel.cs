@@ -182,6 +182,26 @@ namespace DentalPlus.Models
             return lista;
         }
 
+        /*public string ObterNomePorId(int? id)
+        {
+            if (id == null) return null;
+
+            DAL objDAL = new DAL();
+            string sql = "SELECT NAME_PATIENT FROM TB_CLI_PATIENTS WHERE ID_PATIENTS = @IdPatients";
+
+            MySqlCommand command = new MySqlCommand(sql);
+            command.Parameters.AddWithValue("@IdPatients", id);
+
+            DataTable dt = objDAL.RetDataTable(command);
+
+            if (dt.Rows.Count > 0)
+            {
+                return dt.Rows[0]["NAME_PATIENT"].ToString();
+            }
+
+            return null; 
+        }*/
+
         public PacienteModel RetornarPaciente(int? id)
         {
 

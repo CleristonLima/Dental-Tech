@@ -25,6 +25,7 @@
                     <th>Status</th>
                     <th>Observacao</th>
                     <th>#</th>
+                    <th>#</th>
                 </tr>
             </thead>
 
@@ -42,6 +43,7 @@
                             <td>@item.StatusConsultation</td>
                             <td>@item.Reason</td>
                             <td><button type="button" class="btn btn-warning" onclick="Editar(@item.IdMedConsXPat)">Editar</button></td>
+                            <td><button type="button" class="btn btn-danger" onclick="Cancelar(@item.IdMedConsXPat)">Cancelar</button></td>
                         </tr>
                     }
                 }
@@ -145,6 +147,14 @@ else
             alert("Sem conexão com a internet. Verifique sua rede e tente novamente.");
         } else {
             window.location.href = "../Agendamento/CadastroAgendamento/" + id;
+        }
+    }
+
+    function Cancelar(id) {
+        if (!navigator.onLine) {
+            alert("Sem conexão com a internet. Verifique sua rede e tente novamente.");
+        } else {
+            window.location.href = "../Agendamento/CancelamentoAgendamento/" + id;
         }
     }
 </script>

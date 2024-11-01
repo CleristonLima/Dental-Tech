@@ -1,6 +1,6 @@
 ﻿@model AgendamentoModel
 
-<h3> Cadastro de agendamento</h3>
+<h3>Cadastro de agendamento</h3>
 
 @if (TempData["ErrorHorario"] != null)
 {
@@ -61,7 +61,7 @@
         <select asp-for="StatusConsultation" class="form-control">
             <option value="Agendado">Agendado</option>
             <option value="Realizada">Realizada</option>
-            <option value="Cancelada">Cancelada</option>
+            <option value="Confirmado">Confirmado</option>
         </select>
         <span asp-validation-for="StatusConsultation" class="text-danger"></span>
     </div>

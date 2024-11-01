@@ -1,0 +1,78 @@
+﻿@model AgendamentoModel
+
+<h3>Cancelamento de agendamento</h3>
+
+<form asp-controller="Agendamento" asp-action="CancelamentoAgendamento" method="post">
+    <input type="hidden" asp-for="IdMedConsXPat" />
+
+    <div class="form-group">
+        <br />
+        <label>Paciente</label>
+        <select asp-for="IdPatients" class="form-control" asp-items="ViewBag.ListaPacientes" readonly>
+        </select>
+        <span asp-validation-for="IdPatients" class="text-danger"></span>
+    </div>
+    <br />
+    <div class="form-group">
+        <br />
+        <label>Medico</label>
+        <select asp-for="IdDoctor" class="form-control" asp-items="ViewBag.ListaMedicos" readonly>
+        </select>
+        <span asp-validation-for="IdDoctor" class="text-danger"></span>
+    </div>
+    <br />
+    <div class="form-group">
+        <br />
+        <label>Consulta</label>
+        <select asp-for="IdMedicalConsultation" class="form-control" asp-items="ViewBag.ListaTipoConsultas" readonly>
+        </select>
+        <span asp-validation-for="IdMedicalConsultation" class="text-danger"></span>
+    </div>
+    <br />
+    <div class="form-group">
+        <label>Data e Hora do cancelamento:</label>
+        <input type="datetime-local" name="DateCancellation" id="dataCancelamento"
+               min="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")"/>
+        <span asp-validation-for="DateCancellation" class="text-danger"></span>
+    </div>
+    <br />
+    <div class="form-group">
+        <br />
+        <label>Motivo do cancelamento</label>
+
+        @{
+            var vObs = "";
+
+            try
+            {
+
+                vObs = ViewBag.Agendamento.Reason;
+            }
+            catch { }
+        }
+
+        @Html.TextArea("Reason", vObs, new { @class = "form-control" })
+
+        <!--<span asp-validation-for="Reason" class="text-danger"></span>-->
+    </div>
+    <br />
+    <br />
+    <button type="submit" class="btn btn-primary">Salvar</button>
+</form>
+
+<style>
+
+    #dataCancelamento {
+        width: 150px; /* ajusta o tamanho do campo de texto */
+        margin-right: 15px; /* espaçamento entre o campo de texto e o botão */
+    }
+
+</style>
+
+<script>
+     function checkInternetConnection() {
+         if (!navigator.onLine) {
+           alert("Sem conexao com a internet. Verifique sua rede e tente novamente.");
+           }
+     }
+</script>

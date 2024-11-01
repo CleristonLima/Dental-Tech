@@ -124,5 +124,56 @@ namespace DentalPlus.Controllers
             return RedirectToAction("Index", "Agendamento");
         
         }
+
+        [HttpGet]
+        public IActionResult CancelamentoAgendamento(int? id)
+        {
+            if (!VerificarConexaoInternet())
+            {
+                TempData["ErrorLogin"] = "Sem conexão com a internet. Verifique sua rede e tente novamente.";
+                return RedirectToAction("Index", "Agendamento");
+            }
+            else
+            {
+                AgendamentoModel agendamento = new AgendamentoModel();
+
+                if (id != null)
+                {
+
+                    agendamento = new AgendamentoModel().RetornarAgendamentoParaCancelar(id);
+
+                    var paciente = new PacienteModel().ListarTodosPacientes();
+                    ViewBag.ListaPacientes = new SelectList(paciente, "IdPatients", "NomeComCpf");
+
+                    var medico = new MedicoModel().ListarTodosMedicos();
+                    ViewBag.ListaMedicos = new SelectList(medico, "IdDoctor", "NomeComCRM");
+
+                    var consulta = new TipoConsultaModel().ListarTodosTiposConsultas();
+                    ViewBag.ListaTipoConsultas = new SelectList(consulta, "IdMedicalConsultation", "descMedicalConsultation");
+                }
+                return View(agendamento);
+            }
+
+        }
+
+        [HttpPost]
+        public IActionResult CancelamentoAgendamento(AgendamentoModel agendamento)
+        {
+
+                // Recarrega as listas de Médicos, Pacientes e Consultas para que fiquem disponíveis na View novamente
+                var paciente = new PacienteModel().ListarTodosPacientes();
+                ViewBag.ListaPacientes = new SelectList(paciente, "IdPatients", "NomeComCpf");
+
+                var medico = new MedicoModel().ListarTodosMedicos();
+                ViewBag.ListaMedicos = new SelectList(medico, "IdDoctor", "NomeComCRM");
+
+                var consulta = new TipoConsultaModel().ListarTodosTiposConsultas();
+                ViewBag.ListaTipoConsultas = new SelectList(consulta, "IdMedicalConsultation", "descMedicalConsultation");
+
+                agendamento.userId = _httpContextAccessor.HttpContext?.Session.GetString("IdUsuarioLogado");
+                agendamento.GravarCancelamento();
+                return RedirectToAction("Index", "Agendamento");
+
+        }
     }
 }

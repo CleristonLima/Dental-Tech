@@ -54,6 +54,9 @@ namespace DentalPlus.Models
 
         public string LinkPhoto { get; set; }
 
+        [Required(ErrorMessage = "Informe a data e hora do inicio da consulta!")]
+        public DateTime DateCancellation { get; set; }
+
         public string userId { get; set; }
 
         public string ErrorMessage { get; set; }
@@ -247,6 +250,36 @@ namespace DentalPlus.Models
             return lista;
         }
 
+        public AgendamentoModel RetornarAgendamentoParaCancelar(int? id)
+        {
+            AgendamentoModel item = null;
+            DAL objDAL = new DAL();
+            string sql = $"SELECT CMCP.ID_MED_CONS_X_PAT, " +
+                               $"CP.ID_PATIENTS, " +
+                               $"CD.ID_DOCTOR, " +
+                               $"CMC.ID_MEDICAL_CONSULTATION " +
+                        $"FROM TB_CLI_MED_CONSUL_X_PATIENT CMCP " +
+                        $"INNER JOIN TB_CLI_DOCTORS CD ON CD.ID_DOCTOR = CMCP.ID_DOCTOR " +
+                        $"INNER JOIN TB_CLI_PATIENTS CP ON CP.ID_PATIENTS = CMCP.ID_PATIENTS " +
+                        $"INNER JOIN TB_CLI_MEDICAL_CONSULTATION CMC ON CMC.ID_MEDICAL_CONSULTATION = CMCP.ID_MEDICAL_CONSULTATION " +
+                        $"WHERE CMCP.ID_MED_CONS_X_PAT = '{id}'";
+            DataTable dt = objDAL.RetDataTable(sql);
+
+            if (dt.Rows.Count > 0)
+            {
+
+                    item = new AgendamentoModel
+                    {
+                        IdMedConsXPat = dt.Rows[0]["ID_MED_CONS_X_PAT"].ToString(),
+                        IdPatients = dt.Rows[0]["ID_PATIENTS"].ToString(),
+                        IdDoctor = dt.Rows[0]["ID_DOCTOR"].ToString(),
+                        IdMedicalConsultation = dt.Rows[0]["ID_MEDICAL_CONSULTATION"].ToString()
+                    };
+            }
+
+            return item;
+        }
+
         public void Gravar()
         {
             DAL objDAL = new DAL();
@@ -297,6 +330,34 @@ namespace DentalPlus.Models
                 command.Parameters.AddWithValue("@Reason", Reason);
                 command.Parameters.AddWithValue("@userInsert", userId);
                 command.Parameters.AddWithValue("@dateInsert", currentDateTime);
+
+                objDAL.ExecutarComandoSQL(command);
+            }
+        }
+
+        public void GravarCancelamento()
+        {
+            DAL objDAL = new DAL();
+            string sql = string.Empty;
+
+            string currentDateTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+
+            if (!string.IsNullOrEmpty(IdMedConsXPat))
+            {
+                // Se for uma atualização, preenche o campo USER_UPDATE
+                sql = "UPDATE TB_CLI_MED_CONSUL_X_PATIENT SET DATE_CANCELLATION = @DateCancellation, " +
+                        "STATUS_CONSULTATION = 'Cancelada', " +
+                        "REASON = @Reason, " +
+                        "USER_UPDATE = @userUpdate, " +
+                        "DATE_UPDATE = @dateUpdate " +
+                        "WHERE ID_MED_CONS_X_PAT = @IdMedConsXPat ";
+
+                MySqlCommand command = new MySqlCommand(sql);
+                command.Parameters.AddWithValue("@DateCancellation", DateCancellation);
+                command.Parameters.AddWithValue("@Reason", Reason);
+                command.Parameters.AddWithValue("@userUpdate", userId);
+                command.Parameters.AddWithValue("@dateUpdate", currentDateTime);
+                command.Parameters.AddWithValue("@IdMedConsXPat", IdMedConsXPat);
 
                 objDAL.ExecutarComandoSQL(command);
             }
