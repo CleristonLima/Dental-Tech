@@ -54,7 +54,6 @@ namespace DentalPlus.Models
 
         public string LinkPhoto { get; set; }
 
-        [Required(ErrorMessage = "Informe a data e hora do inicio da consulta!")]
         public DateTime DateCancellation { get; set; }
 
         public string userId { get; set; }
@@ -80,7 +79,7 @@ namespace DentalPlus.Models
                         "INNER JOIN TB_CLI_DOCTORS CD ON CD.ID_DOCTOR = CMCP.ID_DOCTOR " +
                         "INNER JOIN TB_CLI_PATIENTS CP ON CP.ID_PATIENTS = CMCP.ID_PATIENTS " +
                         "INNER JOIN TB_CLI_MEDICAL_CONSULTATION CMC ON CMC.ID_MEDICAL_CONSULTATION = CMCP.ID_MEDICAL_CONSULTATION " +
-                        "WHERE CMCP.STATUS_CONSULTATION NOT IN ('Cancelada') " +
+                        "WHERE CMCP.STATUS_CONSULTATION NOT IN ('Cancelada', 'Realizada') " +
                         "ORDER BY CMCP.DATE_CONSULTATION_START DESC";
 
             DataTable dt = objDAL.RetDataTable(sql);
@@ -278,6 +277,99 @@ namespace DentalPlus.Models
             }
 
             return item;
+        }
+
+        public List<AgendamentoModel> ListarTodasConsultasRealizadas()
+        {
+            List<AgendamentoModel> lista = new List<AgendamentoModel>();
+            AgendamentoModel item;
+            DAL objDAL = new DAL();
+
+            string sql = "SELECT CMCP.ID_MED_CONS_X_PAT, " +
+                               "CP.LINK_PHOTO, " +
+                               "CP.NAME_PATIENT, " +
+                               "CD.NAME_DOCTOR, " +
+                               "CMC.DESC_MEDICAL_CONSULTATION, " +
+                               "CMCP.DATE_CONSULTATION_START, " +
+                               "CMCP.DATE_CONSULTATION_FINISH, " +
+                               "CMCP.STATUS_CONSULTATION, " +
+                               "CMCP.REASON " +
+                        "FROM TB_CLI_MED_CONSUL_X_PATIENT CMCP " +
+                        "INNER JOIN TB_CLI_DOCTORS CD ON CD.ID_DOCTOR = CMCP.ID_DOCTOR " +
+                        "INNER JOIN TB_CLI_PATIENTS CP ON CP.ID_PATIENTS = CMCP.ID_PATIENTS " +
+                        "INNER JOIN TB_CLI_MEDICAL_CONSULTATION CMC ON CMC.ID_MEDICAL_CONSULTATION = CMCP.ID_MEDICAL_CONSULTATION " +
+                        "WHERE CMCP.STATUS_CONSULTATION = 'Realizada' " +
+                        "ORDER BY CMCP.DATE_CONSULTATION_START DESC";
+
+            DataTable dt = objDAL.RetDataTable(sql);
+
+            foreach (DataRow row in dt.Rows)
+            {
+                item = new AgendamentoModel(_httpContextAccessor)
+                {
+                    IdMedConsXPat = row["ID_MED_CONS_X_PAT"].ToString(),
+                    LinkPhoto = row["LINK_PHOTO"].ToString(),
+                    NamePatient = row["NAME_PATIENT"].ToString(),
+                    NameDoctor = row["NAME_DOCTOR"].ToString(),
+                    NameMedicalConsultation = row["DESC_MEDICAL_CONSULTATION"].ToString(),
+                    DateConsultationStart = DateTime.Parse(row["DATE_CONSULTATION_START"].ToString()),
+                    DateConsultationFinish = DateTime.Parse(row["DATE_CONSULTATION_FINISH"].ToString()),
+                    StatusConsultation = row["STATUS_CONSULTATION"].ToString(),
+                    Reason = row["REASON"].ToString()
+                };
+
+                lista.Add(item);
+            }
+
+            return lista;
+        }
+
+        public List<AgendamentoModel> ListarTodasConsultasCanceladas()
+        {
+            List<AgendamentoModel> lista = new List<AgendamentoModel>();
+            AgendamentoModel item;
+            DAL objDAL = new DAL();
+
+            string sql = "SELECT CMCP.ID_MED_CONS_X_PAT, " +
+                               "CP.LINK_PHOTO, " +
+                               "CP.NAME_PATIENT, " +
+                               "CD.NAME_DOCTOR, " +
+                               "CMC.DESC_MEDICAL_CONSULTATION, " +
+                               "CMCP.DATE_CONSULTATION_START, " +
+                               "CMCP.DATE_CONSULTATION_FINISH, " +
+                               "CMCP.DATE_CANCELLATION, " +
+                               "CMCP.STATUS_CONSULTATION, " +
+                               "CMCP.REASON " +
+                        "FROM TB_CLI_MED_CONSUL_X_PATIENT CMCP " +
+                        "INNER JOIN TB_CLI_DOCTORS CD ON CD.ID_DOCTOR = CMCP.ID_DOCTOR " +
+                        "INNER JOIN TB_CLI_PATIENTS CP ON CP.ID_PATIENTS = CMCP.ID_PATIENTS " +
+                        "INNER JOIN TB_CLI_MEDICAL_CONSULTATION CMC ON CMC.ID_MEDICAL_CONSULTATION = CMCP.ID_MEDICAL_CONSULTATION " +
+                        "WHERE CMCP.STATUS_CONSULTATION = 'Cancelada' " +
+                        "AND CMCP.DATE_CANCELLATION IS NOT NULL " +
+                        "ORDER BY CMCP.DATE_CONSULTATION_START DESC";
+
+            DataTable dt = objDAL.RetDataTable(sql);
+
+            foreach (DataRow row in dt.Rows)
+            {
+                item = new AgendamentoModel(_httpContextAccessor)
+                {
+                    IdMedConsXPat = row["ID_MED_CONS_X_PAT"].ToString(),
+                    LinkPhoto = row["LINK_PHOTO"].ToString(),
+                    NamePatient = row["NAME_PATIENT"].ToString(),
+                    NameDoctor = row["NAME_DOCTOR"].ToString(),
+                    NameMedicalConsultation = row["DESC_MEDICAL_CONSULTATION"].ToString(),
+                    DateConsultationStart = DateTime.Parse(row["DATE_CONSULTATION_START"].ToString()),
+                    DateConsultationFinish = DateTime.Parse(row["DATE_CONSULTATION_FINISH"].ToString()),
+                    DateCancellation = DateTime.Parse(row["DATE_CANCELLATION"].ToString()),
+                    StatusConsultation = row["STATUS_CONSULTATION"].ToString(),
+                    Reason = row["REASON"].ToString()
+                };
+
+                lista.Add(item);
+            }
+
+            return lista;
         }
 
         public void Gravar()

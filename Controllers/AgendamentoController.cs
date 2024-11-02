@@ -122,7 +122,7 @@ namespace DentalPlus.Controllers
             agendamento.userId = _httpContextAccessor.HttpContext?.Session.GetString("IdUsuarioLogado");
             agendamento.Gravar();
             return RedirectToAction("Index", "Agendamento");
-        
+
         }
 
         [HttpGet]
@@ -160,20 +160,51 @@ namespace DentalPlus.Controllers
         public IActionResult CancelamentoAgendamento(AgendamentoModel agendamento)
         {
 
-                // Recarrega as listas de Médicos, Pacientes e Consultas para que fiquem disponíveis na View novamente
-                var paciente = new PacienteModel().ListarTodosPacientes();
-                ViewBag.ListaPacientes = new SelectList(paciente, "IdPatients", "NomeComCpf");
+            // Recarrega as listas de Médicos, Pacientes e Consultas para que fiquem disponíveis na View novamente
+            var paciente = new PacienteModel().ListarTodosPacientes();
+            ViewBag.ListaPacientes = new SelectList(paciente, "IdPatients", "NomeComCpf");
 
-                var medico = new MedicoModel().ListarTodosMedicos();
-                ViewBag.ListaMedicos = new SelectList(medico, "IdDoctor", "NomeComCRM");
+            var medico = new MedicoModel().ListarTodosMedicos();
+            ViewBag.ListaMedicos = new SelectList(medico, "IdDoctor", "NomeComCRM");
 
-                var consulta = new TipoConsultaModel().ListarTodosTiposConsultas();
-                ViewBag.ListaTipoConsultas = new SelectList(consulta, "IdMedicalConsultation", "descMedicalConsultation");
+            var consulta = new TipoConsultaModel().ListarTodosTiposConsultas();
+            ViewBag.ListaTipoConsultas = new SelectList(consulta, "IdMedicalConsultation", "descMedicalConsultation");
 
-                agendamento.userId = _httpContextAccessor.HttpContext?.Session.GetString("IdUsuarioLogado");
-                agendamento.GravarCancelamento();
-                return RedirectToAction("Index", "Agendamento");
+            agendamento.userId = _httpContextAccessor.HttpContext?.Session.GetString("IdUsuarioLogado");
+            agendamento.GravarCancelamento();
+            return RedirectToAction("Index", "Agendamento");
 
         }
+
+        [HttpGet]
+        public IActionResult ConsultasRealizadas()
+        {
+            if (!VerificarConexaoInternet())
+            {
+                TempData["ErrorLogin"] = "Sem conexão com a internet. Verifique sua rede e tente novamente.";
+                return RedirectToAction("Menu", "Home");
+            }
+            else
+            {
+                ViewBag.ListaConsultasRealizadas = new AgendamentoModel().ListarTodasConsultasRealizadas();
+                return View();
+            }
+        }
+
+        [HttpGet]
+        public IActionResult AgendamentosCancelados()
+        {
+            if (!VerificarConexaoInternet())
+            {
+                TempData["ErrorLogin"] = "Sem conexão com a internet. Verifique sua rede e tente novamente.";
+                return RedirectToAction("Menu", "Home");
+            }
+            else
+            {
+                ViewBag.ListaConsultasCanceladas = new AgendamentoModel().ListarTodasConsultasCanceladas();
+                return View();
+            }
+        }
     }
+
 }

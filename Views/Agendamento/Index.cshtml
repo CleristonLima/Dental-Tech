@@ -33,18 +33,18 @@
                 @{
                     foreach (var item in (List<AgendamentoModel>)ViewBag.ListaAgendamento)
                     {
-                        <tr>
-                            <td><img src="@(string.IsNullOrEmpty(item.LinkPhoto) ?"/images/SemFoto.png " : item.LinkPhoto)" width="50" height="50" /></td>
-                            <td>@item.NamePatient</td>
-                            <td>@item.NameDoctor</td>
-                            <td>@item.NameMedicalConsultation</td>
-                            <td>@item.DateConsultationStart.ToString("dd/MM/yyyy HH:mm")</td>
-                            <td>@item.DateConsultationFinish.ToString("dd/MM/yyyy HH:mm")</td>
-                            <td>@item.StatusConsultation</td>
-                            <td>@item.Reason</td>
-                            <td><button type="button" class="btn btn-warning" onclick="Editar(@item.IdMedConsXPat)">Editar</button></td>
-                            <td><button type="button" class="btn btn-danger" onclick="Cancelar(@item.IdMedConsXPat)">Cancelar</button></td>
-                        </tr>
+                                <tr>
+                                    <td><img src="@(string.IsNullOrEmpty(item.LinkPhoto) ?"/images/SemFoto.png " : item.LinkPhoto)" width="50" height="50" /></td>
+                                    <td>@item.NamePatient</td>
+                                    <td>@item.NameDoctor</td>
+                                    <td>@item.NameMedicalConsultation</td>
+                                    <td>@item.DateConsultationStart.ToString("dd/MM/yyyy HH:mm")</td>
+                                    <td>@item.DateConsultationFinish.ToString("dd/MM/yyyy HH:mm")</td>
+                                    <td>@item.StatusConsultation</td>
+                                    <td>@item.Reason</td>
+                                    <td><button type="button" class="btn btn-warning" onclick="Editar(@item.IdMedConsXPat)">Editar</button></td>
+                                    <td><button type="button" class="btn btn-danger" onclick="Cancelar(@item.IdMedConsXPat)">Cancelar</button></td>
+                                </tr>
                     }
                 }
             </tbody>
@@ -53,6 +53,8 @@
     <br />
 
     <button class="btn btn-block btn-primary" type="button" onclick="Cadastrar()">Cadastrar novo agendamento</button>
+    <button class="btn btn-block btn-success" type="button" onclick="ConsultasRealizadas()" id="realizadas">Consultas realizadas</button>
+    <button class="btn btn-block btn-danger" type="button" onclick="ConsultasCanceladas()" id="canceladas">Consultas canceladas</button>
 }
 else
 {
@@ -100,6 +102,14 @@ else
     .table th {
         background-color: #f2f2f2;
     }
+
+    #realizadas{
+        margin-left: 25px;
+    }
+
+    #canceladas {
+        margin-left: 25px;
+    }
 </style>
 
 <script>
@@ -112,11 +122,6 @@ else
         }
     }, 5000); // Tempo em milissegundos
 
-    function checkInternetConnection() {
-        if (!navigator.onLine) {
-            alert("Sem conexao com a internet. Verifique sua rede e tente novamente.");
-        }
-    }
 
     function checkInternetConnection() {
         if (!navigator.onLine) {
@@ -157,4 +162,22 @@ else
             window.location.href = "../Agendamento/CancelamentoAgendamento/" + id;
         }
     }
+
+    function ConsultasRealizadas() { 
+        if (!navigator.onLine) {
+            alert("Sem conexão com a internet. Verifique sua rede e tente novamente.");
+        } else {
+            window.location.href = "../Agendamento/ConsultasRealizadas";
+        }
+    }
+
+
+    function ConsultasCanceladas() {
+        if (!navigator.onLine) {
+            alert("Sem conexão com a internet. Verifique sua rede e tente novamente.");
+        } else {
+            window.location.href = "../Agendamento/AgendamentosCancelados";
+        }
+    }
+
 </script>

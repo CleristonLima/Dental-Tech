@@ -1,0 +1,118 @@
+﻿@model AgendamentoModel
+
+<h3 class="titulo-cadastro">Consultas Canceladas</h3>
+
+@if (ViewBag.ListaConsultasCanceladas != null)
+{
+    <div class="table-container">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Foto</th>
+                    <th>Paciente</th>
+                    <th>Médico</th>
+                    <th>Consulta cancelada</th>
+                    <th>Data e hora inicial</th>
+                    <th>Data e hora final</th>
+                    <th>Data e hora do cancelamento</th>
+                    <th>Status</th>
+                    <th>Observacao</th>
+                </tr>
+            </thead>
+
+            <tbody>
+                @{
+                    foreach (var item in (List<AgendamentoModel>)ViewBag.ListaConsultasCanceladas)
+                    {
+                        <tr>
+                            <td><img src="@(string.IsNullOrEmpty(item.LinkPhoto) ?"/images/SemFoto.png " : item.LinkPhoto)" width="50" height="50" /></td>
+                            <td>@item.NamePatient</td>
+                            <td>@item.NameDoctor</td>
+                            <td>@item.NameMedicalConsultation</td>
+                            <td>@item.DateConsultationStart.ToString("dd/MM/yyyy HH:mm")</td>
+                            <td>@item.DateConsultationFinish.ToString("dd/MM/yyyy HH:mm")</td>
+                            <td>@item.DateCancellation.ToString("dd/MM/yyyy HH:mm")</td>
+                            <td>@item.StatusConsultation</td>
+                            <td>@item.Reason</td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+    <br />
+    <button class="btn btn-block btn-danger" type="button" onclick="Voltar()">Voltar</button>
+}
+else
+{
+    <p>Sem conexão com a internet! Verifique sua conexão com a internet e tente novamente.</p>
+}
+<style>
+    .titulo-cadastro {
+        white-space: nowrap; /* Impede a quebra de linha */
+        text-align: center; /* Centraliza o texto */
+        margin-bottom: 20px; /* Adiciona um espaço abaixo do título */
+    }
+
+    .table-container {
+        white-space: nowrap;
+        width: 100%;
+        overflow-x: auto;
+        margin: 0; /* Remove margens */
+        padding: 0; /* Remove padding */
+    }
+
+    .table {
+        white-space: nowrap;
+        width: 100%;
+        border-collapse: collapse;
+        margin: 0; /* Remove margens */
+        padding: 0; /* Remove padding */
+    }
+
+    .table th, .table td {
+        white-space: nowrap;
+        padding: 8px;
+        text-align: center;
+        border: 1px solid #ddd;
+    }
+
+    .table td img {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%; /* Deixa a imagem redonda */
+        object-fit: cover; /* Ajusta a imagem para cobrir o espaço sem distorcer */
+    }
+
+    .table th {
+        background-color: #f2f2f2;
+    }
+
+</style>
+<script>
+
+    function checkInternetConnection() {
+        if (!navigator.onLine) {
+            alert("Sem conexao com a internet. Verifique sua rede e tente novamente.");
+        }
+    }
+
+    window.addEventListener('load', checkInternetConnection);
+    window.addEventListener('offline', checkInternetConnection);
+
+    document.addEventListener('DOMContentLoaded', function () {
+        var errorMessage = '@TempData["ErrorLogin"]';
+        if (errorMessage) {
+            alert(errorMessage);
+        }
+    });
+
+    function Voltar() {
+        if (!navigator.onLine) {
+            alert("Sem conexão com a internet. Verifique sua rede e tente novamente.");
+        } else {
+            window.location.href = "../Agendamento/Index";
+        }
+    }
+
+</script>

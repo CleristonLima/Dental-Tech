@@ -18,12 +18,20 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = C:\Projetos\DentalPlus\DentalPlus
 build_property._RazorSourceGeneratorDebug = 
 
+[C:/Projetos/DentalPlus/DentalPlus/Views/Agendamento/AgendamentosCancelados.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWdlbmRhbWVudG9cQWdlbmRhbWVudG9zQ2FuY2VsYWRvcy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Projetos/DentalPlus/DentalPlus/Views/Agendamento/CadastroAgendamento.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWdlbmRhbWVudG9cQ2FkYXN0cm9BZ2VuZGFtZW50by5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Projetos/DentalPlus/DentalPlus/Views/Agendamento/CancelamentoAgendamento.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWdlbmRhbWVudG9cQ2FuY2VsYW1lbnRvQWdlbmRhbWVudG8uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Projetos/DentalPlus/DentalPlus/Views/Agendamento/ConsultasRealizadas.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcQWdlbmRhbWVudG9cQ29uc3VsdGFzUmVhbGl6YWRhcy5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
 
 [C:/Projetos/DentalPlus/DentalPlus/Views/Agendamento/Index.cshtml]
