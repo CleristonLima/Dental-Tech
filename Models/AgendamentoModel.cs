@@ -31,10 +31,14 @@ namespace DentalPlus.Models
         [Required(ErrorMessage = "Informe o paciente!")]
         public string NamePatient { get; set; }
 
+        public string CpfCnpj { get; set; }
+
         public string IdDoctor {  get; set; }
 
         [Required(ErrorMessage = "Informe o médico!")]
         public string NameDoctor { get; set; }
+
+        public string CrmCro { get; set; }
 
         public string IdMedicalConsultation { get; set; }
 
@@ -69,7 +73,9 @@ namespace DentalPlus.Models
             string sql = "SELECT CMCP.ID_MED_CONS_X_PAT, " +
                                "CP.LINK_PHOTO, " +
                                "CP.NAME_PATIENT, " +
+                               "CP.CPF_CNPJ, " +
                                "CD.NAME_DOCTOR, " +
+                               "CD.CRM_CRO, " +
                                "CMC.DESC_MEDICAL_CONSULTATION, " +
                                "CMCP.DATE_CONSULTATION_START, " +
                                "CMCP.DATE_CONSULTATION_FINISH, " +
@@ -91,7 +97,9 @@ namespace DentalPlus.Models
                     IdMedConsXPat = row["ID_MED_CONS_X_PAT"].ToString(),
                     LinkPhoto = row["LINK_PHOTO"].ToString(),
                     NamePatient = row["NAME_PATIENT"].ToString(),
+                    CpfCnpj = row["CPF_CNPJ"].ToString(),
                     NameDoctor = row["NAME_DOCTOR"].ToString(),
+                    CrmCro = row["CRM_CRO"].ToString(),
                     NameMedicalConsultation = row["DESC_MEDICAL_CONSULTATION"].ToString(),
                     DateConsultationStart = DateTime.Parse(row["DATE_CONSULTATION_START"].ToString()),
                     DateConsultationFinish = DateTime.Parse(row["DATE_CONSULTATION_FINISH"].ToString()),
@@ -288,7 +296,9 @@ namespace DentalPlus.Models
             string sql = "SELECT CMCP.ID_MED_CONS_X_PAT, " +
                                "CP.LINK_PHOTO, " +
                                "CP.NAME_PATIENT, " +
+                               "CP.CPF_CNPJ, " +
                                "CD.NAME_DOCTOR, " +
+                               "CD.CRM_CRO, " +
                                "CMC.DESC_MEDICAL_CONSULTATION, " +
                                "CMCP.DATE_CONSULTATION_START, " +
                                "CMCP.DATE_CONSULTATION_FINISH, " +
@@ -310,7 +320,9 @@ namespace DentalPlus.Models
                     IdMedConsXPat = row["ID_MED_CONS_X_PAT"].ToString(),
                     LinkPhoto = row["LINK_PHOTO"].ToString(),
                     NamePatient = row["NAME_PATIENT"].ToString(),
+                    CpfCnpj = row["CPF_CNPJ"].ToString(),
                     NameDoctor = row["NAME_DOCTOR"].ToString(),
+                    CrmCro = row["CRM_CRO"].ToString(),
                     NameMedicalConsultation = row["DESC_MEDICAL_CONSULTATION"].ToString(),
                     DateConsultationStart = DateTime.Parse(row["DATE_CONSULTATION_START"].ToString()),
                     DateConsultationFinish = DateTime.Parse(row["DATE_CONSULTATION_FINISH"].ToString()),
@@ -333,7 +345,9 @@ namespace DentalPlus.Models
             string sql = "SELECT CMCP.ID_MED_CONS_X_PAT, " +
                                "CP.LINK_PHOTO, " +
                                "CP.NAME_PATIENT, " +
+                               "CP.CPF_CNPJ, " +
                                "CD.NAME_DOCTOR, " +
+                               "CD.CRM_CRO, " +
                                "CMC.DESC_MEDICAL_CONSULTATION, " +
                                "CMCP.DATE_CONSULTATION_START, " +
                                "CMCP.DATE_CONSULTATION_FINISH, " +
@@ -357,7 +371,9 @@ namespace DentalPlus.Models
                     IdMedConsXPat = row["ID_MED_CONS_X_PAT"].ToString(),
                     LinkPhoto = row["LINK_PHOTO"].ToString(),
                     NamePatient = row["NAME_PATIENT"].ToString(),
+                    CpfCnpj = row["CPF_CNPJ"].ToString(),
                     NameDoctor = row["NAME_DOCTOR"].ToString(),
+                    CrmCro = row["CRM_CRO"].ToString(),
                     NameMedicalConsultation = row["DESC_MEDICAL_CONSULTATION"].ToString(),
                     DateConsultationStart = DateTime.Parse(row["DATE_CONSULTATION_START"].ToString()),
                     DateConsultationFinish = DateTime.Parse(row["DATE_CONSULTATION_FINISH"].ToString()),

@@ -1,31 +1,28 @@
 ﻿@model AgendamentoModel
 
-<h3>Cancelamento de agendamento</h3>
+<h3 class="titulo-cadastro">Cancelamento de agendamento</h3>
 
 <form asp-controller="Agendamento" asp-action="CancelamentoAgendamento" method="post">
     <input type="hidden" asp-for="IdMedConsXPat" />
 
     <div class="form-group">
-        <br />
         <label>Paciente</label>
-        <select asp-for="IdPatients" class="form-control" asp-items="ViewBag.ListaPacientes" readonly>
-        </select>
+        <input type="text" class="form-control" readonly value="@ViewBag.NomePaciente" />
+        <input type="hidden" asp-for="IdPatients" />
         <span asp-validation-for="IdPatients" class="text-danger"></span>
     </div>
     <br />
     <div class="form-group">
-        <br />
-        <label>Medico</label>you
-        <select asp-for="IdDoctor" class="form-control" asp-items="ViewBag.ListaMedicos" readonly>
-        </select>
+        <label>Medico</label>
+        <input type="text" class="form-control" readonly value="@ViewBag.NomeMedico" />
+        <input type="hidden" asp-for="IdDoctor" />
         <span asp-validation-for="IdDoctor" class="text-danger"></span>
     </div>
     <br />
     <div class="form-group">
-        <br />
         <label>Consulta</label>
-        <select asp-for="IdMedicalConsultation" class="form-control" asp-items="ViewBag.ListaTipoConsultas" readonly>
-        </select>
+        <input type="text" class="form-control" readonly value="@ViewBag.NomeConsulta" />
+        <input type="hidden" asp-for="IdMedicalConsultation" />
         <span asp-validation-for="IdMedicalConsultation" class="text-danger"></span>
     </div>
     <br />
@@ -65,6 +62,12 @@
     #dataCancelamento {
         width: 150px; /* ajusta o tamanho do campo de texto */
         margin-right: 15px; /* espaçamento entre o campo de texto e o botão */
+    }
+
+    .titulo-cadastro {
+        white-space: nowrap; /* Impede a quebra de linha */
+        text-align: center; /* Centraliza o texto */
+        margin-bottom: 20px; /* Adiciona um espaço abaixo do título */
     }
 
 </style>

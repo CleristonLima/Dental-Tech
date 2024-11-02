@@ -91,11 +91,6 @@ namespace DentalPlus.Controllers
         [HttpPost]
         public IActionResult CadastroAgendamento(AgendamentoModel agendamento)
         {
-            /*if (!ModelState.IsValid)
-            {
-                // Retorna a view com os erros de validação padrão
-                return View(agendamento);
-            }*/
 
             if (string.IsNullOrEmpty(agendamento.IdMedConsXPat) &&
                 !agendamento.HorarioDisponivel(agendamento.DateConsultationStart, agendamento.DateConsultationFinish, agendamento.IdDoctor))
@@ -139,18 +134,14 @@ namespace DentalPlus.Controllers
 
                 if (id != null)
                 {
-
                     agendamento = new AgendamentoModel().RetornarAgendamentoParaCancelar(id);
 
-                    var paciente = new PacienteModel().ListarTodosPacientes();
-                    ViewBag.ListaPacientes = new SelectList(paciente, "IdPatients", "NomeComCpf");
-
-                    var medico = new MedicoModel().ListarTodosMedicos();
-                    ViewBag.ListaMedicos = new SelectList(medico, "IdDoctor", "NomeComCRM");
-
-                    var consulta = new TipoConsultaModel().ListarTodosTiposConsultas();
-                    ViewBag.ListaTipoConsultas = new SelectList(consulta, "IdMedicalConsultation", "descMedicalConsultation");
+                    // Preenche o ViewBag com os nomes baseados nos IDs para exibição somente leitura
+                    ViewBag.NomePaciente = new PacienteModel().ObterNomePorId(agendamento.IdPatients);
+                    ViewBag.NomeMedico = new MedicoModel().ObterNomePorId(agendamento.IdDoctor);
+                    ViewBag.NomeConsulta = new TipoConsultaModel().ObterDescricaoPorId(agendamento.IdMedicalConsultation);
                 }
+
                 return View(agendamento);
             }
 

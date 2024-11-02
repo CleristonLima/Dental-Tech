@@ -1,6 +1,6 @@
 ﻿@model AgendamentoModel
 
-<h3>Cadastro de agendamento</h3>
+<h3 class="titulo-cadastro">Cadastro de agendamento</h3>
 
 @if (TempData["ErrorHorario"] != null)
 {
@@ -42,16 +42,14 @@
     <div class="form-group">
         <label>Data e Hora Inicial da Consulta:</label>
         <input type="datetime-local" name="DateConsultationStart" id="dataHoraInicio"
-               min="@DateTime.MinValue.ToString("yyyy-MM-ddTHH:mm")" 
-               value="@Model.DateConsultationStart.ToString("yyyy-MM-ddTHH:mm")" />
+               min="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")" />
         <span asp-validation-for="DateConsultationStart" class="text-danger"></span>
     </div>
     <br />
     <div class="form-group">
         <label>Data e Hora Final da Consulta:</label>
         <input type="datetime-local" name="DateConsultationFinish" id="dataHoraFim"
-               min="@DateTime.MinValue.ToString("yyyy-MM-ddTHH:mm")" 
-               value="@Model.DateConsultationFinish.ToString("yyyy-MM-ddTHH:mm")" />
+               min="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")" />
         <span asp-validation-for="DateConsultationFinish" class="text-danger"></span>
     </div>
     <br />
@@ -96,6 +94,12 @@
     #dataHora {
         width: 150px; /* ajusta o tamanho do campo de texto */
         margin-right: 15px; /* espaçamento entre o campo de texto e o botão */
+    }
+
+    .titulo-cadastro {
+        white-space: nowrap; /* Impede a quebra de linha */
+        text-align: center; /* Centraliza o texto */
+        margin-bottom: 20px; /* Adiciona um espaço abaixo do título */
     }
 
 </style>

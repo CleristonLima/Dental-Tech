@@ -46,6 +46,28 @@ namespace DentalPlus.Models
         }
         public string userId { get; set; }
 
+        public string ObterNomePorId(string id)
+        {
+            if (id == null) return null;
+
+            DAL objDAL = new DAL();
+            string sql = "SELECT NAME_DOCTOR FROM TB_CLI_DOCTORS WHERE ID_DOCTOR = @IdDoctor";
+
+            MySqlCommand command = new MySqlCommand(sql);
+            command.Parameters.AddWithValue("@IdDoctor", id);
+
+            DataTable dt = objDAL.RetDataTable(command);
+
+            // Verifica se o DataTable contém algum registro
+            if (dt.Rows.Count > 0)
+            {
+                // Retorna o nome do paciente
+                return dt.Rows[0]["NAME_DOCTOR"].ToString();
+            }
+
+            return null;
+        }
+
         public List<MedicoModel> ListarTodosMedicos()
         {
             List<MedicoModel> lista = new List<MedicoModel>();

@@ -18,7 +18,9 @@
                 <tr>
                     <th>Foto</th>
                     <th>Paciente</th>
+                    <th>CPF ou CNPJ do paciente</th>
                     <th>Médico</th>
+                    <th>CRM/CRO</th>
                     <th>Consulta solicitada</th>
                     <th>Data e hora inicial</th>
                     <th>Data e hora final</th>
@@ -36,7 +38,9 @@
                                 <tr>
                                     <td><img src="@(string.IsNullOrEmpty(item.LinkPhoto) ?"/images/SemFoto.png " : item.LinkPhoto)" width="50" height="50" /></td>
                                     <td>@item.NamePatient</td>
+                                    <td>@item.CpfCnpj</td>
                                     <td>@item.NameDoctor</td>
+                                    <td>@item.CrmCro</td>
                                     <td>@item.NameMedicalConsultation</td>
                                     <td>@item.DateConsultationStart.ToString("dd/MM/yyyy HH:mm")</td>
                                     <td>@item.DateConsultationFinish.ToString("dd/MM/yyyy HH:mm")</td>

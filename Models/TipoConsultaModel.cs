@@ -38,6 +38,28 @@ namespace DentalPlus.Models
 
         public string userId { get; set; }
 
+
+        public string ObterDescricaoPorId(string id)
+        {
+            if (id == null) return null;
+
+            DAL objDAL = new DAL();
+            string sql = "SELECT DESC_MEDICAL_CONSULTATION FROM TB_CLI_MEDICAL_CONSULTATION WHERE ID_MEDICAL_CONSULTATION = @IdMedicalConsultation";
+
+            MySqlCommand command = new MySqlCommand(sql);
+            command.Parameters.AddWithValue("@IdMedicalConsultation", id);
+
+            DataTable dt = objDAL.RetDataTable(command);
+
+            // Verifica se o DataTable contém algum registro
+            if (dt.Rows.Count > 0)
+            {
+                // Retorna o nome do paciente
+                return dt.Rows[0]["DESC_MEDICAL_CONSULTATION"].ToString();
+            }
+
+            return null;
+        }
         public List<TipoConsultaModel> ListarTodosTiposConsultas()
         {
             List<TipoConsultaModel> lista = new List<TipoConsultaModel>();
