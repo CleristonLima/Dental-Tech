@@ -1,0 +1,35 @@
+﻿@model AgendamentoModel
+
+<h3 class="titulo-cadastro">Enviar Mensagem</h3>
+
+<form asp-controller="Agendamento" asp-action="EnviarMensagem">
+    <input type="hidden" asp-for="IdMedConsXPat" />
+
+<div class="form-group">
+    <label>Paciente</label>
+    <input type="text" class="form-control" readonly value="@ViewBag.NomePaciente" />
+    <input type="hidden" asp-for="IdPatients" />
+    <span asp-validation-for="IdPatients" class="text-danger"></span>
+</div>
+<br />
+    <div class="form-group">
+        <label>Telefone 1</label>
+        <input type="text" class="form-control" readonly value="@ViewBag.Telefone1" />
+        <input type="hidden" asp-for="PhoneNumber1" />
+        <span asp-validation-for="PhoneNumber1" class="text-danger"></span>        
+    </div>
+    <br />
+    <div class="form-group">
+        <label>Telefone 2</label>
+        <input type="text" class="form-control" readonly value="@ViewBag.Telefone2" />
+        <input type="hidden" asp-for="PhoneNumber2" />
+        <span asp-validation-for="PhoneNumber2" class="text-danger"></span>
+    </div>
+    <br />
+    <br />
+    <div>
+        <label>Mensagem</label>
+        <br />
+        <p>Boa tarde, @ViewBag.NomePaciente! Sua consulta está agendada para o dia @ViewBag.DataConsulta às @ViewBag.HorarioConsulta.</p>
+    </div>
+</form>

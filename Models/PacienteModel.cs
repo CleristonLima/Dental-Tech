@@ -94,7 +94,7 @@ namespace DentalPlus.Models
             if (id == null) return null;
 
             DAL objDAL = new DAL();
-            string sql = "SELECT NAME_PATIENT  FROM TB_CLI_PATIENTS WHERE ID_PATIENTS = @IdPatients";
+            string sql = "SELECT NAME_PATIENT FROM TB_CLI_PATIENTS WHERE ID_PATIENTS = @IdPatients";
 
             MySqlCommand command = new MySqlCommand(sql);
             command.Parameters.AddWithValue("@IdPatients", id);
@@ -111,9 +111,53 @@ namespace DentalPlus.Models
             return null; // Retorna null se o paciente não for encontrado
         }
 
+        public string ObterTelefone1Paciente(string id)
+        {
+            if (id == null) return null;
+
+            DAL objDAL = new DAL();
+            string sql = "SELECT PHONE_NUMBER_1 FROM TB_CLI_PATIENTS WHERE ID_PATIENTS = @IdPatients";
+
+            MySqlCommand command = new MySqlCommand(sql);
+            command.Parameters.AddWithValue("@IdPatients", id);
+
+            DataTable dt = objDAL.RetDataTable(command);
+
+            // Verifica se o DataTable contém algum registro
+            if (dt.Rows.Count > 0)
+            {
+                // Retorna o nome do paciente
+                return dt.Rows[0]["PHONE_NUMBER_1"].ToString();
+            }
+
+            return null;
+        }
+
+        public string ObterTelefone2Paciente(string id)
+        {
+            if (id == null) return null;
+
+            DAL objDAL = new DAL();
+            string sql = "SELECT PHONE_NUMBER_2 FROM TB_CLI_PATIENTS WHERE ID_PATIENTS = @IdPatients";
+
+            MySqlCommand command = new MySqlCommand(sql);
+            command.Parameters.AddWithValue("@IdPatients", id);
+
+            DataTable dt = objDAL.RetDataTable(command);
+
+            // Verifica se o DataTable contém algum registro
+            if (dt.Rows.Count > 0)
+            {
+                // Retorna o nome do paciente
+                return dt.Rows[0]["PHONE_NUMBER_2"].ToString();
+            }
+
+            return null;
+        }
+
 
         public List<PacienteModel> ListarTodosPacientes()
-        {
+         {
             List<PacienteModel> lista = new List<PacienteModel>();
             PacienteModel item;
             DAL objDAL = new DAL();

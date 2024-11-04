@@ -33,6 +33,10 @@ namespace DentalPlus.Models
 
         public string CpfCnpj { get; set; }
 
+        public string PhoneNumber1 { get; set; }
+
+        public string PhoneNumber2 { get; set; }
+
         public string IdDoctor {  get; set; }
 
         [Required(ErrorMessage = "Informe o médico!")]
@@ -282,6 +286,43 @@ namespace DentalPlus.Models
                         IdDoctor = dt.Rows[0]["ID_DOCTOR"].ToString(),
                         IdMedicalConsultation = dt.Rows[0]["ID_MEDICAL_CONSULTATION"].ToString()
                     };
+            }
+
+            return item;
+        }
+
+        public AgendamentoModel RetornarPacienteParaEnviarMensagem(int? id)
+        {
+            AgendamentoModel item = null;
+            DAL objDAL = new DAL();
+            string sql = $"SELECT CMCP.ID_MED_CONS_X_PAT, " +
+                               $"CP.ID_PATIENTS, " +
+                               $"CP.PHONE_NUMBER_1, " +
+                               $"CP.PHONE_NUMBER_2, " +
+                               $"CMCP.DATE_CONSULTATION_START, " +
+                               $"CD.ID_DOCTOR, " +
+                               $"CMC.ID_MEDICAL_CONSULTATION " +
+                        $"FROM TB_CLI_MED_CONSUL_X_PATIENT CMCP " +
+                        $"INNER JOIN TB_CLI_DOCTORS CD ON CD.ID_DOCTOR = CMCP.ID_DOCTOR " +
+                        $"INNER JOIN TB_CLI_PATIENTS CP ON CP.ID_PATIENTS = CMCP.ID_PATIENTS " +
+                        $"INNER JOIN TB_CLI_MEDICAL_CONSULTATION CMC ON CMC.ID_MEDICAL_CONSULTATION = CMCP.ID_MEDICAL_CONSULTATION " +
+                        $"WHERE CMCP.ID_MED_CONS_X_PAT = '{id}'";
+            DataTable dt = objDAL.RetDataTable(sql);
+
+            if (dt.Rows.Count > 0)
+            {
+
+                item = new AgendamentoModel
+                {
+                    IdMedConsXPat = dt.Rows[0]["ID_MED_CONS_X_PAT"].ToString(),
+                    IdPatients = dt.Rows[0]["ID_PATIENTS"].ToString(),
+                    PhoneNumber1 = dt.Rows[0]["PHONE_NUMBER_1"].ToString(),
+                    PhoneNumber2 = dt.Rows[0]["PHONE_NUMBER_2"].ToString(),
+                    DateConsultationStart = DateTime.Parse(dt.Rows[0]["DATE_CONSULTATION_START"].ToString()),
+                    IdDoctor = dt.Rows[0]["ID_DOCTOR"].ToString(),
+                    IdMedicalConsultation = dt.Rows[0]["ID_MEDICAL_CONSULTATION"].ToString()
+
+                };
             }
 
             return item;

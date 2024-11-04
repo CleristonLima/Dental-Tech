@@ -1,6 +1,7 @@
 ﻿using DentalPlus.Connection;
 using DentalPlus.Models;
 using DocumentFormat.OpenXml.EMMA;
+using DocumentFormat.OpenXml.Office2010.Excel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -194,6 +195,34 @@ namespace DentalPlus.Controllers
             {
                 ViewBag.ListaConsultasCanceladas = new AgendamentoModel().ListarTodasConsultasCanceladas();
                 return View();
+            }
+        }
+
+        [HttpGet]
+        public IActionResult EnviarMensagem(int? id)
+        {
+            if (!VerificarConexaoInternet())
+            {
+                TempData["ErrorLogin"] = "Sem conexão com a internet. Verifique sua rede e tente novamente.";
+                return RedirectToAction("Index", "Agendamento");
+            }
+            else
+            {
+                AgendamentoModel agendamento = new AgendamentoModel();
+
+                if (id != null)
+                {
+                    agendamento = new AgendamentoModel().RetornarPacienteParaEnviarMensagem(id);
+
+                    // Preenche o ViewBag com os nomes baseados nos IDs para exibição somente leitura
+                    ViewBag.NomePaciente = new PacienteModel().ObterNomePorId(agendamento.IdPatients);
+                    ViewBag.Telefone1 = new PacienteModel().ObterTelefone1Paciente(agendamento.IdPatients);
+                    ViewBag.Telefone2 = new PacienteModel().ObterTelefone2Paciente(agendamento.IdPatients);
+
+                    ViewBag.DataConsulta = agendamento.DateConsultationStart.ToString("dd/MM/yyyy");
+                    ViewBag.HorarioConsulta = agendamento.DateConsultationStart.ToString("HH:mm");
+                }
+                    return View(agendamento);
             }
         }
     }
