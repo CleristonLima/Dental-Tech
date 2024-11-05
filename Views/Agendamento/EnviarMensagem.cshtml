@@ -26,10 +26,21 @@
         <span asp-validation-for="PhoneNumber2" class="text-danger"></span>
     </div>
     <br />
+    <div class="form-group">
+        <br />
+        <label>Tipo de envio</label>
+        <select asp-for="StatusConsultation" class="form-control">
+            <option value="WhatsApp">WhatsApp</option>
+            <option value="SMS">SMS</option>
+        </select>
+        <span asp-validation-for="StatusConsultation" class="text-danger"></span>
+    </div>
     <br />
     <div>
         <h5>Mensagem</h5>
         <br />
         <p>Boa tarde, @ViewBag.NomePaciente! Sua consulta está agendada para o dia @ViewBag.DataConsulta às @ViewBag.HorarioConsulta. Você confirma a sua presença?</p>
     </div>
+
+    <button type="submit" class="btn btn-success">Enviar Mensagem</button>
 </form>

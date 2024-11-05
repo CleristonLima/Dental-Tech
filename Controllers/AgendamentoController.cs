@@ -222,8 +222,45 @@ namespace DentalPlus.Controllers
                     ViewBag.DataConsulta = agendamento.DateConsultationStart.ToString("dd/MM/yyyy");
                     ViewBag.HorarioConsulta = agendamento.DateConsultationStart.ToString("HH:mm");
                 }
-                    return View(agendamento);
+                return View(agendamento);
             }
+        }
+
+        [HttpPost]
+        public IActionResult EnviarMensagem(AgendamentoModel agendamento)
+        {
+            if (!VerificarConexaoInternet())
+            {
+                TempData["ErrorLogin"] = "Sem conexão com a internet. Verifique sua rede e tente novamente.";
+                return RedirectToAction("Index", "Agendamento");
+            }
+
+            string phoneNumber = agendamento.PhoneNumber1;
+            phoneNumber = "+55" + new string(phoneNumber.Where(char.IsDigit).ToArray());
+
+            // Obter o nome do paciente
+            ViewBag.NomePaciente = new PacienteModel().ObterNomePorId(agendamento.IdPatients);
+
+            // Obter data e hora da consulta usando o método ObterDataeHoraPorId
+            string dataHoraConsulta = new AgendamentoModel().ObterDataeHoraPorId(agendamento.IdMedConsXPat);
+
+            if (!string.IsNullOrEmpty(dataHoraConsulta) && DateTime.TryParse(dataHoraConsulta, out DateTime dateConsultationStart))
+            {
+                ViewBag.DataConsulta = dateConsultationStart.ToString("dd/MM/yyyy");
+                ViewBag.HorarioConsulta = dateConsultationStart.ToString("HH:mm");
+            }
+
+            // Criar mensagem com data e horário
+            string mensagem = $"Boa tarde, {ViewBag.NomePaciente}! Sua consulta está agendada para o dia {ViewBag.DataConsulta} às {ViewBag.HorarioConsulta}. Você confirma a sua presença?";
+
+            if (agendamento.StatusConsultation == "WhatsApp")
+            {
+                // Redireciona para o WhatsApp com a mensagem
+                string whatsappUrl = $"https://wa.me/{phoneNumber}?text={Uri.EscapeDataString(mensagem)}";
+                return Redirect(whatsappUrl);
+            }
+
+            return View(agendamento);
         }
     }
 

@@ -68,6 +68,34 @@ namespace DentalPlus.Models
 
         public string ErrorMessage { get; set; }
 
+        public string ObterDataeHoraPorId(string id)
+        {
+            if (id == null) return null;
+
+            DAL objDAL = new DAL();
+            string sql = "SELECT DATE_CONSULTATION_START FROM TB_CLI_MED_CONSUL_X_PATIENT WHERE ID_MED_CONS_X_PAT = @IdMedConsXPat AND STATUS_CONSULTATION = 'Agendado'";
+
+            MySqlCommand command = new MySqlCommand(sql);
+            command.Parameters.AddWithValue("@IdMedConsXPat", id);
+
+            DataTable dt = objDAL.RetDataTable(command);
+
+            // Verifica se o DataTable contém algum registro
+            if (dt.Rows.Count > 0)
+            {
+                // Retorna o nome do paciente
+                return dt.Rows[0]["DATE_CONSULTATION_START"].ToString();
+            }
+
+            else
+            {
+                ErrorMessage = "Não é possivel enviar a mensagem pois o paciente não esta com a consulta com o status de agendada";
+            }
+
+
+            return null; // Retorna null se o paciente não for encontrado
+        }
+
         public List<AgendamentoModel> ListarTodosAgendamentos()
         {
             List<AgendamentoModel> lista = new List<AgendamentoModel>();
@@ -323,6 +351,7 @@ namespace DentalPlus.Models
                     IdMedicalConsultation = dt.Rows[0]["ID_MEDICAL_CONSULTATION"].ToString()
 
                 };
+
             }
 
             return item;
