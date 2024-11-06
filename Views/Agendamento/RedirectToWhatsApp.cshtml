@@ -1,0 +1,31 @@
+﻿@{
+    ViewData["Title"] = "Redirecionando para o WhatsApp...";
+}
+
+<h3>Estamos redirecionando você para o WhatsApp...</h3>
+<p>Se você não for redirecionado automaticamente, <a href="@ViewBag.WhatsAppUrl">clique aqui</a>.</p>
+
+<script type="text/javascript">
+
+    function checkInternetConnection() {
+        if (!navigator.onLine) {
+            alert("Sem conexao com a internet. Verifique sua rede e tente novamente.");
+        }
+    }
+
+    window.addEventListener('load', checkInternetConnection);
+    window.addEventListener('offline', checkInternetConnection);
+
+    document.addEventListener('DOMContentLoaded', function () {
+        var errorMessage = '@TempData["ErrorLogin"]';
+        if (errorMessage) {
+            alert(errorMessage);
+        }
+    });
+
+    setTimeout(function () {
+        window.open("@ViewBag.WhatsAppUrl", "_blank");
+
+        window.location.href = '@Url.Action("Index", "Agendamento")';
+    }, 1500); // 1,5 segundos de atraso
+</script>

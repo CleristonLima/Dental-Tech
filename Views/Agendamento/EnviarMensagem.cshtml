@@ -1,5 +1,12 @@
 ﻿@model AgendamentoModel
 
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger" role="alert">
+        @TempData["ErrorMessage"]
+    </div>
+}
+
 <h3 class="titulo-cadastro">Enviar Mensagem</h3>
 
 <form asp-controller="Agendamento" asp-action="EnviarMensagem">
@@ -37,10 +44,21 @@
     </div>
     <br />
     <div>
-        <h5>Mensagem</h5>
+        <h5>Mensagem ao paciente</h5>
         <br />
-        <p>Boa tarde, @ViewBag.NomePaciente! Sua consulta está agendada para o dia @ViewBag.DataConsulta às @ViewBag.HorarioConsulta. Você confirma a sua presença?</p>
+        <p>Olá, @ViewBag.NomePaciente, tudo bem?</p>
+        <br />
+        <p>Passando para lembrar que a sua consulta está agendada para o dia @ViewBag.DataConsulta às @ViewBag.HorarioConsulta.</p>
+        <br />
+        <p>Você confirma a sua presença?</p>
     </div>
 
     <button type="submit" class="btn btn-success">Enviar Mensagem</button>
 </form>
+
+<style>
+    .alert-danger {
+        font-size: 16px;
+        font-weight: bold;
+    }
+</style>

@@ -226,6 +226,15 @@ namespace DentalPlus.Controllers
             }
         }
 
+        // Metodo para enviar mensagem
+
+        public IActionResult RedirectToWhatsApp(string phoneNumber, string mensagem)
+        {
+            string whatsappUrl = $"https://wa.me/{phoneNumber}?text={Uri.EscapeDataString(mensagem)}";
+            ViewBag.WhatsAppUrl = whatsappUrl;
+            return View();
+        }
+
         [HttpPost]
         public IActionResult EnviarMensagem(AgendamentoModel agendamento)
         {
@@ -235,29 +244,29 @@ namespace DentalPlus.Controllers
                 return RedirectToAction("Index", "Agendamento");
             }
 
-            string phoneNumber = agendamento.PhoneNumber1;
-            phoneNumber = "+55" + new string(phoneNumber.Where(char.IsDigit).ToArray());
-
-            // Obter o nome do paciente
+            // 55 -> DDI do Brasil
+            string phoneNumber = "55" + new string(agendamento.PhoneNumber1.Where(char.IsDigit).ToArray());
             ViewBag.NomePaciente = new PacienteModel().ObterNomePorId(agendamento.IdPatients);
 
-            // Obter data e hora da consulta usando o método ObterDataeHoraPorId
             string dataHoraConsulta = new AgendamentoModel().ObterDataeHoraPorId(agendamento.IdMedConsXPat);
 
-            if (!string.IsNullOrEmpty(dataHoraConsulta) && DateTime.TryParse(dataHoraConsulta, out DateTime dateConsultationStart))
+            if (string.IsNullOrEmpty(dataHoraConsulta))
+            {
+                TempData["ErrorMessage"] = new AgendamentoModel().ErrorMessage;
+                return RedirectToAction("EnviarMensagem", new { id = agendamento.IdMedConsXPat });
+            }
+
+            if (DateTime.TryParse(dataHoraConsulta, out DateTime dateConsultationStart))
             {
                 ViewBag.DataConsulta = dateConsultationStart.ToString("dd/MM/yyyy");
                 ViewBag.HorarioConsulta = dateConsultationStart.ToString("HH:mm");
             }
 
-            // Criar mensagem com data e horário
-            string mensagem = $"Boa tarde, {ViewBag.NomePaciente}! Sua consulta está agendada para o dia {ViewBag.DataConsulta} às {ViewBag.HorarioConsulta}. Você confirma a sua presença?";
+            string mensagem = $"Olá, {ViewBag.NomePaciente}, tudo bem?\n\nPassando para lembrar que a sua consulta está agendada para o dia {ViewBag.DataConsulta} às {ViewBag.HorarioConsulta}.\n\nVocê confirma a sua presença?";
 
             if (agendamento.StatusConsultation == "WhatsApp")
             {
-                // Redireciona para o WhatsApp com a mensagem
-                string whatsappUrl = $"https://wa.me/{phoneNumber}?text={Uri.EscapeDataString(mensagem)}";
-                return Redirect(whatsappUrl);
+                return RedirectToAction("RedirectToWhatsApp", new { phoneNumber, mensagem });
             }
 
             return View(agendamento);

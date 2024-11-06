@@ -73,7 +73,7 @@ namespace DentalPlus.Models
             if (id == null) return null;
 
             DAL objDAL = new DAL();
-            string sql = "SELECT DATE_CONSULTATION_START FROM TB_CLI_MED_CONSUL_X_PATIENT WHERE ID_MED_CONS_X_PAT = @IdMedConsXPat AND STATUS_CONSULTATION = 'Agendado'";
+            string sql = @"SELECT DATE_CONSULTATION_START FROM TB_CLI_MED_CONSUL_X_PATIENT WHERE ID_MED_CONS_X_PAT = @IdMedConsXPat AND STATUS_CONSULTATION = 'Agendado' AND DATE(DATE_CONSULTATION_START) BETWEEN CURDATE() AND CURDATE() + INTERVAL 1 DAY";
 
             MySqlCommand command = new MySqlCommand(sql);
             command.Parameters.AddWithValue("@IdMedConsXPat", id);
@@ -83,17 +83,15 @@ namespace DentalPlus.Models
             // Verifica se o DataTable contém algum registro
             if (dt.Rows.Count > 0)
             {
-                // Retorna o nome do paciente
-                return dt.Rows[0]["DATE_CONSULTATION_START"].ToString();
+                DateTime dateConsultationStart = DateTime.Parse(dt.Rows[0]["DATE_CONSULTATION_START"].ToString());
+                return dateConsultationStart.ToString("yyyy-MM-dd HH:mm:ss");
             }
-
             else
             {
-                ErrorMessage = "Não é possivel enviar a mensagem pois o paciente não esta com a consulta com o status de agendada";
+                ErrorMessage = "Não é possível enviar a mensagem pois o paciente não está com a consulta com o status de 'Agendado' ou a data do agendamento é anterior a hoje.";
             }
 
-
-            return null; // Retorna null se o paciente não for encontrado
+            return null; // Retorna null se as condições não forem atendidas
         }
 
         public List<AgendamentoModel> ListarTodosAgendamentos()

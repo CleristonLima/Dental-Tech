@@ -112,6 +112,16 @@
         }
     }
 
+    window.addEventListener('load', checkInternetConnection);
+    window.addEventListener('offline', checkInternetConnection);
+
+    document.addEventListener('DOMContentLoaded', function () {
+        var errorMessage = '@TempData["ErrorLogin"]';
+        if (errorMessage) {
+            alert(errorMessage);
+        }
+    });
+
     document.getElementById("dataConsulta").addEventListener("change", function () {
         var data = this.value;
 
