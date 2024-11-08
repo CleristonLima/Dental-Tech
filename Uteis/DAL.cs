@@ -101,5 +101,15 @@ namespace DentalPlus.Uteis
                 return cmd.ExecuteScalar();
             }
         }
+
+        public object RetornarValorComando(MySqlCommand command)
+        {
+            using (MySqlConnection conn = GetConnection())
+            {
+                conn.Open();
+                command.Connection = conn;
+                return command.ExecuteScalar();
+            }
+        }
     }
 }

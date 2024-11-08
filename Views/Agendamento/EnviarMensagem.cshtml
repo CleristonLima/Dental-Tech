@@ -2,7 +2,7 @@
 
 @if (TempData["ErrorMessage"] != null)
 {
-    <div class="alert alert-danger" role="alert">
+    <div class="alert alert-danger" role="alert" id="alertaAgendamento">
         @TempData["ErrorMessage"]
     </div>
 }
@@ -20,27 +20,20 @@
 </div>
 <br />
     <div class="form-group">
-        <label>Telefone 1</label>
+        <label>Telefone/Celular</label>
         <input type="text" class="form-control" readonly value="@ViewBag.Telefone1" />
         <input type="hidden" asp-for="PhoneNumber1" />
         <span asp-validation-for="PhoneNumber1" class="text-danger"></span>        
     </div>
     <br />
     <div class="form-group">
-        <label>Telefone 2</label>
-        <input type="text" class="form-control" readonly value="@ViewBag.Telefone2" />
-        <input type="hidden" asp-for="PhoneNumber2" />
-        <span asp-validation-for="PhoneNumber2" class="text-danger"></span>
-    </div>
-    <br />
-    <div class="form-group">
         <br />
         <label>Tipo de envio</label>
-        <select asp-for="StatusConsultation" class="form-control">
+        <select asp-for="MessageType" class="form-control">
             <option value="WhatsApp">WhatsApp</option>
             <option value="SMS">SMS</option>
         </select>
-        <span asp-validation-for="StatusConsultation" class="text-danger"></span>
+        <span asp-validation-for="MessageType" class="text-danger"></span>
     </div>
     <br />
     <div>
@@ -59,6 +52,15 @@
 <style>
     .alert-danger {
         font-size: 16px;
-        font-weight: bold;
     }
 </style>
+
+<script>
+    setTimeout(function () {
+        var alerta = document.getElementById("alertaAgendamento");
+        if (alerta) {
+            alerta.style.display = "none";
+        }
+    }, 5000);
+
+</script>

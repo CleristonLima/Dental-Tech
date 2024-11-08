@@ -236,7 +236,7 @@ namespace DentalPlus.Controllers
         }
 
         [HttpPost]
-        public IActionResult EnviarMensagem(AgendamentoModel agendamento)
+        public async Task<IActionResult> EnviarMensagem(AgendamentoModel agendamento)
         {
             if (!VerificarConexaoInternet())
             {
@@ -252,7 +252,7 @@ namespace DentalPlus.Controllers
 
             if (string.IsNullOrEmpty(dataHoraConsulta))
             {
-                TempData["ErrorMessage"] = new AgendamentoModel().ErrorMessage;
+                TempData["ErrorMessage"] = "Não é possível enviar a mensagem pois o paciente não está com a consulta com o status de 'Agendado' ou a data do agendamento é anterior a hoje."; //new AgendamentoModel().ErrorMessage;
                 return RedirectToAction("EnviarMensagem", new { id = agendamento.IdMedConsXPat });
             }
 
@@ -264,9 +264,13 @@ namespace DentalPlus.Controllers
 
             string mensagem = $"Olá, {ViewBag.NomePaciente}, tudo bem?\n\nPassando para lembrar que a sua consulta está agendada para o dia {ViewBag.DataConsulta} às {ViewBag.HorarioConsulta}.\n\nVocê confirma a sua presença?";
 
-            if (agendamento.StatusConsultation == "WhatsApp")
+            if (agendamento.MessageType == "WhatsApp")
             {
+                agendamento.userId = _httpContextAccessor.HttpContext?.Session.GetString("IdUsuarioLogado");
+                await agendamento.GravarMensagemEnviadaAsync();
+
                 return RedirectToAction("RedirectToWhatsApp", new { phoneNumber, mensagem });
+                  
             }
 
             return View(agendamento);

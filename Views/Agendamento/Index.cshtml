@@ -5,7 +5,7 @@
     <div id="alerta-consultaamanha" class="alert alert-warning">
         @foreach (var item in (List<AgendamentoModel>)ViewBag.ListaAgendamentoAmanha)
         {
-            <p>O paciente @item.NamePatient tem agendamento amanhã das @item.DateConsultationStart.ToString("dd/MM/yyyy HH:mm") até as @item.DateConsultationFinish.ToString("dd/MM/yyyy HH:mm"), para fazer uma @item.NameMedicalConsultation, não esqueça de enviar a mensagem para ele 😉<br /></p>
+            <p>O paciente @item.NamePatient tem agendamento amanhã das @item.DateConsultationStart.ToString("dd/MM/yyyy HH:mm") até as @item.DateConsultationFinish.ToString("dd/MM/yyyy HH:mm"), para fazer uma @item.NameMedicalConsultation, não esqueça de enviar a mensagem. 😉<br /></p>
         }
     </div>
 }
