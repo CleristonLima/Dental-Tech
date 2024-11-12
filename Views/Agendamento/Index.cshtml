@@ -57,10 +57,11 @@
         </table>
     </div>
     <br />
-
+    <div class="button-container">
     <button class="btn btn-block btn-primary" type="button" onclick="Cadastrar()">Cadastrar novo agendamento</button>
     <button class="btn btn-block btn-success" type="button" onclick="ConsultasRealizadas()" id="realizadas">Consultas realizadas</button>
     <button class="btn btn-block btn-danger" type="button" onclick="ConsultasCanceladas()" id="canceladas">Consultas canceladas</button>
+    </div>
 }
 else
 {
@@ -109,12 +110,29 @@ else
         background-color: #f2f2f2;
     }
 
-    #realizadas{
+    /*#realizadas{
         margin-left: 25px;
     }
 
     #canceladas {
         margin-left: 25px;
+    }*/
+
+    .button-container {
+        display: flex;
+        gap: 10px; /* Espaçamento entre os botões */
+    }
+
+    @@media (max-width: 768px) {
+        .button-container {
+            flex-direction: column;
+        }
+            /*Alinha os botões quando fica no modo do celular*/
+            .button-container .btn {
+                /*margin-left: 70px;*/
+                margin-top: 15px;
+                width: 50%; /* Botões ocupam toda a largura do contêiner */
+            }
     }
 </style>
 
