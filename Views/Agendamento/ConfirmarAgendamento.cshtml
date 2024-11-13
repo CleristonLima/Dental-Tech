@@ -1,0 +1,55 @@
+﻿<h2>Confirmar agendamento</h2>
+
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger" role="alert">
+        @TempData["ErrorMessage"]
+    </div>
+}
+
+<h3> Deseja realmente confirmar este agendamento?</h3>
+<br />
+<button type="button" class="btn btn-danger" onclick="Nao()">Não</button>
+<button type="button" class="btn btn-success" onclick="Sim()">Sim</button>
+
+<script>
+    function checkInternetConnection() {
+        if (!navigator.onLine) {
+            alert("Sem conexao com a internet. Verifique sua rede e tente novamente.");
+        }
+    }
+
+    window.addEventListener('load', checkInternetConnection);
+    window.addEventListener('offline', checkInternetConnection);
+
+    document.addEventListener('DOMContentLoaded', function () {
+        var errorMessage = '@TempData["ErrorLogin"]';
+        if (errorMessage) {
+            alert(errorMessage);
+        }
+    });
+
+    setTimeout(function () {
+        var erroMensagem = document.querySelector('.alert-danger');
+        if (erroMensagem) {
+            erroMensagem.style.display = "none";
+            window.location.href = '../../Agendamento/Index'
+        }
+    }, 3000);
+
+    function Sim() {
+        if (!navigator.onLine) {
+            alert("Sem conexão com a internet. Verifique sua rede e tente novamente.");
+        } else {
+            window.location.href = '../../Agendamento/ConfirmarAgendamentoSucesso/' + '@ViewData["IdMedConsXPat"].ToString()';
+        }
+    }
+
+    function Nao() {
+        if (!navigator.onLine) {
+            alert("Sem conexão com a internet. Verifique sua rede e tente novamente.");
+        } else {
+            window.location.href = '../../Agendamento/Index';
+        }
+    }
+</script>

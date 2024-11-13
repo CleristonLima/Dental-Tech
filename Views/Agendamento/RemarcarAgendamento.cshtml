@@ -1,0 +1,67 @@
+﻿@model AgendamentoModel
+
+<h3 class="titulo-cadastro">Remarcar agendamento</h3>
+
+@if (TempData["ErrorHorario"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["ErrorHorario"]
+    </div>
+}
+
+<form asp-controller="Agendamento" asp-action="RemarcarAgendamento" method="post">
+    <input type="hidden" asp-for="IdMedConsXPat" />
+
+    <div class="form-group">
+        <label>Paciente</label>
+        <input type="text" class="form-control" readonly value="@ViewBag.NomePaciente" />
+        <input type="hidden" asp-for="IdPatients" />
+        <span asp-validation-for="IdPatients" class="text-danger"></span>
+    </div>
+    <br />
+    <div class="form-group">
+        <label>Medico</label>
+        <input type="text" class="form-control" readonly value="@ViewBag.NomeMedico" />
+        <input type="hidden" asp-for="IdDoctor" />
+        <span asp-validation-for="IdDoctor" class="text-danger"></span>
+    </div>
+    <br />
+    <div class="form-group">
+        <label>Data e Hora Inicial da Consulta:</label>
+        <input type="datetime-local" name="DateConsultationStart" id="dataHoraInicio"
+               min="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")" />
+        <span asp-validation-for="DateConsultationStart" class="text-danger"></span>
+    </div>
+    <br />
+    <div class="form-group">
+        <label>Data e Hora Final da Consulta:</label>
+        <input type="datetime-local" name="DateConsultationFinish" id="dataHoraFim"
+               min="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")" />
+        <span asp-validation-for="DateConsultationFinish" class="text-danger"></span>
+    </div>
+    <br />
+    <div class="form-group">
+        <br />
+        <label>Observação</label>
+
+        @{
+            var vObs = "";
+
+            try
+            {
+
+                vObs = ViewBag.Agendamento.Reason;
+            }
+            catch { }
+        }
+
+        @Html.TextArea("Reason", vObs, new { @class = "form-control" })
+
+        <!--<span asp-validation-for="Reason" class="text-danger"></span>-->
+    </div>
+    <br />
+    <br />
+    <button type="submit" class="btn btn-success">Salvar</button>
+
+
+</form>

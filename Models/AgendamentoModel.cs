@@ -1,9 +1,5 @@
 ﻿using DentalPlus.Uteis;
-using DocumentFormat.OpenXml.Bibliography;
-using DocumentFormat.OpenXml.Drawing.Charts;
-using Microsoft.VisualBasic;
 using MySql.Data.MySqlClient;
-using Mysqlx.Crud;
 using System.ComponentModel.DataAnnotations;
 using System.Data;
 using DataTable = System.Data.DataTable;
@@ -287,6 +283,34 @@ namespace DentalPlus.Models
             return lista;
         }
 
+        public AgendamentoModel RemarcarAgendamento(int? id)
+        {
+            AgendamentoModel item = null;
+            DAL objDAL = new DAL();
+            string sql = $"SELECT CMCP.ID_MED_CONS_X_PAT, " +
+                               $"CP.ID_PATIENTS, " +
+                               $"CD.ID_DOCTOR " +
+                        $"FROM TB_CLI_MED_CONSUL_X_PATIENT CMCP " +
+                        $"INNER JOIN TB_CLI_DOCTORS CD ON CD.ID_DOCTOR = CMCP.ID_DOCTOR " +
+                        $"INNER JOIN TB_CLI_PATIENTS CP ON CP.ID_PATIENTS = CMCP.ID_PATIENTS " +
+                        $"INNER JOIN TB_CLI_MEDICAL_CONSULTATION CMC ON CMC.ID_MEDICAL_CONSULTATION = CMCP.ID_MEDICAL_CONSULTATION " +
+                        $"WHERE CMCP.ID_MED_CONS_X_PAT = '{id}'";
+            DataTable dt = objDAL.RetDataTable(sql);
+
+            if (dt.Rows.Count > 0)
+            {
+
+                item = new AgendamentoModel
+                {
+                    IdMedConsXPat = dt.Rows[0]["ID_MED_CONS_X_PAT"].ToString(),
+                    IdPatients = dt.Rows[0]["ID_PATIENTS"].ToString(),
+                    IdDoctor = dt.Rows[0]["ID_DOCTOR"].ToString()
+                };
+            }
+
+            return item;
+        }
+
         public AgendamentoModel RetornarAgendamentoParaCancelar(int? id)
         {
             AgendamentoModel item = null;
@@ -539,6 +563,36 @@ namespace DentalPlus.Models
             }
         }
 
+        public void GravarRemarcacao()
+        {
+            DAL objDAL = new DAL();
+            string sql = string.Empty;
+
+            string currentDateTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+
+            if (!string.IsNullOrEmpty(IdMedConsXPat))
+            {
+                // Se for uma atualização, preenche o campo USER_UPDATE
+                sql = "UPDATE TB_CLI_MED_CONSUL_X_PATIENT SET DATE_CONSULTATION_START = @DateConsultationStart, " +
+                        "DATE_CONSULTATION_FINISH = @DateConsultationFinish, " +
+                        "STATUS_CONSULTATION = 'Agendado', " +
+                        "REASON = @Reason, " +
+                        "USER_UPDATE = @userUpdate, " +
+                        "DATE_UPDATE = @dateUpdate " +
+                        "WHERE ID_MED_CONS_X_PAT = @IdMedConsXPat ";
+
+                MySqlCommand command = new MySqlCommand(sql);
+                command.Parameters.AddWithValue("@DateConsultationStart", DateConsultationStart);
+                command.Parameters.AddWithValue("@DateConsultationFinish", DateConsultationFinish);
+                command.Parameters.AddWithValue("@Reason", Reason);
+                command.Parameters.AddWithValue("@userUpdate", userId);
+                command.Parameters.AddWithValue("@dateUpdate", currentDateTime);
+                command.Parameters.AddWithValue("@IdMedConsXPat", IdMedConsXPat);
+
+                objDAL.ExecutarComandoSQL(command);
+            }
+        }
+
         /*public void GravarMensagemEnviada()
         {
             DAL objDAL = new DAL();
@@ -612,6 +666,43 @@ namespace DentalPlus.Models
             updateCommand.Parameters.AddWithValue("@MessageId", messageId);
 
             objDAL.ExecutarComandoSQL(updateCommand);
+        }
+
+        public void AgendamentoConfirmado(int id)
+        {
+            DAL objDAL = new DAL();            
+            string sql = string.Empty;
+
+            string currentDateTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+
+            sql = "SELECT COUNT(*) FROM TB_CLI_MED_CONSUL_X_PATIENT WHERE ID_MED_CONS_X_PAT = @IdMedConsXPat AND STATUS_CONSULTATION NOT IN ('Agendado')";
+
+            MySqlCommand commandSelect = new MySqlCommand(sql);
+            commandSelect.Parameters.AddWithValue("@IdMedConsXPat", id);
+
+            int count = Convert.ToInt32(objDAL.RetDataTable(commandSelect).Rows[0][0]);
+
+            if (count > 0)
+            {
+                ErrorMessage = "Não é possivel confirmar esse agendamento, pois não esta com o status de agendado! ";
+            }
+
+            else {
+
+                sql = "UPDATE TB_CLI_MED_CONSUL_X_PATIENT " +
+                              "SET STATUS_CONSULTATION = 'Confirmado', " +
+                              "USER_UPDATE = @userUpdate, " +
+                              "DATE_UPDATE = @DateUpdate " +
+                              "WHERE ID_MED_CONS_X_PAT = @IdMedConsXPat " +
+                              "AND STATUS_CONSULTATION = 'Agendado'";
+
+                MySqlCommand commandUpdate = new MySqlCommand(sql);
+                commandUpdate.Parameters.AddWithValue("@IdMedConsXPat", id);
+                commandUpdate.Parameters.AddWithValue("@userUpdate", userId);
+                commandUpdate.Parameters.AddWithValue("@DateUpdate", currentDateTime);
+
+                objDAL.ExecutarComandoSQL(commandUpdate);
+            }
         }
     }
 }

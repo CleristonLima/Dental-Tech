@@ -1,7 +1,5 @@
 ﻿using DentalPlus.Connection;
 using DentalPlus.Models;
-using DocumentFormat.OpenXml.EMMA;
-using DocumentFormat.OpenXml.Office2010.Excel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -169,6 +167,52 @@ namespace DentalPlus.Controllers
         }
 
         [HttpGet]
+        public IActionResult RemarcarAgendamento(int? id)
+        {
+            if (!VerificarConexaoInternet())
+            {
+                TempData["ErrorLogin"] = "Sem conexão com a internet. Verifique sua rede e tente novamente.";
+                return RedirectToAction("Index", "Agendamento");
+            }
+            else
+            {
+                AgendamentoModel agendamento = new AgendamentoModel();
+
+                if (id != null)
+                {
+                    agendamento = new AgendamentoModel().RemarcarAgendamento(id);
+
+                    // Preenche o ViewBag com os nomes baseados nos IDs para exibição somente leitura
+                    ViewBag.NomePaciente = new PacienteModel().ObterNomePorId(agendamento.IdPatients);
+                    ViewBag.NomeMedico = new MedicoModel().ObterNomePorId(agendamento.IdDoctor);
+                }
+
+                return View(agendamento);
+            }
+
+        }
+
+        [HttpPost]
+        public IActionResult RemarcarAgendamento(AgendamentoModel agendamento)
+        {
+
+            // Recarrega as listas de Médicos, Pacientes e Consultas para que fiquem disponíveis na View novamente
+            var paciente = new PacienteModel().ListarTodosPacientes();
+            ViewBag.ListaPacientes = new SelectList(paciente, "IdPatients", "NomeComCpf");
+
+            var medico = new MedicoModel().ListarTodosMedicos();
+            ViewBag.ListaMedicos = new SelectList(medico, "IdDoctor", "NomeComCRM");
+
+            var consulta = new TipoConsultaModel().ListarTodosTiposConsultas();
+            ViewBag.ListaTipoConsultas = new SelectList(consulta, "IdMedicalConsultation", "descMedicalConsultation");
+
+            agendamento.userId = _httpContextAccessor.HttpContext?.Session.GetString("IdUsuarioLogado");
+            agendamento.GravarRemarcacao();
+            return RedirectToAction("Index", "Agendamento");
+
+        }
+
+        [HttpGet]
         public IActionResult ConsultasRealizadas()
         {
             if (!VerificarConexaoInternet())
@@ -274,6 +318,45 @@ namespace DentalPlus.Controllers
             }
 
             return View(agendamento);
+        }
+
+        public IActionResult ConfirmarAgendamento(int id)
+        {
+            if (!VerificarConexaoInternet())
+            {
+                TempData["ErrorLogin"] = "Sem conexão com a internet. Verifique sua rede e tente novamente.";
+                return RedirectToAction("Index", "Agendamento");
+            }
+            else
+            {
+                ViewData["IdMedConsXPat"] = id;
+                return View();
+            }
+        }
+
+        public IActionResult ConfirmarAgendamentoSucesso(int id)
+        {
+            if (!VerificarConexaoInternet())
+            {
+                TempData["ErrorLogin"] = "Sem conexão com a internet. Verifique sua rede e tente novamente.";
+                return RedirectToAction("Index", "Agendamento");
+            }
+            else
+            {
+                var agendamento = new AgendamentoModel();
+
+                agendamento.userId = _httpContextAccessor.HttpContext?.Session.GetString("IdUsuarioLogado");
+                
+                agendamento.AgendamentoConfirmado(id);
+
+                if (!string.IsNullOrEmpty(agendamento.ErrorMessage))
+                {
+                    TempData["ErrorMessage"] = agendamento.ErrorMessage;
+                    return RedirectToAction("ConfirmarAgendamento", "Agendamento");
+                }
+
+                return View();
+            }
         }
     }
 
