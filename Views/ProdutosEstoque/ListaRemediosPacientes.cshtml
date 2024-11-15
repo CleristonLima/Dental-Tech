@@ -2,6 +2,11 @@
 
 @if (ViewBag.ListaRemedios != null)
 {
+
+    <button class="btn btn-block btn-primary" type="button" onclick="Cadastrar()">Cadastrar novo remédio</button>
+    <button class="btn btn-block btn-success" type="button" onclick="ReceitaMedica()" id="btnReceita">Gerar receita médica</button>
+    <br />
+    <br />
     <div class="table-container">
         <table class="table table-bordered">
             <thead>
@@ -18,7 +23,7 @@
                     foreach (var item in (List<ProdutoReceitaModel>)ViewBag.ListaRemedios)
                     {
                         <tr>
-                            <td><img src="@item.LinkPhotoRevenue" width="50" height="50" /></td>
+                            <td><img src="@(string.IsNullOrEmpty(item.LinkPhotoRevenue) ?"/images/Remedios.png " : item.LinkPhotoRevenue)" width="50" height="50" /></td>
                             <td>@item.NameProduct</td>
                             <td><button type="button" class="btn btn-warning" onclick="Editar(@item.IdProductRevenue)">Editar</button></td>
                             <td><button type="button" class="btn btn-danger" onclick="Excluir(@item.IdProductRevenue)">Excluir</button></td>
@@ -29,9 +34,6 @@
 
         </table>
     </div>
-    <br />
-
-    <button class="btn btn-block btn-primary" type="button" onclick="Cadastrar()">Cadastrar novo remédio</button>
 }
 else
 {
@@ -62,16 +64,27 @@ else
         padding: 0; /* Remove padding */
     }
 
-    .table th, .table td {
-        white-space: nowrap;
-        padding: 8px;
-        text-align: center;
-        border: 1px solid #ddd;
-    }
+        .table th, .table td {
+            white-space: nowrap;
+            padding: 8px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
 
-    .table th {
-        background-color: #f2f2f2;
-    }
+            .table td img {
+                width: 50px;
+                height: 50px;
+                border-radius: 50%; /* Deixa a imagem redonda */
+                object-fit: cover; /* Ajusta a imagem para cobrir o espaço sem distorcer */
+            }
+
+        .table th {
+            background-color: #f2f2f2;
+        }
+
+        #btnReceita{
+            margin-left: 20px;
+        }
 </style>
 
 <script>
@@ -96,6 +109,14 @@ else
             alert("Sem conexão com a internet. Verifique sua rede e tente novamente.");
         } else {
             window.location.href = "../ProdutosEstoque/CadastroRemedio";
+        }
+    }
+
+    function ReceitaMedica() {
+        if (!navigator.onLine) {
+            alert("Sem conexão com a internet. Verifique sua rede e tente novamente.");
+        } else {
+            window.location.href = "../Prontuario/Receita";
         }
     }
 

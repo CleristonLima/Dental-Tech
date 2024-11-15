@@ -1,6 +1,6 @@
 ﻿@model ProdutosEstoqueModel
 
-<h2>Abastecer Produto</h2>
+<h2 class="titulo-cadastro">Abastecer Produto</h2>
 
 <form asp-controller="ProdutosEstoque" asp-action="AbastecerProduto" method="post">
     <input type="hidden" asp-for="IdProduct" />
@@ -39,3 +39,11 @@
         window.location.href = "../../ProdutosEstoque/ListaProdutosEstoque";
     }
 </script>
+
+<style>
+    .titulo-cadastro {
+        white-space: nowrap; /* Impede a quebra de linha */
+        text-align: center; /* Centraliza o texto */
+        margin-bottom: 20px; /* Adiciona um espaço abaixo do título */
+    }
+</style>

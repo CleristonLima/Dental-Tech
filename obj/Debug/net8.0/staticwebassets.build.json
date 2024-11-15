@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "Hx1xMBRQ5uN4tSTsJp8Yfp/nUV8wmQ5s0P+EWYCMtlk=",
+  "Hash": "wBXA7jEN0UkMN2q2QHk+z2dMApqvH5raUzdchEMthG0=",
   "Source": "DentalPlus",
   "BasePath": "_content/DentalPlus",
   "Mode": "Default",
@@ -433,6 +433,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\images\\Relogio.png"
+    },
+    {
+      "Identity": "C:\\Projetos\\DentalPlus\\DentalPlus\\wwwroot\\images\\Remedios.png",
+      "SourceId": "DentalPlus",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Projetos\\DentalPlus\\DentalPlus\\wwwroot\\",
+      "BasePath": "_content/DentalPlus",
+      "RelativePath": "images/Remedios.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\Remedios.png"
     },
     {
       "Identity": "C:\\Projetos\\DentalPlus\\DentalPlus\\wwwroot\\images\\SemFoto.png",

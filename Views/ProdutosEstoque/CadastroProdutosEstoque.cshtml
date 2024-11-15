@@ -1,6 +1,6 @@
 ﻿@model ProdutosEstoqueModel
 
-<h2>Cadastro de Produtos</h2>
+<h2 class="titulo-cadastro">Cadastro de Produtos</h2>
 
 <br />
 
@@ -76,3 +76,11 @@
         window.location.href = "../../ProdutosEstoque/ListaProdutosEstoque";
     }
 </script>
+
+<style>
+    .titulo-cadastro {
+        white-space: nowrap; /* Impede a quebra de linha */
+        text-align: center; /* Centraliza o texto */
+        margin-bottom: 20px; /* Adiciona um espaço abaixo do título */
+    }
+</style>

@@ -1,6 +1,6 @@
 ﻿@model ReceituarioModel
 
-<h3>Prontuario</h3>
+<h3 class ="titulo-cadastro">Prontuario</h3>
 
 <form id="prontuarioForm" asp-controller="Prontuario" asp-action="ProntuarioInicial" method="post">
     <input type="hidden" asp-for="IdMrRecipe" />
@@ -50,9 +50,10 @@
         margin-left: 30px;
     }
 
-    h3 {
-        text-align: center;
-        font-size: 35px; /* Ajusta o tamanho dos títulos */
+    .titulo-cadastro {
+        white-space: nowrap; /* Impede a quebra de linha */
+        text-align: center; /* Centraliza o texto */
+        margin-bottom: 20px; /* Adiciona um espaço abaixo do título */
     }
 
 </style>

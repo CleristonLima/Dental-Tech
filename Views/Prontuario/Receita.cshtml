@@ -1,6 +1,6 @@
 ﻿@model ReceituarioModel
 
-<h3>Receita Médica</h3>
+<h3 class="titulo-cadastro">Receita Médica</h3>
 
 <form id="receitaForm" asp-controller="Prontuario" asp-action="ReceitaMedica" method="post">
     <input type="hidden" asp-for="IdMedicinePrescription" />
@@ -33,9 +33,9 @@
     <br />
 
     <!-- Dropdown de medicamentos -->
-    <div class="form-group">
+    <div class="form-group medicamento-row">
         <label for="IdProductRevenue">Medicamento:</label>
-        <select id="IdProductRevenue" asp-for="IdProductRevenue" class="form-control">
+        <select id="IdProductRevenue" asp-for="IdProductRevenue" class="form-control combo-medicamento">
             <option value="">Selecione um Medicamento</option>
             @foreach (var remedio in ViewBag.ProdutosReceita)
             {
@@ -43,6 +43,7 @@
             }
         </select>
         <span asp-validation-for="IdProductRevenue" class="text-danger"></span>
+        <button type="button" class="btn btn-primary btn-lista-remedios" onclick="ListaRemedios()">Lista de remédios</button>
     </div>
     <br />
     <div class="col-2">
@@ -92,13 +93,34 @@
 </form>
 
 <style>
-    h3 {
-        text-align: center;
-        font-size: 35px; /* Ajusta o tamanho dos títulos */
+    .titulo-cadastro {
+        white-space: nowrap; /* Impede a quebra de linha */
+        text-align: center; /* Centraliza o texto */
+        margin-bottom: 20px; /* Adiciona um espaço abaixo do título */
     }
+    .medicamento-row {
+    display: flex;
+    align-items: center; /* Centraliza verticalmente */
+    gap: 20px; /* Espaço entre os elementos */
+    }
+
+    .combo-medicamento {
+    flex: 1; /* Ocupar o máximo de espaço possível */
+    max-width: 500px; /* Limita a largura máxima */
+    }
+
 </style>
 
 <script>
+
+    function ListaRemedios() {
+        if (!navigator.onLine) {
+            alert("Sem conexão com a internet. Verifique sua rede e tente novamente.");
+        } else {
+            window.location.href = "../ProdutosEstoque/ListaRemediosPacientes";
+        }
+    }
+
     let medicamentos = [];
 
     // Função para adicionar medicamento
@@ -190,4 +212,5 @@
 
         this.appendChild(inputMedicamentos);
     };
+
 </script>

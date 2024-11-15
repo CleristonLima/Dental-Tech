@@ -1,6 +1,6 @@
 ﻿@model FinanceiroModel
 
-<h3>Caixa</h3>
+<h3 class="titulo-cadastro">Caixa</h3>
 <br />
 <form asp-controller="Financeiro" asp-action="Caixa" method="post">
     <input type="hidden" asp-for="IdMbSale" />
@@ -8,7 +8,7 @@
 
     <div class="form-group">
         <label>Medico</label>
-        <select asp-for="IdDoctor" class="form-control" asp-items="ViewBag.ListaMedicos" id="txtMedico">
+        <select asp-for="IdDoctor" class="form-control" asp-items="ViewBag.ListaMedicos" id="txtMedico" required>
             <option value="">Selecione o medico</option>
         </select>
         <span asp-validation-for="IdDoctor" class="text-danger"></span>
@@ -16,7 +16,7 @@
     <br />
     <div class="form-group">
         <label>Paciente</label>
-        <select asp-for="IdPatients" class="form-control" asp-items="ViewBag.ListaPacientes" id="txtPaciente">
+        <select asp-for="IdPatients" class="form-control" asp-items="ViewBag.ListaPacientes" id="txtPaciente" required>
             <option value="">Selecione o paciente</option>
         </select>
         <span asp-validation-for="IdPatients" class="text-danger"></span>
@@ -24,7 +24,7 @@
     <br />
     <div class="form-group">
         <label>Consulta medica</label>
-        <select asp-for="IdMedicalConsultation" class="form-control" asp-items="ViewBag.ListaConsulta" id="consultaPreco" onchange="AtualizarPreco()">
+        <select asp-for="IdMedicalConsultation" class="form-control" asp-items="ViewBag.ListaConsulta" id="consultaPreco" onchange="AtualizarPreco()" required>
             <option value="">Selecione a consulta medica</option>
         </select>
     </div>
@@ -66,7 +66,7 @@
     <br />
     <div class="form-group">
         <label>Pagamento</label>
-        <select asp-for="IdPayment" class="form-control" asp-items="ViewBag.ListaPagamento">
+        <select asp-for="IdPayment" class="form-control" asp-items="ViewBag.ListaPagamento" required>
             <option value="">Selecione o tipo de pagamento</option>
         </select>
         <span asp-validation-for="IdPayment" class="text-danger"></span>
@@ -76,6 +76,13 @@
 </form>
 
 <style>
+
+    .titulo-cadastro {
+        white-space: nowrap; /* Impede a quebra de linha */
+        text-align: center; /* Centraliza o texto */
+        margin-bottom: 20px; /* Adiciona um espaço abaixo do título */
+    }
+
     .form-preco {
         display: flex;
         align-items: center;

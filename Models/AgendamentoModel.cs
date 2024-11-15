@@ -675,7 +675,7 @@ namespace DentalPlus.Models
 
             string currentDateTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
 
-            sql = "SELECT COUNT(*) FROM TB_CLI_MED_CONSUL_X_PATIENT WHERE ID_MED_CONS_X_PAT = @IdMedConsXPat AND STATUS_CONSULTATION NOT IN ('Agendado')";
+            sql = "SELECT COUNT(*) FROM TB_CLI_MED_CONSUL_X_PATIENT WHERE ID_MED_CONS_X_PAT = @IdMedConsXPat AND STATUS_CONSULTATION NOT IN ('Agendado') AND  DATE_CONSULTATION_START BETWEEN DATE_ADD(CURDATE(), INTERVAL 1 DAY) AND DATE_ADD(CURDATE(), INTERVAL 2 DAY) -INTERVAL 1 SECOND";
 
             MySqlCommand commandSelect = new MySqlCommand(sql);
             commandSelect.Parameters.AddWithValue("@IdMedConsXPat", id);
@@ -684,7 +684,7 @@ namespace DentalPlus.Models
 
             if (count > 0)
             {
-                ErrorMessage = "Não é possivel confirmar esse agendamento, pois não esta com o status de agendado! ";
+                ErrorMessage = "Não é possivel confirmar esse agendamento, pois não esta com o status de agendado ou ja esta confirmado ";
             }
 
             else {

@@ -1,6 +1,6 @@
 ﻿@model DeclaracaoHorasModel
 
-<h3>Declaração de Horas</h3>
+<h3 class="titulo-cadastro">Declaração de Horas</h3>
 
 <form id="prontuarioForm" asp-controller="Declaracao" asp-action="DeclaracaoHoras" method="post">
     <input type="hidden" asp-for="IdHoursDeclaration" />
@@ -63,8 +63,11 @@
         /* display: inline-block;*/
     }
 
-    .h3 {
+    .titulo-cadastro {
         text-align: center;
-        margin-left: 100px;
+        font-size: 35px; /* Ajusta o tamanho dos títulos */
+        white-space: nowrap; /* Impede a quebra de linha */
+        text-align: center; /* Centraliza o texto */
+        margin-bottom: 20px; /* Adiciona um espaço abaixo do título */
     }
 </style>

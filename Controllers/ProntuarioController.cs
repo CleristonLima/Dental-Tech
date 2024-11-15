@@ -192,6 +192,19 @@ namespace DentalPlus.Controllers
                 FileName = nomeArquivo
             };
         }
+
+        public IActionResult ListaRemedios()
+        {
+            if (!VerificarConexaoInternet())
+            {
+                TempData["ErrorLogin"] = "Sem conexão com a internet. Verifique sua rede e tente novamente.";
+                return RedirectToAction("Menu", "Home");
+            }
+            else
+            {
+                return View();
+            }
+        }
     }
    
 }

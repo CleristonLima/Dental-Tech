@@ -289,5 +289,18 @@ namespace DentalPlus.Controllers
                 return View();
             }
         }
+
+        public IActionResult ReceitaMedica()
+        {
+            if (!VerificarConexaoInternet())
+            {
+                TempData["ErrorLogin"] = "Sem conexão com a internet. Verifique sua rede e tente novamente.";
+                return RedirectToAction("Menu", "Home");
+            }
+            else
+            {
+                return View();
+            }
+        }
     }
 }
