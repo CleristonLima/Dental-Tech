@@ -20,7 +20,11 @@
 <h3>Medicamentos e dosagens</h3>
 <hr />
 
-<p id="Remedios">@Model.Reason</p>
+<!--<p id="Remedios">@Model.Reason</p>-->
+
+<p id="Remedios">@Html.Raw(Model.Reason)</p>
+<br />
+
 
 <style>
         body {
@@ -36,8 +40,9 @@
         font-size: 20px; /* Ajusta o tamanho dos parágrafos */
         }
 
-        #Remedios {
-        white-space: pre-wrap; /* Permite quebras de linha automáticas no texto */
-        }
+    #Remedios {
+        white-space: pre-wrap; /* Ignorar quebras de linha adicionais */
+        margin-bottom: 10px; /* Ajusta o espaçamento se necessário */
+    }
 
 </style>

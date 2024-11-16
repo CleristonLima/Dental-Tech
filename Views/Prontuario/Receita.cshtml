@@ -193,7 +193,7 @@
         var medicamentoHTML = `<p>${descricaoUso}</p>`;
         lista.innerHTML += medicamentoHTML;
 
-        document.getElementById("Reason").value = medicamentos.map(m => m.Reason).join("\n");
+        document.getElementById("Reason").value = medicamentos.map(m => m.Reason).join("\n\n");
 
         // Limpar os campos
         medicamentoSelect.selectedIndex = 0;
