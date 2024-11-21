@@ -11,6 +11,7 @@
                     <th>Mes de referência</th>
                     <th>Ano de referência</th>
                     <th>Data de vencimento</th>
+                    <th>Data do pagamento realizado</th>
                     <th>Status</th>
                     <th>#</th>
                     <th>#</th>
@@ -27,6 +28,7 @@
                             <td>@item.Month</td>
                             <td>@item.Year</td>
                             <td>@item.Expiration_Date</td>
+                            <td>@item.Date_Payment</td>
                             <td>@item.Status</td>
                             <td><button type="button" class="btn btn-warning" onclick="Editar(@item.IdAccountPay)">Editar</button></td>
                             <td><button type="button" class="btn btn-danger" onclick="Excluir(@item.IdAccountPay)">Excluir</button></td>

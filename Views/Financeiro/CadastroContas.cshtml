@@ -51,10 +51,20 @@
         <br />
         <label>Data de vencimento</label>
         <br />
-        <input asp-for="Expiration_Date" type="date" name="Expiration_Date" class="form-control date-field"
-               min="@DateTime.Now.ToString("yyyy-MM-dd")"
+        <input asp-for="Expiration_Date" type="date" name="Expiration_Date" class="form-control date-field" required="required"
+               min="@DateTime.MinValue.ToString("yyyy-MM-dd")"
                value="@Model.Expiration_Date.ToString("yyyy-MM-dd")" />
         <span asp-validation-for="Expiration_Date" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <br />
+        <label>Data de pagamento</label>
+        <br />
+        <input asp-for="Date_Payment" type="date" name="Date_Payment" class="form-control date-field"
+               min="@DateTime.Now.ToString("yyyy-MM-dd")"
+               value="@Model.Date_Payment?.ToString("yyyy-MM-dd")" />
+        <span asp-validation-for="Date_Payment" class="text-danger"></span>
     </div>
 
     <div class="form-group">

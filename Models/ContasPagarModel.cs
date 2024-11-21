@@ -31,6 +31,8 @@ namespace DentalPlus.Models
 
         public DateOnly Expiration_Date {  get; set; }
 
+        public DateOnly? Date_Payment { get; set; }
+
         public string Status { get; set; }
 
         public string userId { get; set; }
@@ -47,6 +49,7 @@ namespace DentalPlus.Models
                               "MONTH, " +
                               "YEAR, " +
                               "EXPIRATION_DATE, " +
+                              "DATE_PAYMENT, " +
                               "STATUS " +
                         "FROM TB_MB_ACCOUNTS_PAYABLE " +
                         "ORDER BY MONTH, YEAR DESC";
@@ -62,6 +65,7 @@ namespace DentalPlus.Models
                     Month = row["MONTH"].ToString(),
                     Year = row["YEAR"].ToString(),
                     Expiration_Date = DateOnly.FromDateTime(DateTime.Parse(row["EXPIRATION_DATE"].ToString())),
+                    Date_Payment = row["DATE_PAYMENT"] != DBNull.Value? DateOnly.FromDateTime(DateTime.Parse(row["DATE_PAYMENT"].ToString())) : null,
                     Status = row["STATUS"].ToString()
                 };
 
@@ -130,6 +134,7 @@ namespace DentalPlus.Models
                     "MONTH = @Month, " +
                     "YEAR = @Year, " +
                     "EXPIRATION_DATE = @Expiration_Date, " +
+                    "DATE_PAYMENT = @Date_Payment, " +
                     "STATUS = @Status, " +
                     "USER_UPDATE = @userUpdate, " +
                     "DATE_UPDATE = @dateUpdate " +
@@ -141,6 +146,7 @@ namespace DentalPlus.Models
                 command.Parameters.AddWithValue("@Month", Month);
                 command.Parameters.AddWithValue("@Year", Year);
                 command.Parameters.AddWithValue("@Expiration_Date", Expiration_Date.ToDateTime(TimeOnly.MinValue));
+                command.Parameters.AddWithValue("@Date_Payment", Date_Payment.HasValue ? Date_Payment.Value.ToDateTime(TimeOnly.MinValue) : (object)DBNull.Value);
                 command.Parameters.AddWithValue("@Status", Status);
                 command.Parameters.AddWithValue("@userUpdate", userId);
                 command.Parameters.AddWithValue("@dateUpdate", currentDateTime);
