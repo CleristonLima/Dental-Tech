@@ -6,9 +6,20 @@
     <input type="hidden" asp-for="IdAccountPay" />
 
     <div class="form-group">
-        <label>Descrição</label>
         <br />
-        <input asp-for="DescAccountPay" type="text" class="form-control" required="required" />
+        <label>Descrição</label>
+        <select asp-for="DescAccountPay" class="form-control" required="required">
+            <option value="Agua">Agua</option>
+            <option value="Cartao de crédito">Cartão de credito</option>
+            <option value="Emprestimo bancario">Empréstimo bancario</option>
+            <option value="Financiamento">Financiamento</option>
+            <option value="Fornecedor">Fornecedor</option>
+            <option value="Funcionario">Funcionario</option>
+            <option value="Luz">Luz</option>
+            <option value="Telefone/Internet">Telefone/Internet</option>
+            <option value="Tv a cabo">Tv a cabo</option>
+            <option value="Outros">Outros</option>
+        </select>
         <span asp-validation-for="DescAccountPay" class="text-danger"></span>
     </div>
 
