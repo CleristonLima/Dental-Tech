@@ -143,7 +143,7 @@ namespace DentalPlus.Controllers
 
         }
 
-        // Vai receber os dados do medico
+        // Vai receber os dados das contas
         [HttpPost]
         public IActionResult CadastroContas(ContasPagarModel conta)
         {

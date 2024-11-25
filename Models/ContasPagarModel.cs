@@ -3,6 +3,7 @@ using MySql.Data.MySqlClient;
 using System.Data;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 using System.Reflection.Emit;
+using System;
 
 namespace DentalPlus.Models
 {
@@ -86,6 +87,7 @@ namespace DentalPlus.Models
                               $"MONTH, " +
                               $"YEAR, " +
                               $"EXPIRATION_DATE, " +
+                              $"DATE_PAYMENT, " +
                               $"STATUS " +
                         $"FROM TB_MB_ACCOUNTS_PAYABLE " +
                         $"WHERE ID_ACCOUNT_PAY = '{id}' " +
@@ -96,8 +98,16 @@ namespace DentalPlus.Models
             {
                 DateTime expirationDate;
 
+                DateTime? datePayment = null;
+
                 if (DateTime.TryParse(dt.Rows[0]["EXPIRATION_DATE"].ToString(), out expirationDate))
                 {
+
+                    if (DateTime.TryParse(dt.Rows[0]["DATE_PAYMENT"].ToString(), out var parsedDatePayment))
+                    {
+                        datePayment = parsedDatePayment;
+                    }
+
                     item = new ContasPagarModel
                     {
                         IdAccountPay = dt.Rows[0]["ID_ACCOUNT_PAY"].ToString(),
@@ -106,6 +116,7 @@ namespace DentalPlus.Models
                         Month = dt.Rows[0]["MONTH"].ToString(),
                         Year = dt.Rows[0]["YEAR"].ToString(),
                         Expiration_Date = DateOnly.FromDateTime(DateTime.Parse(dt.Rows[0]["EXPIRATION_DATE"].ToString())),
+                        Date_Payment = datePayment.HasValue ? DateOnly.FromDateTime(datePayment.Value) : null,
                         Status = dt.Rows[0]["STATUS"].ToString()
                     };
                 }
@@ -157,8 +168,8 @@ namespace DentalPlus.Models
             else
             {
                 // Se for uma inserção, preenche o campo USER_INSERT
-                sql = "INSERT INTO TB_MB_ACCOUNTS_PAYABLE (DESC_ACCOUNT_PAY, VALUE_ACCOUNT_PAY, MONTH, YEAR, EXPIRATION_DATE, STATUS, USER_INSERT, DATE_INSERT) " +
-                                     "VALUES (@DescAccountPay, @ValueAccountPay, @Month, @Year, @Expiration_Date, @Status, @userInsert, @dateInsert)";
+                sql = "INSERT INTO TB_MB_ACCOUNTS_PAYABLE (DESC_ACCOUNT_PAY, VALUE_ACCOUNT_PAY, MONTH, YEAR, EXPIRATION_DATE, DATE_PAYMENT, STATUS, USER_INSERT, DATE_INSERT) " +
+                                     "VALUES (@DescAccountPay, @ValueAccountPay, @Month, @Year, @Expiration_Date, @Date_Payment, @Status, @userInsert, @dateInsert)";
 
                 MySqlCommand command = new MySqlCommand(sql);
                 command.Parameters.AddWithValue("@DescAccountPay", DescAccountPay);
@@ -166,6 +177,7 @@ namespace DentalPlus.Models
                 command.Parameters.AddWithValue("@Month", Month);
                 command.Parameters.AddWithValue("@Year", Year);
                 command.Parameters.AddWithValue("@Expiration_Date", Expiration_Date.ToDateTime(TimeOnly.MinValue));
+                command.Parameters.AddWithValue("@Date_Payment", Date_Payment.HasValue ? Date_Payment.Value.ToDateTime(TimeOnly.MinValue) : (object)DBNull.Value);
                 command.Parameters.AddWithValue("@Status", Status);
                 command.Parameters.AddWithValue("@userInsert", userId);
                 command.Parameters.AddWithValue("@dateInsert", currentDateTime);
