@@ -6,20 +6,24 @@
     <input type="hidden" asp-for="IdMedicinePrescription" />
     <input type="hidden" asp-for="Reason" id="Reason" />
 
-    <div class="form-group">
-        <label>Dr(a)</label>
-        <select asp-for="IdDoctor" class="form-control" asp-items="ViewBag.ListaMedicos" required="required">
-            <option value="">Selecione o medico</option>
-        </select>
-        <span asp-validation-for="IdDoctor" class="text-danger"></span>
+    <div class="form-group medico-row">
+        <label for="IdDoctor">Dr(a)</label>
+        <div class="form-inline">
+            <select id="IdDoctor" asp-for="IdDoctor" class="form-control combo-medico" asp-items="ViewBag.ListaMedicos" required="required">
+                <option value="">Selecione o medico</option>
+            </select>
+            <input type="text" id="medicoFiltro" class="form-control filtro-medico" placeholder="Pesquisar medico..." />
+        </div>
     </div>
     <br />
-    <div class="form-group">
-        <label>Paciente</label>
-        <select asp-for="IdPatients" class="form-control" asp-items="ViewBag.ListaPacientes" required="required">
-            <option value="">Selecione o paciente</option>
-        </select>
-        <span asp-validation-for="IdPatients" class="text-danger"></span>
+    <div class="form-group paciente-row">
+        <label for="IdPatients">Paciente</label>
+        <div class="form-inline">
+            <select id="IdPatients" asp-for="IdPatients" class="form-control combo-paciente" asp-items="ViewBag.ListaPacientes" required="required">
+                <option value="">Selecione o paciente</option>
+            </select>
+            <input type="text" id="pacienteFiltro" class="form-control filtro-paciente" placeholder="Pesquisar paciente..." />
+        </div>
     </div>
     <br />
     <div class="form-group">
@@ -34,21 +38,23 @@
 
     <!-- Dropdown de medicamentos -->
     <div class="form-group medicamento-row">
-        <label for="IdProductRevenue">Medicamento:</label>
-        <select id="IdProductRevenue" asp-for="IdProductRevenue" class="form-control combo-medicamento">
-            <option value="">Selecione um Medicamento</option>
-            @foreach (var remedio in ViewBag.ProdutosReceita)
-            {
-                <option value="@remedio.Value">@remedio.Text</option>
-            }
-        </select>
-        <span asp-validation-for="IdProductRevenue" class="text-danger"></span>
-        <button type="button" class="btn btn-primary btn-lista-remedios" onclick="ListaRemedios()">Lista de remédios</button>
+        <label for="IdProductRevenue">Selecione o Medicamento:</label>
+        <div class="form-inline">
+            <select id="IdProductRevenue" asp-for="IdProductRevenue" class="form-control combo-medicamento">
+                <option value="">Selecione um Medicamento</option>
+                @foreach (var remedio in ViewBag.ProdutosReceita)
+                {
+                    <option value="@remedio.Value">@remedio.Text</option>
+                }
+            </select>
+            <input type="text" id="medicamentoFiltro" class="form-control filtro-medicamento" placeholder="Pesquisar medicamento..." />
+            <button type="button" class="btn btn-primary btn-lista-remedios" onclick="ListaRemedios()">Lista de remédios</button>
+        </div>
     </div>
     <br />
     <div class="col-2">
         <label>Quantidade:</label>
-        <input type="text" id="quantidadeMedicamento" class="form-control short-time-input" />
+        <input type="number" id="quantidadeMedicamento" class="form-control short-time-input"/>
         <span asp-validation-for="Qty" class="text-danger"></span>
     </div>
     <br />
@@ -80,14 +86,14 @@
     </div>
     <br />
     <div class="form-group">
-        <button type="button" class="btn btn-primary" onclick="adicionarMedicamento()">Adicionar Medicamento</button>
+        <button type="button" class="btn btn-primary" onclick="adicionarMedicamento()" id="botaoAdicionarReceita">Adicionar Medicamento</button>
     </div>
     <br />
     <div id="listaMedicamentos" class="form-group">
         <!-- Aqui serão exibidos os medicamentos adicionados -->
         <span asp-validation-for="Reason"></span>
     </div>
-    
+
     <br />
     <button type="submit" class="btn btn-success" onclick="Imprimir()">Imprimir Receita</button>
 </form>
@@ -98,15 +104,45 @@
         text-align: center; /* Centraliza o texto */
         margin-bottom: 20px; /* Adiciona um espaço abaixo do título */
     }
+
     .medicamento-row {
-    display: flex;
-    align-items: center; /* Centraliza verticalmente */
-    gap: 20px; /* Espaço entre os elementos */
+        display: flex;
+        flex-direction: column; /* Responsivo */
+        gap: 10px;
     }
 
-    .combo-medicamento {
-    flex: 1; /* Ocupar o máximo de espaço possível */
-    max-width: 500px; /* Limita a largura máxima */
+    .medico-row{
+        display: flex;
+        flex-direction: column; /* Responsivo */
+        gap: 10px;
+    }
+
+    .paciente-row{
+        display: flex;
+        flex-direction: column; /* Responsivo */
+        gap: 10px;
+    }
+
+    .form-inline {
+        display: flex;
+        align-items: center;
+        gap: 10px; /* Espaço entre os elementos */
+    }
+
+    .combo-medicamento, .filtro-medicamento, .combo-medico, .filtro-medico, .combo-paciente, .filtro-paciente {
+        flex: 1; /* Tamanho proporcional */
+    }
+
+    @@media (max-width: 768px) {
+        .form-inline {
+            flex-direction: column; /* Ajusta para empilhar no celular */
+        }
+
+        .btn-lista-remedios {
+            width: auto; /* Deixa o botão com o tamanho natural */
+            margin-left: 0; /* Remove o deslocamento lateral */
+            align-self: flex-start; /* Alinha à esquerda */
+        }
     }
 
 </style>
@@ -201,6 +237,10 @@
         document.getElementById("intervaloMedicamento").value = '';
         document.getElementById("intervaloVezesDias").value = '';
         document.getElementById("dias").value = '';
+        document.getElementById("medicamentoFiltro").value = '';
+        document.getElementById("pacienteFiltro").value = '';
+        document.getElementById("medicoFiltro").value = '';
+        document.getElementById("medicamentoFiltro").focus();
     }
 
     document.getElementById("receitaForm").onsubmit = function () {
@@ -212,5 +252,148 @@
 
         this.appendChild(inputMedicamentos);
     };
+
+    // Procedimento para que a barra de pesquisa ao clicar no entre ele vai direto no registro pelo combobox
+    document.getElementById('pacienteFiltro').addEventListener('keydown', function (event) {
+        if (event.key === 'Enter') {
+            event.preventDefault(); // Impede o envio do formulário
+            document.getElementById("IdPatients").focus();
+
+            const filtro = this.value.toLowerCase();
+            const select = document.getElementById('IdPatients');
+            const options = select.options;
+
+            let encontrado = false;
+
+            for (let i = 0; i < options.length; i++) {
+                if (options[i].text.toLowerCase().includes(filtro)) {
+                    select.selectedIndex = i; // Define o medicamento encontrado no combobox
+                    encontrado = true;
+                    break;
+                }
+            }
+
+            if (!encontrado) {
+                alert('Paciente não encontrado.');
+            }
+        }
+    });
+    
+    // Procedimento para pesquisar medico
+    document.getElementById('medicoFiltro').addEventListener('keydown', function (event) {
+        if (event.key === 'Enter') {
+            event.preventDefault(); // Impede o envio do formulário
+            document.getElementById("IdDoctor").focus();
+
+            const filtro = this.value.toLowerCase();
+            const select = document.getElementById('IdDoctor');
+            const options = select.options;
+
+            let encontrado = false;
+
+            for (let i = 0; i < options.length; i++) {
+                if (options[i].text.toLowerCase().includes(filtro)) {
+                    select.selectedIndex = i; // Define o medicamento encontrado no combobox
+                    encontrado = true;
+                    break;
+                }
+            }
+
+            if (!encontrado) {
+                alert('Medico não encontrado.');
+            }
+        }
+    });
+    
+    // Procedimento para pesquisar medicamento
+    document.getElementById('medicamentoFiltro').addEventListener('keydown', function (event) {
+        if (event.key === 'Enter') {
+            event.preventDefault(); // Impede o envio do formulário
+            document.getElementById("IdProductRevenue").focus();
+
+            const filtro = this.value.toLowerCase();
+            const select = document.getElementById('IdProductRevenue');
+            const options = select.options;
+
+            let encontrado = false;
+
+            for (let i = 0; i < options.length; i++) {
+                if (options[i].text.toLowerCase().includes(filtro)) {
+                    select.selectedIndex = i; // Define o medicamento encontrado no combobox
+                    encontrado = true;
+                    break;
+                }
+            }
+
+            if (!encontrado) {
+                alert('Medicamento não encontrado.');
+            }
+        }
+    });
+
+    // Esse procedimento serve para que quando o usuário aperte o enter vai pra proxima textbox
+    
+    document.getElementById('IdDoctor').addEventListener('keydown', function (event) {
+        if (event.key === 'Enter') {
+            event.preventDefault(); // Impede o envio do formulário
+            document.getElementById("IdPatients").focus();
+        }
+    });
+
+    document.getElementById('IdPatients').addEventListener('keydown', function (event) {
+        if (event.key === 'Enter') {
+            event.preventDefault(); // Impede o envio do formulário
+            document.getElementById("dataEmissao").focus();
+        }
+    });
+
+    document.getElementById('dataEmissao').addEventListener('keydown', function (event) {
+        if (event.key === 'Enter') {
+            event.preventDefault(); // Impede o envio do formulário
+            document.getElementById("IdProductRevenue").focus();
+        }
+    });
+
+    document.getElementById('IdProductRevenue').addEventListener('keydown', function (event) {
+        if (event.key === 'Enter') {
+            event.preventDefault(); // Impede o envio do formulário
+            document.getElementById("quantidadeMedicamento").focus();
+        }
+    });
+    
+    document.getElementById('quantidadeMedicamento').addEventListener('keydown', function (event) {
+        if (event.key === 'Enter') {
+            event.preventDefault(); // Impede o envio do formulário
+            document.getElementById("tipoMedicacao").focus();
+        }
+    });
+
+    document.getElementById('tipoMedicacao').addEventListener('keydown', function (event) {
+        if (event.key === 'Enter') {
+            event.preventDefault(); // Impede o envio do formulário
+            document.getElementById("intervaloMedicamento").focus();
+        }
+    });
+
+    document.getElementById('intervaloMedicamento').addEventListener('keydown', function (event) {
+        if (event.key === 'Enter') {
+            event.preventDefault(); // Impede o envio do formulário
+            document.getElementById("intervaloVezesDias").focus();
+        }
+    });
+
+    document.getElementById('intervaloVezesDias').addEventListener('keydown', function (event) {
+        if (event.key === 'Enter') {
+            event.preventDefault(); // Impede o envio do formulário
+            document.getElementById("dias").focus();
+        }
+    });
+
+    document.getElementById('dias').addEventListener('keydown', function (event) {
+        if (event.key === 'Enter') {
+            event.preventDefault(); // Impede o envio do formulário
+            document.getElementById("botaoAdicionarReceita").focus();
+        }
+    });
 
 </script>

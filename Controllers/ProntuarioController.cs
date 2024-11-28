@@ -1,7 +1,11 @@
 ﻿using DentalPlus.Connection;
 using DentalPlus.Models;
+using DentalPlus.Uteis;
+using DocumentFormat.OpenXml.EMMA;
+using DocumentFormat.OpenXml.InkML;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using MySql.Data.MySqlClient;
 using Newtonsoft.Json;
 using Rotativa.AspNetCore;
 
