@@ -43,17 +43,31 @@ namespace DentalPlus.Controllers
         }
 
         // Prontuario
-        public IActionResult ProntuarioInicial()
+
+        public IActionResult ProntuarioInicial(string medicoId, string pacienteId)
         {
             if (!VerificarConexaoInternet())
             {
                 TempData["ErrorLogin"] = "Sem conexão com a internet. Verifique sua rede e tente novamente.";
                 return RedirectToAction("Index", "Prontuario");
             }
-            else
+
+            var prontuario = new ReceituarioModel
             {
-                return View();
-            }
+                IdDoctor = medicoId,
+                IdPatients = pacienteId
+            };
+
+            prontuario.ConsultarNomeMedico();
+            prontuario.ConsultarNomePaciente();
+
+            var paciente = new PacienteModel().ListarTodosPacientes();
+            ViewBag.ListaPacientes = new SelectList(paciente, "IdPatients", "NomeComCpf");
+
+            var medico = new MedicoModel().ListarTodosMedicos();
+            ViewBag.ListaMedicos = new SelectList(medico, "IdDoctor", "NomeComCRM");
+
+            return View(prontuario);
         }
 
         [HttpGet]
@@ -68,12 +82,12 @@ namespace DentalPlus.Controllers
             {
                 ReceituarioModel receita = new ReceituarioModel();
 
-                if (id != null)
+               /* if (id != null)
                 {
 
                     //receita = new ReceituarioModel().RetornarPaciente(id);
                                         
-                }
+                }*/
 
                 var paciente = new PacienteModel().ListarTodosPacientes();
                 ViewBag.ListaPacientes = new SelectList(paciente, "IdPatients", "NomeComCpf");

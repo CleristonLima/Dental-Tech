@@ -6,7 +6,7 @@
     <input type="hidden" asp-for="IdMedicinePrescription" />
     <input type="hidden" asp-for="Reason" id="Reason" />
 
-    <div class="form-group medico-row">
+    <!--<div class="form-group medico-row">
         <label for="IdDoctor">Dr(a)</label>
         <div class="form-inline">
             <select id="IdDoctor" asp-for="IdDoctor" class="form-control combo-medico" asp-items="ViewBag.ListaMedicos" required="required">
@@ -14,15 +14,24 @@
             </select>
             <input type="text" id="medicoFiltro" class="form-control filtro-medico" placeholder="Pesquisar medico..." />
         </div>
+    </div>-->
+    <div class="form-group medico-row">
+        <label for="searchDoctor">Dr(a)</label>
+        <div class="form-inline">
+            <select id="IdDoctor" asp-for="IdDoctor" class="form-control combo-medico" asp-items="ViewBag.ListaMedicos" required="required">
+                <option value="">Selecione o medico</option>
+            </select>
+            <input type="text" id="searchDoctor" class="form-control filtro-medico" placeholder="Pesquisar médico..." oninput="filtrarMedicos()">
+        </div>
     </div>
     <br />
     <div class="form-group paciente-row">
-        <label for="IdPatients">Paciente</label>
+        <label for="searchPatient">Paciente</label>
         <div class="form-inline">
             <select id="IdPatients" asp-for="IdPatients" class="form-control combo-paciente" asp-items="ViewBag.ListaPacientes" required="required">
                 <option value="">Selecione o paciente</option>
             </select>
-            <input type="text" id="pacienteFiltro" class="form-control filtro-paciente" placeholder="Pesquisar paciente..." />
+            <input type="text" id="searchPatient" class="form-control filtro-paciente" placeholder="Pesquisar paciente..." oninput="filtrarPacientes()">
         </div>
     </div>
     <br />
@@ -38,7 +47,7 @@
 
     <!-- Dropdown de medicamentos -->
     <div class="form-group medicamento-row">
-        <label for="IdProductRevenue">Selecione o Medicamento:</label>
+        <label for="searchMedications">Selecione o Medicamento:</label>
         <div class="form-inline">
             <select id="IdProductRevenue" asp-for="IdProductRevenue" class="form-control combo-medicamento">
                 <option value="">Selecione um Medicamento</option>
@@ -47,7 +56,7 @@
                     <option value="@remedio.Value">@remedio.Text</option>
                 }
             </select>
-            <input type="text" id="medicamentoFiltro" class="form-control filtro-medicamento" placeholder="Pesquisar medicamento..." />
+            <input type="text" id="searchMedications" class="form-control filtro-medicamento" placeholder="Pesquisar medicamento..." oninput="filtrarMedicamentos()" />
             <button type="button" class="btn btn-primary btn-lista-remedios" onclick="ListaRemedios()">Lista de remédios</button>
         </div>
     </div>
@@ -181,37 +190,37 @@
         switch (tipoMedicacao) {
             case "CP": // Comprimidos
                 if (intervaloDeVezes) {
-                    descricaoUso = `Tomar ${quantidade} comprimido(s) de ${medicamentoNome}, ${intervaloDeVezes} vez(es) por dia durante ${dias} dia(s).`;
+                    descricaoUso = `- Tomar ${quantidade} comprimido(s) de ${medicamentoNome}, ${intervaloDeVezes} vez(es) por dia durante ${dias} dia(s).`;
                 } else if (intervaloHoras) {
-                    descricaoUso = `Tomar ${quantidade} comprimido(s) de ${medicamentoNome} de ${intervaloHoras} em ${intervaloHoras} horas durante ${dias} dia(s).`;
+                    descricaoUso = `- Tomar ${quantidade} comprimido(s) de ${medicamentoNome} de ${intervaloHoras} em ${intervaloHoras} horas durante ${dias} dia(s).`;
                 }
                 break;
             case "GT": // Gotas
                 if (intervaloDeVezes) {
-                    descricaoUso = `Tomar ${quantidade} gotas de ${medicamentoNome}, ${intervaloDeVezes} vez(es) por dia durante ${dias} dia(s).`;
+                    descricaoUso = `- Tomar ${quantidade} gotas de ${medicamentoNome}, ${intervaloDeVezes} vez(es) por dia durante ${dias} dia(s).`;
                 } else if (intervaloHoras) {
-                    descricaoUso = `Tomar ${quantidade} gotas de ${medicamentoNome} de ${intervaloHoras} em ${intervaloHoras} horas durante ${dias} dia(s).`;
+                    descricaoUso = `- Tomar ${quantidade} gotas de ${medicamentoNome} de ${intervaloHoras} em ${intervaloHoras} horas durante ${dias} dia(s).`;
                 }
                 break;
             case "Ml": // Mililitros
                 if (intervaloDeVezes) {
-                    descricaoUso = `Tomar ${quantidade} ml de ${medicamentoNome}, ${intervaloDeVezes} vez(es) por dia durante ${dias} dia(s).`;
+                    descricaoUso = `- Tomar ${quantidade} ml de ${medicamentoNome}, ${intervaloDeVezes} vez(es) por dia durante ${dias} dia(s).`;
                 } else if (intervaloHoras) {
-                    descricaoUso = `Tomar ${quantidade} ml de ${medicamentoNome} de ${intervaloHoras} em ${intervaloHoras} horas durante ${dias} dia(s).`;
+                    descricaoUso = `- Tomar ${quantidade} ml de ${medicamentoNome} de ${intervaloHoras} em ${intervaloHoras} horas durante ${dias} dia(s).`;
                 }
                 break;
             case "CX": // Caixa
                 if (intervaloDeVezes) {
-                    descricaoUso = `Tomar ${quantidade} caixa(s) de ${medicamentoNome}, ${intervaloDeVezes} vez(es) por dia durante ${dias} dia(s).`;
+                    descricaoUso = `- Tomar ${quantidade} caixa(s) de ${medicamentoNome}, ${intervaloDeVezes} vez(es) por dia durante ${dias} dia(s).`;
                 } else if (intervaloHoras) {
-                    descricaoUso = `Tomar ${quantidade} caixa(s) de ${medicamentoNome} de ${intervaloHoras} em ${intervaloHoras} horas durante ${dias} dia(s).`;
+                    descricaoUso = `- Tomar ${quantidade} caixa(s) de ${medicamentoNome} de ${intervaloHoras} em ${intervaloHoras} horas durante ${dias} dia(s).`;
                 }
                 break;
             default: // Outros tipos de medicação
                 if (intervaloDeVezes) {
-                    descricaoUso = `${quantidade} unidade(s) de ${medicamentoNome}, ${intervaloDeVezes} vez(es) por dia durante ${dias} dia(s).`;
+                    descricaoUso = `- ${quantidade} unidade(s) de ${medicamentoNome}, ${intervaloDeVezes} vez(es) por dia durante ${dias} dia(s).`;
                 } else if (intervalo) {
-                    descricaoUso = `${quantidade} unidade(s) de ${medicamentoNome} a cada ${intervaloHoras} horas durante ${dias} dia(s).`;
+                    descricaoUso = `- ${quantidade} unidade(s) de ${medicamentoNome} a cada ${intervaloHoras} horas durante ${dias} dia(s).`;
                 }
                 break;
         }
@@ -237,10 +246,10 @@
         document.getElementById("intervaloMedicamento").value = '';
         document.getElementById("intervaloVezesDias").value = '';
         document.getElementById("dias").value = '';
-        document.getElementById("medicamentoFiltro").value = '';
-        document.getElementById("pacienteFiltro").value = '';
-        document.getElementById("medicoFiltro").value = '';
-        document.getElementById("medicamentoFiltro").focus();
+        document.getElementById("searchMedications").value = '';
+        document.getElementById("searchPatient").value = '';
+        document.getElementById("searchDoctor").value = '';
+        document.getElementById("searchMedications").focus();
     }
 
     document.getElementById("receitaForm").onsubmit = function () {
@@ -254,7 +263,7 @@
     };
 
     // Procedimento para que a barra de pesquisa ao clicar no entre ele vai direto no registro pelo combobox
-    document.getElementById('pacienteFiltro').addEventListener('keydown', function (event) {
+    /*document.getElementById('pacienteFiltro').addEventListener('keydown', function (event) {
         if (event.key === 'Enter') {
             event.preventDefault(); // Impede o envio do formulário
             document.getElementById("IdPatients").focus();
@@ -267,7 +276,7 @@
 
             for (let i = 0; i < options.length; i++) {
                 if (options[i].text.toLowerCase().includes(filtro)) {
-                    select.selectedIndex = i; // Define o medicamento encontrado no combobox
+                    select.selectedIndex = i; // Define o paciente encontrado no combobox
                     encontrado = true;
                     break;
                 }
@@ -293,7 +302,7 @@
 
             for (let i = 0; i < options.length; i++) {
                 if (options[i].text.toLowerCase().includes(filtro)) {
-                    select.selectedIndex = i; // Define o medicamento encontrado no combobox
+                    select.selectedIndex = i; // Define o medico encontrado no combobox
                     encontrado = true;
                     break;
                 }
@@ -329,16 +338,123 @@
                 alert('Medicamento não encontrado.');
             }
         }
+    });*/
+
+    // Para fazer a pesquisa e trazer no combobox ao lado
+    document.addEventListener('DOMContentLoaded', function () {
+        const searchDoctorInput = document.getElementById('searchDoctor');
+        const searchPatientInput = document.getElementById('searchPatient');
+        const searchMedicationsInput = document.getElementById('searchMedications');
+
+        if (searchDoctorInput) {
+            searchDoctorInput.addEventListener('keypress', function (e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault(); // Evita que o formulário seja submetido ao pressionar Enter
+                    filtrarMedicos();
+                }
+            });
+        }
+
+        if (searchPatientInput) {
+            searchPatientInput.addEventListener('keypress', function (e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault(); // Evita que o formulário seja submetido ao pressionar Enter
+                    filtrarPacientes();
+                }
+            });
+        }
+
+        if (searchMedicationsInput) {
+            searchMedicationsInput.addEventListener('keypress', function (e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault(); // Evita que o formulário seja submetido ao pressionar Enter
+                    filtrarMedicamentos();
+                }
+            });
+        }
     });
+
+    function filtrarMedicos() {
+        const termo = document.getElementById('searchDoctor').value.toLowerCase();
+        const select = document.getElementById('IdDoctor');
+        const options = select.getElementsByTagName('option');
+
+        let encontrado = false;
+
+        for (let i = 0; i < options.length; i++) {
+            const nomeMedico = options[i].text.toLowerCase();
+            if (nomeMedico.includes(termo)) {
+                select.value = options[i].value;
+                encontrado = true;
+                break;
+            }
+        }
+
+        if (!encontrado) {
+            alert('Médico não encontrado.');
+            document.getElementById("searchDoctor").value = '';
+            document.getElementById("IdDoctor").value = '';
+            document.getElementById("searchDoctor").focus();
+        }
+    }
+
+    function filtrarPacientes() {
+        const termo = document.getElementById('searchPatient').value.toLowerCase();
+        const select = document.getElementById('IdPatients');
+        const options = select.getElementsByTagName('option');
+
+        let encontrado = false;
+
+        for (let i = 0; i < options.length; i++) {
+            const nomePaciente = options[i].text.toLowerCase();
+            if (nomePaciente.includes(termo)) {
+                select.value = options[i].value;
+                encontrado = true;
+                break;
+            }
+        }
+
+        if (!encontrado) {
+            alert('Paciente não encontrado.');
+            document.getElementById("searchPatient").value = '';
+            document.getElementById("IdPatients").value = '';
+            document.getElementById("searchPatient").focus();
+        }
+    }
+
+    function filtrarMedicamentos() {
+        const termo = document.getElementById('searchMedications').value.toLowerCase();
+        const select = document.getElementById('IdProductRevenue');
+        const options = select.getElementsByTagName('option');
+
+        let encontrado = false;
+
+        for (let i = 0; i < options.length; i++) {
+            const nomePaciente = options[i].text.toLowerCase();
+            if (nomePaciente.includes(termo)) {
+                select.value = options[i].value;
+                encontrado = true;
+                break;
+            }
+        }
+
+        if (!encontrado) {
+            alert('Medicamento não encontrado.');
+            document.getElementById("searchMedications").value = '';
+            document.getElementById("IdProductRevenue").value = '';
+            document.getElementById("searchMedications").focus();
+        }
+
+    }
 
     // Esse procedimento serve para que quando o usuário aperte o enter vai pra proxima textbox
     
-    document.getElementById('IdDoctor').addEventListener('keydown', function (event) {
+    /*document.getElementById('IdDoctor').addEventListener('keydown', function (event) {
         if (event.key === 'Enter') {
             event.preventDefault(); // Impede o envio do formulário
             document.getElementById("IdPatients").focus();
         }
-    });
+    });*/
 
     document.getElementById('IdPatients').addEventListener('keydown', function (event) {
         if (event.key === 'Enter') {

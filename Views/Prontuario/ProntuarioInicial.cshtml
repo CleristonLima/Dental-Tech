@@ -1,24 +1,28 @@
 ﻿@model ReceituarioModel
 
-<h3 class ="titulo-cadastro">Prontuario</h3>
+<h3 class="titulo-cadastro">Prontuario</h3>
 
 <form id="prontuarioForm" asp-controller="Prontuario" asp-action="ProntuarioInicial" method="post">
     <input type="hidden" asp-for="IdMrRecipe" />
 
-    <div class="form-group">
-        <label>Dr(a)</label>
-        <select asp-for="IdDoctor" class="form-control" asp-items="ViewBag.ListaMedicos" required="required">
-            <option value="">Selecione o medico</option>
-        </select>
-        <span asp-validation-for="IdDoctor" class="text-danger"></span>
+    <div class="form-group medico-row">
+        <label for="searchDoctor">Dr(a)</label>
+        <div class="form-inline">
+            <select id="IdDoctor" asp-for="IdDoctor" class="form-control combo-medico" asp-items="ViewBag.ListaMedicos" required="required">
+                <option value="">Selecione o medico</option>
+            </select>
+            <input type="text" id="searchDoctor" class="form-control filtro-medico" placeholder="Digite o nome do médico" oninput="filtrarMedicos()">
+        </div>
     </div>
     <br />
-    <div class="form-group">
-        <label>Paciente</label>
-        <select asp-for="IdPatients" class="form-control" asp-items="ViewBag.ListaPacientes" required="required">
-            <option value="">Selecione o paciente</option>
-        </select>
-        <span asp-validation-for="IdPatients" class="text-danger"></span>
+    <div class="form-group paciente-row">
+        <label for="searchPatient">Paciente</label>
+        <div class="form-inline">
+            <select id="IdPatients" asp-for="IdPatients" class="form-control combo-paciente" asp-items="ViewBag.ListaPacientes" required="required">
+                <option value="">Selecione o paciente</option>
+            </select>
+            <input type="text" id="searchPatient" class="form-control filtro-paciente" placeholder="Digite o nome do paciente" oninput="filtrarPacientes()">
+        </div>
     </div>
     <br />
     <div class="form-group">
@@ -31,11 +35,11 @@
         <label>Data de Emissão:</label>
         <input type="date" name="DateIssue" id="dataEmissao" required="required"
                min="@DateTime.Now.ToString("yyyy-MM-dd")"
-              @*value="@Model.dateIssue.ToString("yyyy-MM-dd")"*@ />
+        @*value="@Model.dateIssue.ToString("yyyy-MM-dd")"*@ />
         <span asp-validation-for="DateIssue" class="text-danger"></span>
     </div>
     <br />
-    <button type="submit" class="btn btn-primary" onclick="Imprimir()">Imprimir Prontuário</button>
+    <button type="submit" class="btn btn-primary" onclick="Imprimir()" id="botaoImprimirProntuario">Imprimir Prontuário</button>
     <button type="button" class="btn btn-success" onclick="GerarReceita()" id="gerarReceita">Gerar Receita Médica</button>
 </form>
 
@@ -54,6 +58,34 @@
         white-space: nowrap; /* Impede a quebra de linha */
         text-align: center; /* Centraliza o texto */
         margin-bottom: 20px; /* Adiciona um espaço abaixo do título */
+    }
+
+    .medico-row {
+        display: flex;
+        flex-direction: column; /* Responsivo */
+        gap: 10px;
+    }
+
+    .paciente-row {
+        display: flex;
+        flex-direction: column; /* Responsivo */
+        gap: 10px;
+    }
+
+    .form-inline {
+        display: flex;
+        align-items: center;
+        gap: 10px; /* Espaço entre os elementos */
+    }
+
+    .combo-medico, .filtro-medico, .combo-paciente, .filtro-paciente {
+        flex: 1; /* Tamanho proporcional */
+    }
+
+    @@media (max-width: 768px) {
+        .form-inline {
+            flex-direction: column; /* Ajusta para empilhar no celular */
+        }
     }
 
 </style>
@@ -78,6 +110,77 @@
         } else {
             window.location.href = "../Prontuario/Receita";
         }
+    }
 
+    // Para fazer a pesquisa e trazer no combobox ao lado
+    document.addEventListener('DOMContentLoaded', function () {
+        const searchDoctorInput = document.getElementById('searchDoctor');
+        const searchPatientInput = document.getElementById('searchPatient');
+
+        if (searchDoctorInput) {
+            searchDoctorInput.addEventListener('keypress', function (e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault(); // Evita que o formulário seja submetido ao pressionar Enter
+                    filtrarMedicos();
+                }
+            });
+        }
+
+        if (searchPatientInput) {
+            searchPatientInput.addEventListener('keypress', function (e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault(); // Evita que o formulário seja submetido ao pressionar Enter
+                    filtrarPacientes();
+                }
+            });
+        }
+    });
+
+    function filtrarMedicos() {
+        const termo = document.getElementById('searchDoctor').value.toLowerCase();
+        const select = document.getElementById('IdDoctor');
+        const options = select.getElementsByTagName('option');
+
+        let encontrado = false;
+
+        for (let i = 0; i < options.length; i++) {
+            const nomeMedico = options[i].text.toLowerCase();
+            if (nomeMedico.includes(termo)) {
+                select.value = options[i].value;
+                encontrado = true;
+                break;
+            }
+        }
+
+        if (!encontrado) {
+            alert('Médico não encontrado.');
+            document.getElementById("searchDoctor").value = '';
+            document.getElementById("IdDoctor").value = '';
+            document.getElementById("searchDoctor").focus();
+        }
+    }
+
+    function filtrarPacientes() {
+        const termo = document.getElementById('searchPatient').value.toLowerCase();
+        const select = document.getElementById('IdPatients');
+        const options = select.getElementsByTagName('option');
+
+        let encontrado = false;
+
+        for (let i = 0; i < options.length; i++) {
+            const nomePaciente = options[i].text.toLowerCase();
+            if (nomePaciente.includes(termo)) {
+                select.value = options[i].value;
+                encontrado = true;
+                break;
+            }
+        }
+
+        if (!encontrado) {
+            alert('Paciente não encontrado.');
+            document.getElementById("searchPatient").value = '';
+            document.getElementById("IdPatients").value = '';
+            document.getElementById("searchPatient").focus();
+        }
     }
 </script>

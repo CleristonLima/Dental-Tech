@@ -1,5 +1,7 @@
 ﻿using DentalPlus.Uteis;
+using Microsoft.EntityFrameworkCore;
 using MySql.Data.MySqlClient;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Data;
 
@@ -12,12 +14,14 @@ namespace DentalPlus.Models
         public MedicoModel(IHttpContextAccessor httpContextAccessor)
         {
             _httpContextAccessor = httpContextAccessor;
+
         }
 
         public MedicoModel()
         {
 
         }
+
         public string IdDoctor { get; set; }
 
         [Required(ErrorMessage = "Informe o nome completo do médico!")]
