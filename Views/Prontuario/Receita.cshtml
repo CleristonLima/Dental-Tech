@@ -430,8 +430,8 @@
         let encontrado = false;
 
         for (let i = 0; i < options.length; i++) {
-            const nomePaciente = options[i].text.toLowerCase();
-            if (nomePaciente.includes(termo)) {
+            const nomeMedicamento = options[i].text.toLowerCase();
+            if (nomeMedicamento.includes(termo)) {
                 select.value = options[i].value;
                 encontrado = true;
                 break;

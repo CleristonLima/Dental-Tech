@@ -6,20 +6,24 @@
     <input type="hidden" asp-for="IdMbSale" />
     <input type="hidden" asp-for="TotalValue" id="totalValue" />
 
-    <div class="form-group">
-        <label>Medico</label>
-        <select asp-for="IdDoctor" class="form-control" asp-items="ViewBag.ListaMedicos" id="txtMedico" required>
-            <option value="">Selecione o medico</option>
-        </select>
-        <span asp-validation-for="IdDoctor" class="text-danger"></span>
+    <div class="form-group medico-row">
+        <label for="searchDoctor">Dr(a)</label>
+        <div class="form-inline">
+            <select id="IdDoctor" asp-for="IdDoctor" class="form-control combo-medico" asp-items="ViewBag.ListaMedicos" required="required">
+                <option value="">Selecione o medico</option>
+            </select>
+            <input type="text" id="searchDoctor" class="form-control filtro-medico" placeholder="Pesquisar médico..." oninput="filtrarMedicos()">
+        </div>
     </div>
     <br />
-    <div class="form-group">
-        <label>Paciente</label>
-        <select asp-for="IdPatients" class="form-control" asp-items="ViewBag.ListaPacientes" id="txtPaciente" required>
-            <option value="">Selecione o paciente</option>
-        </select>
-        <span asp-validation-for="IdPatients" class="text-danger"></span>
+    <div class="form-group paciente-row">
+        <label for="searchPatient">Paciente</label>
+        <div class="form-inline">
+            <select id="IdPatients" asp-for="IdPatients" class="form-control combo-paciente" asp-items="ViewBag.ListaPacientes" required="required">
+                <option value="">Selecione o paciente</option>
+            </select>
+            <input type="text" id="searchPatient" class="form-control filtro-paciente" placeholder="Pesquisar paciente..." oninput="filtrarPacientes()">
+        </div>
     </div>
     <br />
     <div class="form-group">
@@ -32,13 +36,13 @@
     <div class="form-group">
         <label>Quantidade</label>
         <br />
-        <input asp-for="Qty" type="text" class="form-control" value="1" id="txtQuantidade" />
+        <input asp-for="Qty" type="number" class="form-control" value="1" id="txtQuantidade" />
     </div>
     <br />
     <div class="form-preco">
         <label>Preço Unitário R$:</label>
         <br />
-        <input asp-for="ValueConsultation" type="text" class="form-cbxpreco" id="precoUnitario" readonly />
+        <input id="precoUnitario" asp-for="ValueConsultation" type="text" class="form-cbxpreco" readonly />
         <button type="button" class="btn btn-primary btn-block" onclick="AdicionarVenda()">Adicionar</button>
     </div>
     <br />
@@ -133,6 +137,40 @@
         .table th {
             background-color: #f2f2f2;
         }
+
+    .medico-row {
+        display: flex;
+        flex-direction: column; /* Responsivo */
+        gap: 10px;
+    }
+
+    .paciente-row {
+        display: flex;
+        flex-direction: column; /* Responsivo */
+        gap: 10px;
+    }
+
+    .consulta-row {
+        display: flex;
+        flex-direction: column; /* Responsivo */
+        gap: 10px;
+    }
+
+    .form-inline {
+        display: flex;
+        align-items: center;
+        gap: 10px; /* Espaço entre os elementos */
+    }
+
+    .combo-consulta, .filtro-consulta, .combo-medico, .filtro-medico, .combo-paciente, .filtro-paciente {
+        flex: 1; /* Tamanho proporcional */
+    }
+
+    @@media (max-width: 768px) {
+        .form-inline {
+            flex-direction: column; /* Ajusta para empilhar no celular */
+        }
+    }
 </style>
 
 <script>
@@ -148,6 +186,32 @@
         }
     }
 
+    /*document.addEventListener('DOMContentLoaded', function () {
+        var consultaPreco = document.getElementById("consultaPreco");
+        if (consultaPreco && consultaPreco.value) {
+            AtualizarPreco(); // Atualiza o preço automaticamente se já houver uma consulta selecionada
+        }
+    });*/
+
+    /*function AtualizarPreco() {
+        var consultaPreco = document.getElementById("consultaPreco").value;
+        if (consultaPreco) {
+            fetch(`/Financeiro/GetConsultaPreco?idConsulta=${consultaPreco}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Erro ao buscar preço da consulta.');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    document.getElementById("precoUnitario").value = data.toFixed(2).replace('.', ',');
+                })
+                .catch(error => {
+                    console.error('Erro:', error);
+                    alert("Erro ao atualizar o preço da consulta. Tente novamente.");
+                });
+        }
+    }*/
 
     function AdicionarVenda() {
 
@@ -171,28 +235,38 @@
         }
 
         // Verificando se o campo de médico foi selecionado corretamente
-        var medicoSelect = document.getElementById("txtMedico");
+        /*var medicoSelect = document.getElementById("txtMedico");
         if (!medicoSelect || medicoSelect.value === "") {
             console.log("Erro: Médico não selecionado");
+            alert("Selecione um médico.");
+            return;
+        }*/
+        var medicoSelect = document.getElementById("IdDoctor");
+        if (!medicoSelect || medicoSelect.value === "") {
             alert("Selecione um médico.");
             return;
         }
         var medico = medicoSelect.options[medicoSelect.selectedIndex].text;
 
         // Verificando se o campo de paciente foi selecionado corretamente
-        var pacienteSelect = document.getElementById("txtPaciente");
+        /*var pacienteSelect = document.getElementById("txtPaciente");
         if (!pacienteSelect || pacienteSelect.value === "") {
             console.log("Erro: Paciente não selecionado");
             alert("Selecione um paciente.");
             return;
-        }
+        }*/
 
+        var pacienteSelect = document.getElementById("IdPatients");
+        if (!pacienteSelect || pacienteSelect.value === "") {
+            alert("Selecione um paciente.");
+            return;
+        }
         var paciente = pacienteSelect.options[pacienteSelect.selectedIndex].text;
 
         // Verificando se o campo de consulta foi selecionado corretamente
         var consultaSelect = document.getElementById("consultaPreco");
         if (!consultaSelect || consultaSelect.value === "") {
-            console.log("Erro: Consulta não selecionada");
+            //console.log("Erro: Consulta não selecionada");
             alert("Selecione uma consulta.");
             return;
         }
@@ -226,6 +300,113 @@
             "<td> R$" + (precoUnitario * quantidade).toFixed(2).replace('.', ',') + "</td>" +
             "</tr>";
 
-        console.log("Venda adicionada: Médico:", medico, "Paciente:", paciente, "Consulta:", consulta, "Quantidade:", quantidade, "Preço Unitário:", precoUnitario, "Total Atual:", novoTotal);
+       // console.log("Venda adicionada: Médico:", medico, "Paciente:", paciente, "Consulta:", consulta, "Quantidade:", quantidade, "Preço Unitário:", precoUnitario, "Total Atual:", novoTotal);
     }
+
+    // Para fazer a pesquisa e trazer no combobox ao lado
+    document.addEventListener('DOMContentLoaded', function () {
+        const searchDoctorInput = document.getElementById('searchDoctor');
+        const searchPatientInput = document.getElementById('searchPatient');
+        const searchConsultationInput = document.getElementById('searchConsultation');
+
+        if (searchDoctorInput) {
+            searchDoctorInput.addEventListener('keypress', function (e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault(); // Evita que o formulário seja submetido ao pressionar Enter
+                    filtrarMedicos();
+                }
+            });
+        }
+
+        if (searchPatientInput) {
+            searchPatientInput.addEventListener('keypress', function (e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault(); // Evita que o formulário seja submetido ao pressionar Enter
+                    filtrarPacientes();
+                }
+            });
+        }
+
+        if (searchConsultationInput) {
+            searchConsultationInput.addEventListener('keypress', function (e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault(); // Evita que o formulário seja submetido ao pressionar Enter
+                    filtrarMedicamentos();
+                }
+            });
+        }
+    });
+
+    function filtrarMedicos() {
+        const termo = document.getElementById('searchDoctor').value.toLowerCase();
+        const select = document.getElementById('IdDoctor');
+        const options = select.getElementsByTagName('option');
+
+        let encontrado = false;
+
+        for (let i = 0; i < options.length; i++) {
+            const nomeMedico = options[i].text.toLowerCase();
+            if (nomeMedico.includes(termo)) {
+                select.value = options[i].value;
+                encontrado = true;
+                break;
+            }
+        }
+
+        if (!encontrado) {
+            alert('Médico não encontrado.');
+            document.getElementById("searchDoctor").value = '';
+            document.getElementById("IdDoctor").value = '';
+            document.getElementById("searchDoctor").focus();
+        }
+    }
+
+    function filtrarPacientes() {
+        const termo = document.getElementById('searchPatient').value.toLowerCase();
+        const select = document.getElementById('IdPatients');
+        const options = select.getElementsByTagName('option');
+
+        let encontrado = false;
+
+        for (let i = 0; i < options.length; i++) {
+            const nomePaciente = options[i].text.toLowerCase();
+            if (nomePaciente.includes(termo)) {
+                select.value = options[i].value;
+                encontrado = true;
+                break;
+            }
+        }
+
+        if (!encontrado) {
+            alert('Paciente não encontrado.');
+            document.getElementById("searchPatient").value = '';
+            document.getElementById("IdPatients").value = '';
+            document.getElementById("searchPatient").focus();
+        }
+    }
+
+    /*function filtrarConsulta() {
+        const termo = document.getElementById('searchConsultation').value.toLowerCase();
+        const select = document.getElementById('consultaPreco');
+        const options = select.getElementsByTagName('option');
+
+        let encontrado = false;
+
+        for (let i = 0; i < options.length; i++) {
+            const nomeConsulta = options[i].text.toLowerCase();
+            if (nomeConsulta.includes(termo)) {
+                select.value = options[i].value;
+                encontrado = true;
+                break;
+            }
+        }
+
+        if (!encontrado) {
+            alert('Consulta ou exame não encontrada.');
+            document.getElementById("searchConsultation").value = '';
+            document.getElementById("consultaPreco").value = '';
+            document.getElementById("searchConsultation").focus();
+        }
+
+    }*/
 </script>
