@@ -57,6 +57,10 @@
       "PackagePath": "staticwebassets\\images\\Login.png"
     },
     {
+      "Id": "C:\\Projetos\\DentalPlus\\DentalPlus\\wwwroot\\images\\LogoDentista.png",
+      "PackagePath": "staticwebassets\\images\\LogoDentista.png"
+    },
+    {
       "Id": "C:\\Projetos\\DentalPlus\\DentalPlus\\wwwroot\\images\\Medicos.png",
       "PackagePath": "staticwebassets\\images\\Medicos.png"
     },

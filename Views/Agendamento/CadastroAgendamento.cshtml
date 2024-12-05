@@ -12,31 +12,34 @@
 <form asp-controller="Agendamento" asp-action="CadastroAgendamento" method="post">
     <input type="hidden" asp-for="IdMedConsXPat" />
 
-     <div class="form-group">
-         <br />
-         <label>Paciente</label>
-        <select asp-for="IdPatients" class="form-control" asp-items="ViewBag.ListaPacientes">
-             <option value="">Selecione o Paciente</option>
-         </select>
-        <span asp-validation-for="IdPatients" class="text-danger"></span>
-     </div>
-     <br />
-    <div class="form-group">
-        <br />
-        <label>Medico</label>
-        <select asp-for="IdDoctor" class="form-control" asp-items="ViewBag.ListaMedicos">
-            <option value="">Selecione o medico</option>
-        </select>
-        <span asp-validation-for="IdDoctor" class="text-danger"></span>
+    <div class="form-group paciente-row">
+        <label for="searchPatient">Paciente</label>
+        <div class="form-inline">
+            <select id="IdPatients" asp-for="IdPatients" class="form-control combo-paciente" asp-items="ViewBag.ListaPacientes" required="required">
+                <option value="">Selecione o paciente</option>
+            </select>
+            <input type="text" id="searchPatient" class="form-control filtro-paciente" placeholder="Pesquisar paciente..." oninput="filtrarPacientes()">
+        </div>
     </div>
     <br />
-    <div class="form-group">
-        <br />
-        <label>Consulta</label>
-        <select asp-for="IdMedicalConsultation" class="form-control" asp-items="ViewBag.ListaTipoConsultas">
-            <option value="">Selecione a consulta</option>
-        </select>
-        <span asp-validation-for="IdMedicalConsultation" class="text-danger"></span>
+    <div class="form-group medico-row">
+        <label for="searchDoctor">Dr(a)</label>
+        <div class="form-inline">
+            <select id="IdDoctor" asp-for="IdDoctor" class="form-control combo-medico" asp-items="ViewBag.ListaMedicos" required="required">
+                <option value="">Selecione o medico</option>
+            </select>
+            <input type="text" id="searchDoctor" class="form-control filtro-medico" placeholder="Pesquisar médico..." oninput="filtrarMedicos()">
+        </div>
+    </div>
+    <br />
+    <div class="form-group consultation-row">
+        <label for="searchConsultation">Consulta</label>
+        <div class="form-inline">
+            <select id="IdMedicalConsultation" asp-for="IdMedicalConsultation" class="form-control combo-consulta" asp-items="ViewBag.ListaTipoConsultas">
+                <option value="">Selecione a consulta</option>
+            </select>
+            <input type="text" id="searchConsultation" class="form-control filtro-consulta" placeholder="Pesquisar consulta ou exame..." oninput="filtrarConsulta()">
+        </div>
     </div>
     <br />
     <div class="form-group">
@@ -102,6 +105,40 @@
         margin-bottom: 20px; /* Adiciona um espaço abaixo do título */
     }
 
+    .medico-row {
+        display: flex;
+        flex-direction: column; /* Responsivo */
+        gap: 10px;
+    }
+
+    .paciente-row {
+        display: flex;
+        flex-direction: column; /* Responsivo */
+        gap: 10px;
+    }
+
+    .consultation-row {
+        display: flex;
+        flex-direction: column; /* Responsivo */
+        gap: 10px;
+    }
+
+    .form-inline {
+        display: flex;
+        align-items: center;
+        gap: 10px; /* Espaço entre os elementos */
+    }
+
+    .combo-consulta, .filtro-consulta, .combo-medico, .filtro-medico, .combo-paciente, .filtro-paciente {
+        flex: 1; /* Tamanho proporcional */
+    }
+
+    @@media (max-width: 768px) {
+        .form-inline {
+            flex-direction: column; /* Ajusta para empilhar no celular */
+        }
+    }
+
 </style>
 
 <script>
@@ -150,4 +187,110 @@
             })
             .catch(error => console.error('Erro ao buscar horários:', error));
     });
+
+    document.addEventListener('DOMContentLoaded', function () {
+        const searchDoctorInput = document.getElementById('searchDoctor');
+        const searchPatientInput = document.getElementById('searchPatient');
+        const searchConsultationInput = document.getElementById('searchConsultation');
+
+        if (searchDoctorInput) {
+            searchDoctorInput.addEventListener('keypress', function (e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault(); // Evita que o formulário seja submetido ao pressionar Enter
+                    filtrarMedicos();
+                }
+            });
+        }
+
+        if (searchPatientInput) {
+            searchPatientInput.addEventListener('keypress', function (e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault(); // Evita que o formulário seja submetido ao pressionar Enter
+                    filtrarPacientes();
+                }
+            });
+        }
+
+        if (searchConsultationInput) {
+            searchConsultationInput.addEventListener('keypress', function (e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault(); // Evita que o formulário seja submetido ao pressionar Enter
+                    filtrarMedicamentos();
+                }
+            });
+        }
+    });
+
+    function filtrarMedicos() {
+        const termo = document.getElementById('searchDoctor').value.toLowerCase();
+        const select = document.getElementById('IdDoctor');
+        const options = select.getElementsByTagName('option');
+
+        let encontrado = false;
+
+        for (let i = 0; i < options.length; i++) {
+            const nomeMedico = options[i].text.toLowerCase();
+            if (nomeMedico.includes(termo)) {
+                select.value = options[i].value;
+                encontrado = true;
+                break;
+            }
+        }
+
+        if (!encontrado) {
+            alert('Médico não encontrado.');
+            document.getElementById("searchDoctor").value = '';
+            document.getElementById("IdDoctor").value = '';
+            document.getElementById("searchDoctor").focus();
+        }
+    }
+
+    function filtrarPacientes() {
+        const termo = document.getElementById('searchPatient').value.toLowerCase();
+        const select = document.getElementById('IdPatients');
+        const options = select.getElementsByTagName('option');
+
+        let encontrado = false;
+
+        for (let i = 0; i < options.length; i++) {
+            const nomePaciente = options[i].text.toLowerCase();
+            if (nomePaciente.includes(termo)) {
+                select.value = options[i].value;
+                encontrado = true;
+                break;
+            }
+        }
+
+        if (!encontrado) {
+            alert('Paciente não encontrado.');
+            document.getElementById("searchPatient").value = '';
+            document.getElementById("IdPatients").value = '';
+            document.getElementById("searchPatient").focus();
+        }
+    }
+
+    function filtrarConsulta() {
+        const termo = document.getElementById('searchConsultation').value.toLowerCase();
+        const select = document.getElementById('IdMedicalConsultation');
+        const options = select.getElementsByTagName('option');
+
+        let encontrado = false;
+
+        for (let i = 0; i < options.length; i++) {
+            const nomeConsulta = options[i].text.toLowerCase();
+            if (nomeConsulta.includes(termo)) {
+                select.value = options[i].value;
+                encontrado = true;
+                break;
+            }
+        }
+
+        if (!encontrado) {
+            alert('Consulta ou exame não encontrada.');
+            document.getElementById("searchConsultation").value = '';
+            document.getElementById("IdMedicalConsultation").value = '';
+            document.getElementById("searchConsultation").focus();
+        }
+
+    }
 </script>

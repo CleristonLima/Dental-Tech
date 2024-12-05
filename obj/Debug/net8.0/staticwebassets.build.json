@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "wBXA7jEN0UkMN2q2QHk+z2dMApqvH5raUzdchEMthG0=",
+  "Hash": "Ec+URuOnJ70B9BjOjrqlZViDTwZlNiHapj6OLROqmOY=",
   "Source": "DentalPlus",
   "BasePath": "_content/DentalPlus",
   "Mode": "Default",
@@ -281,6 +281,25 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\images\\Login.png"
+    },
+    {
+      "Identity": "C:\\Projetos\\DentalPlus\\DentalPlus\\wwwroot\\images\\LogoDentista.png",
+      "SourceId": "DentalPlus",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Projetos\\DentalPlus\\DentalPlus\\wwwroot\\",
+      "BasePath": "_content/DentalPlus",
+      "RelativePath": "images/LogoDentista.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\LogoDentista.png"
     },
     {
       "Identity": "C:\\Projetos\\DentalPlus\\DentalPlus\\wwwroot\\images\\Medicos.png",

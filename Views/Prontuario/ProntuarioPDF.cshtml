@@ -1,31 +1,38 @@
 ﻿@model ReceituarioModel
 
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["ShowHeader"] = false; // Esconde a barra do layout
+}
+<div>
+    <img src="@Url.Content("~/images/LogoDentista.png")" id="Logo" />
+        <p id="Endereco1">Endereço: Avenida José Vieira Guimarães, N° 130</p>
+        <p id="Endereco2">Bairro: Jd Giannetti - São Paulo - SP</p>
+</div>
+<hr />
 <h3>Prontuário</h3>
 
 <div>
-    <strong>Dr(a)</strong> <p>@Model.NameDoctor</p>
+    <strong>Dr(a):</strong> <p>@Model.NameDoctor</p>
 </div>
 <br />
 <div>
-    <strong>Paciente</strong> <p>@Model.NamePatient</p>
+    <strong>Paciente:</strong> <p>@Model.NamePatient</p>
 </div>
 <br />
 <div>
-    <strong>Sintomas</strong> <p>@Model.Symptoms</p>
+    <strong>Sintomas:</strong> <p>@Model.Symptoms</p>
 </div>
 <br />
 <div>
-    <strong>Data de Emissão</strong> <p>@Model.DateIssue.ToString("dd/MM/yyyy")</p>
+    <strong>Data de Emissão:</strong> <p>@Model.DateIssue.ToString("dd/MM/yyyy")</p>
 </div>
-
+<br />
 <hr />
-<br />
-
 <h3>Catálogo dos Dentes</h3>
-<hr />
-<br />
 <div>
-    <img src="~/images/Dentes.png" id="Dentes" />
+    <!--<img src="~/images/Dentes.png" id="Dentes" />-->
+    <img src="@Url.Content("~/images/Dentes.png")" id="Dentes" />
 </div>
 
 <style>
@@ -48,5 +55,21 @@
         margin-right: auto;
         max-width: 100%; /* Garante que a imagem não ultrapasse o tamanho da tela */
         height: auto; /* Mantém a proporção da imagem */
+    }
+
+    #Logo {
+        height: 100px;
+    }
+
+    #Endereco1 {
+        margin-left: 120px;
+        margin-top: -50px;
+        text-align: center;
+    }
+
+    #Endereco2 {
+        margin-left: 120px;
+        margin-top: -10px;
+        text-align: center;
     }
 </style>

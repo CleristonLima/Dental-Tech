@@ -1,17 +1,22 @@
 ﻿@model ReceituarioModel
 
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["ShowHeader"] = false; // Esconde a barra do layout
+}
+
 <h3>Receituario</h3>
 
 <div>
-    <strong>Dr(a)</strong> <p>@Model.NameDoctor</p>
+    <strong>Dr(a):</strong> <p>@Model.NameDoctor</p>
 </div>
 <br />
 <div>
-    <strong>Paciente</strong> <p>@Model.NamePatient</p>
+    <strong>Paciente:</strong> <p>@Model.NamePatient</p>
 </div>
 <br />
 <div>
-    <strong>Data de Emissão</strong> <p>@Model.DateIssuePrescriptions.ToString("dd/MM/yyyy")</p>
+    <strong>Data de Emissão:</strong> <p>@Model.DateIssuePrescriptions.ToString("dd/MM/yyyy")</p>
 </div>
 
 <hr />
@@ -21,11 +26,10 @@
 <hr />
 
 <!--<p id="Remedios">@Model.Reason</p>-->
-
 <p id="Remedios">@Html.Raw(Model.Reason)</p>
 <br />
 
-
+<hr />
 <style>
         body {
         font-size: 20px; /* Ajusta o tamanho geral do texto */
