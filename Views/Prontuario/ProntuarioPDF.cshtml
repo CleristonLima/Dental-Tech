@@ -4,32 +4,37 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewData["ShowHeader"] = false; // Esconde a barra do layout
 }
-<div>
-    <img src="@Url.Content("~/images/LogoDentista.png")" id="Logo" />
-        <p id="Endereco1">Endereço: Avenida José Vieira Guimarães, N° 130</p>
-        <p id="Endereco2">Bairro: Jd Giannetti - São Paulo - SP</p>
-</div>
-<hr />
-<h3>Prontuário</h3>
+
+<h3 id="nomeEmpresa">Odonto XV</h3>
 
 <div>
-    <strong>Dr(a):</strong> <p>@Model.NameDoctor</p>
+    <img src="@Url.Content("~/images/LogoDentista.png")" id="Logo" />
+    
+    <p id="Endereco1">Endereço: Avenida José Vieira Guimarães, N° 130</p>
+    <p id="Endereco2">Bairro: Jd Giannetti - São Paulo - SP</p>
 </div>
-<br />
-<div>
-    <strong>Paciente:</strong> <p>@Model.NamePatient</p>
-</div>
-<br />
-<div>
-    <strong>Sintomas:</strong> <p>@Model.Symptoms</p>
-</div>
-<br />
-<div>
-    <strong>Data de Emissão:</strong> <p>@Model.DateIssue.ToString("dd/MM/yyyy")</p>
-</div>
-<br />
+
 <hr />
-<h3>Catálogo dos Dentes</h3>
+<h4 id="tituloProntuario">Prontuário</h4>
+
+<div>
+    <strong id="tituloMedico">Dr(a):</strong> <p id="nomeMedico">@Model.NameDoctor</p>
+</div>
+<br />
+<div>
+    <strong id="tituloPaciente">Paciente:</strong> <p id="nomePaciente">@Model.NamePatient</p>
+</div>
+<br />
+<div>
+    <strong id="tituloSintomas">Sintomas:</strong> <p id="Sintomas">@Model.Symptoms</p>
+</div>
+<br />
+<div>
+    <strong id="tituloDataEmissao">Data de Emissão:</strong> <p id="DataEmissao">@Model.DateIssue.ToString("dd/MM/yyyy")</p>
+</div>
+
+<hr />
+<h4 id="tituloCatalogo">Catálogo dos Dentes</h4>
 <div>
     <!--<img src="~/images/Dentes.png" id="Dentes" />-->
     <img src="@Url.Content("~/images/Dentes.png")" id="Dentes" />
@@ -40,16 +45,71 @@
     font-size: 20px; /* Ajusta o tamanho geral do texto */
     }
 
-    h3 {
-    font-size: 35px; /* Ajusta o tamanho dos títulos */
+    #tituloProntuario {
+    font-size: 26px; /* Ajusta o tamanho dos títulos */
     text-align: center;
+        font-family: Calibri;
+        font-weight: bold;
     }
 
-    p {
-    font-size: 20px; /* Ajusta o tamanho dos parágrafos */
+    #tituloCatalogo {
+        font-size: 26px; /* Ajusta o tamanho dos títulos */
+        text-align: center;
+        font-family: Calibri;
+        font-weight: bold;
+        margin-top: 10px;
     }
 
-#Dentes {
+    #tituloMedico{
+        font-size: 22px; /* Ajusta o tamanho dos parágrafos */
+        font-family: Calibri;
+    }
+
+    #nomeMedico {
+    font-size: 22px; /* Ajusta o tamanho dos parágrafos */
+    font-family: Calibri;
+        margin-left: 60px;
+        margin-top: -26px;
+
+    }
+
+    #tituloPaciente {
+        font-size: 22px; /* Ajusta o tamanho dos parágrafos */
+        font-family: Calibri;
+    }
+
+    #nomePaciente{
+        font-size: 22px; /* Ajusta o tamanho dos parágrafos */
+        font-family: Calibri;
+        margin-left: 90px;
+        margin-top: -26px;
+    }
+
+    #tituloSintomas{
+        font-size: 22px; /* Ajusta o tamanho dos parágrafos */
+        font-family: Calibri;
+    }
+
+    #Sintomas{
+        font-size: 22px; /* Ajusta o tamanho dos parágrafos */
+        font-family: Calibri;
+        margin-left: 100px;
+        margin-top: -26px;
+    }
+
+    #tituloDataEmissao{
+        font-size: 22px; /* Ajusta o tamanho dos parágrafos */
+        font-family: Calibri;
+    }
+
+    #DataEmissao{
+        font-size: 22px; /* Ajusta o tamanho dos parágrafos */
+        font-family: Calibri;
+        margin-left: 170px;
+        margin-top: -26px;
+    }
+
+    #Dentes {
         display: block;
         margin-left: auto;
         margin-right: auto;
@@ -58,18 +118,28 @@
     }
 
     #Logo {
-        height: 100px;
+        height: 130px;
     }
 
     #Endereco1 {
         margin-left: 120px;
-        margin-top: -50px;
+        margin-top: -70px;
         text-align: center;
+        font-family: Calibri;
+        font-size: 22px;
     }
 
     #Endereco2 {
         margin-left: 120px;
         margin-top: -10px;
         text-align: center;
+        font-family: Calibri;
+        font-size: 22px;
+    }
+    #nomeEmpresa {
+        text-align: center;
+        font-family: Calibri;
+        font-size: 26px;
+        font-weight: bold;
     }
 </style>

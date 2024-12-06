@@ -14,6 +14,8 @@ namespace DentalPlus.Models
         [Required(ErrorMessage = "Por favor selecione o paciente!")]
         public string NamePatient { get; set; }
 
+        public string RgRne { get; set; }
+
         [Required(ErrorMessage = "Por favor selecione o Medico!")]
         public string IdDoctor { get; set; }
 
@@ -37,7 +39,7 @@ namespace DentalPlus.Models
             DAL objDAL = new DAL();
             string sql = string.Empty;
 
-            sql = "SELECT NAME_PATIENT FROM TB_CLI_PATIENTS WHERE ID_PATIENTS = @IdPatients";
+            sql = "SELECT NAME_PATIENT, RG_RNE FROM TB_CLI_PATIENTS WHERE ID_PATIENTS = @IdPatients";
 
             MySqlCommand command = new MySqlCommand(sql);
             command.Parameters.AddWithValue("@IdPatients", IdPatients);
@@ -47,6 +49,7 @@ namespace DentalPlus.Models
             if (dt.Rows.Count > 0)
             {
                 NamePatient = dt.Rows[0]["NAME_PATIENT"].ToString();
+                RgRne = dt.Rows[0]["RG_RNE"].ToString();
 
             }
         }

@@ -1,9 +1,25 @@
 ﻿@model DeclaracaoHorasModel
 
-<h3>Declaração de horas</h3>
-<br />
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["ShowHeader"] = false; // Esconde a barra do layout
+}
+
+<h3 id="nomeEmpresa">Odonto XV</h3>
+
 <div>
-    <p>Declaro que o paciente: @Model.NamePatient, compareceu na clinica odontologica por motivo(s): @Model.Reason </p>
+    <img src="@Url.Content("~/images/LogoDentista.png")" id="Logo" />
+
+    <p id="Endereco1">Endereço: Avenida José Vieira Guimarães, N° 130</p>
+    <p id="Endereco2">Bairro: Jd Giannetti - São Paulo - SP</p>
+</div>
+
+<hr />
+
+<h4 id="tituloDeclaracao">Declaração de horas</h4>
+<br />
+<div id="Declaracao">
+    <p>Declaro que o paciente: @Model.NamePatient, portador do RG/RNE: @Model.RgRne, compareceu nesta clinica odontologica por motivo(s): @Model.Reason </p>
     <p>No horario das @Model.HourStart.ToString(@"hh\:mm") as @Model.HourFinish.ToString(@"hh\:mm").</p>
     <br />
     <br />
@@ -19,15 +35,58 @@
 
 <style>
    
-    h3 {
-        font-size: 35px; /* Ajusta o tamanho dos títulos */
-        text-align: center;
+    hr {
+        border: none !important;
+        border-top: 2px solid black !important;
+        color: black;
+        height: 2px !important;
+        margin: 20px 0 !important;
     }
 
     .linha-assinatura {
         border-bottom: 2px solid black;
-        width: 300px;
+        width: 500px;
         margin-top: 10px;
         margin-bottom: 20px;
+    }
+
+    #tituloDeclaracao {
+        font-size: 26px; /* Ajusta o tamanho dos títulos */
+        text-align: center;
+        font-family: Calibri;
+        font-weight: bold;
+    }
+
+    #Declaracao {
+        font-size: 22px; /* Ajusta o tamanho dos parágrafos */
+        font-family: Calibri;
+    }
+
+    #Logo {
+        height: 130px;
+    }
+
+    #Endereco1 {
+        margin-left: 120px;
+        margin-top: -70px;
+        text-align: center;
+        font-family: Calibri;
+        font-size: 22px;
+    }
+
+    #Endereco2 {
+        margin-left: 120px;
+        margin-top: -10px;
+        text-align: center;
+        font-family: Calibri;
+        font-size: 22px;
+    }
+
+    #nomeEmpresa {
+        text-align: center;
+        font-family: Calibri;
+        font-size: 26px;
+        font-weight: bold;
+        margin-top: -10px;
     }
 </style>
