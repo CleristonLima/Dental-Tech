@@ -31,6 +31,7 @@
                     <th>#</th>
                     <th>#</th>
                     <th>#</th>
+                    <th>#</th>
                 </tr>
             </thead>
 
@@ -52,6 +53,7 @@
                                     <td><button type="button" class="btn btn-success" onclick="EnviarMensagem(@item.IdMedConsXPat)">Enviar Mensagem</button></td>
                                     <td><button type="button" class="btn btn-primary" onclick="Confirmar(@item.IdMedConsXPat)">Confirmar Agendamento</button></td>
                                     <td><button type="button" class="btn btn-warning" onclick="Remarcar(@item.IdMedConsXPat)">Remarcar Consulta</button></td>
+                                    <td><button type="button" class="btn btn-success" onclick="Realizada(@item.IdMedConsXPat)">Finalizar consulta</button></td>
                                     <td><button type="button" class="btn btn-danger" onclick="Cancelar(@item.IdMedConsXPat)">Cancelar</button></td>
                                 </tr>
                     }
@@ -62,7 +64,7 @@
     <br />
     <div class="button-container">
     <button class="btn btn-block btn-primary" type="button" onclick="Cadastrar()">Cadastrar novo agendamento</button>
-    <button class="btn btn-block btn-success" type="button" onclick="ConsultasRealizadas()" id="realizadas">Consultas realizadas</button>
+    <button class="btn btn-block btn-success" type="button" onclick="ConsultasRealizadas()" id="realizadas">Consultas finalizadas</button>
     <button class="btn btn-block btn-danger" type="button" onclick="ConsultasCanceladas()" id="canceladas">Consultas canceladas</button>
     </div>
 }
@@ -194,6 +196,14 @@ else
             alert("Sem conexão com a internet. Verifique sua rede e tente novamente.");
         } else {
             window.location.href = "../Agendamento/ConfirmarAgendamento/" + id;
+        }
+    }
+
+    function Realizada(id) {
+        if (!navigator.onLine) {
+            alert("Sem conexão com a internet. Verifique sua rede e tente novamente.");
+        } else {
+            window.location.href = "../Agendamento/FinalizarAgendamento/" + id;
         }
     }
 

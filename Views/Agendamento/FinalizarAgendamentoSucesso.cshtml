@@ -1,0 +1,15 @@
+﻿<h2>Consulta realizada com Sucesso!</h2>
+<br />
+<button type="button" class="btn btn-primary" onclick="Voltar()">Lista de Agendamentos</button>
+
+<script>
+    function Voltar()
+    {
+        if (!navigator.onLine) {
+            alert("Sem conexão com a internet. Verifique sua rede e tente novamente.");
+        }
+        else {
+            window.location.href = '../../Agendamento/Index';
+        }
+    }
+</script>

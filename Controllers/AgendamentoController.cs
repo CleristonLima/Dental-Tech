@@ -1,5 +1,6 @@
 ﻿using DentalPlus.Connection;
 using DentalPlus.Models;
+using DocumentFormat.OpenXml.Office2010.Excel;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -36,24 +37,6 @@ namespace DentalPlus.Controllers
                 return View();
             }
         }
-
-        /* public IActionResult CadastroAgendamento()
-         {
-             var agendamentoModel = new AgendamentoModel();
-
-             DateTime dataSelecionada = DateTime.Now; // Altere conforme a data selecionada pelo usuário
-             string idDoctor = "id_doctor_exemplo"; // ID do médico selecionado
-
-             var horariosOcupados = agendamentoModel.ObterHorariosOcupados(dataSelecionada, idDoctor);
-
-             // Logica para determinar os horarios disponiveis entre os horariosOcupados
-             // Crie uma lista de horários disponíveis e passe para a ViewBag
-
-             List<DateTime> horariosDisponiveis = agendamentoModel.ObterHorariosDisponiveis(dataSelecionada, idDoctor);
-             ViewBag.HorariosDisponiveis = horariosDisponiveis;
-
-             return View(agendamentoModel);
-         }*/
 
         [HttpGet]
         public IActionResult CadastroAgendamento(int? id)
@@ -144,6 +127,35 @@ namespace DentalPlus.Controllers
                 return View(agendamento);
             }
 
+        }
+
+        public IActionResult FinalizarAgendamento(int id)
+        {
+            if (!VerificarConexaoInternet())
+            {
+                TempData["ErrorLogin"] = "Sem conexão com a internet. Verifique sua rede e tente novamente.";
+                return RedirectToAction("Index", "Agendamento");
+            }
+            else
+            {
+                ViewData["IdMedConsXPat"] = id;
+                return View();
+            }
+        }
+
+        public IActionResult FinalizarAgendamentoSucesso(AgendamentoModel agendamento, int id)
+        {
+            if (!VerificarConexaoInternet())
+            {
+                TempData["ErrorLogin"] = "Sem conexão com a internet. Verifique sua rede e tente novamente.";
+                return RedirectToAction("Index", "Agendamento");
+            }
+            else
+            {
+                agendamento.userId = _httpContextAccessor.HttpContext?.Session.GetString("IdUsuarioLogado");
+                agendamento.GravarConsultaRealizada(id);
+                return View();
+            }
         }
 
         [HttpPost]

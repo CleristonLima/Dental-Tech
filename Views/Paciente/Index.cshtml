@@ -45,7 +45,7 @@
                     foreach (var item in (List<PacienteModel>)ViewBag.ListaPacientes)
                     {
                         <tr>
-                            <td><img src="@(string.IsNullOrEmpty(item.LinkPhoto) ?"/images/SemFoto.png " : item.LinkPhoto)" width="50" height="50" /></td>
+                            <td><img src="@(string.IsNullOrEmpty(item.LinkPhoto) ?"/images/SemFoto.png " : item.LinkPhoto)" width="50" height="50"/></td>
                             <td>@item.CpfCnpj</td>
                             <td>@item.RgRne</td>
                             <td>@item.NamePatient</td>

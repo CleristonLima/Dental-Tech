@@ -535,6 +535,28 @@ namespace DentalPlus.Models
             }
         }
 
+        public void GravarConsultaRealizada(int id)
+        {
+            DAL objDAL = new DAL();
+            string sql = string.Empty;
+
+            string currentDateTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+
+            // Se for uma atualização, preenche o campo USER_UPDATE
+            sql = "UPDATE TB_CLI_MED_CONSUL_X_PATIENT SET STATUS_CONSULTATION = 'Realizada', " +
+                        "USER_UPDATE = @userUpdate, " +
+                        "DATE_UPDATE = @dateUpdate " +
+                        "WHERE ID_MED_CONS_X_PAT = @IdMedConsXPat ";
+
+            MySqlCommand command = new MySqlCommand(sql);
+            command.Parameters.AddWithValue("@userUpdate", userId);
+            command.Parameters.AddWithValue("@dateUpdate", currentDateTime);
+            command.Parameters.AddWithValue("@IdMedConsXPat", id);
+
+            objDAL.ExecutarComandoSQL(command);
+            
+        }
+
         public void GravarCancelamento()
         {
             DAL objDAL = new DAL();
@@ -592,42 +614,6 @@ namespace DentalPlus.Models
                 objDAL.ExecutarComandoSQL(command);
             }
         }
-
-        /*public void GravarMensagemEnviada()
-        {
-            DAL objDAL = new DAL();
-            string sql = string.Empty;
-
-            string currentDateTime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-
-            // Insere a nova mensagem
-            sql = "INSERT INTO TB_MS_MESSAGE (ID_PATIENTS, NUMBER_CELLPHONE, DATA_SEND, ID_STATUS, MESSAGE_TYPE, USER_INSERT, DATE_INSERT) " +
-                  "VALUES (@IdPatients, @PhoneNumber, @DataSend, 0, @MessageType, @userInsert, @dateInsert)";
-
-            MySqlCommand command = new MySqlCommand(sql);
-            command.Parameters.AddWithValue("@IdPatients", IdPatients);
-            command.Parameters.AddWithValue("@PhoneNumber", PhoneNumber1);
-            command.Parameters.AddWithValue("@DataSend", currentDateTime);
-            command.Parameters.AddWithValue("@MessageType", MessageType);
-            command.Parameters.AddWithValue("@userInsert", userId);
-            command.Parameters.AddWithValue("@dateInsert", currentDateTime);
-
-            objDAL.ExecutarComandoSQL(command);
-
-            // Obtém o último ID inserido
-            sql = "SELECT LAST_INSERT_ID()";
-            MySqlCommand selectCommand = new MySqlCommand(sql);
-            int messageId = Convert.ToInt32(objDAL.RetornarValorComando(selectCommand));
-
-            // Atualizar o status para "Enviado"
-            sql = "UPDATE TB_MS_MESSAGE SET ID_STATUS = 1, USER_UPDATE = @userUpdate, DATE_UPDATE = @dateUpdate WHERE ID_MESSAGE = @MessageId";
-            MySqlCommand updateCommand = new MySqlCommand(sql);
-            updateCommand.Parameters.AddWithValue("@userUpdate", userId);
-            updateCommand.Parameters.AddWithValue("@dateUpdate", currentDateTime);
-            updateCommand.Parameters.AddWithValue("@MessageId", messageId);
-
-            objDAL.ExecutarComandoSQL(updateCommand);
-        }*/
 
         public async Task GravarMensagemEnviadaAsync()
         {

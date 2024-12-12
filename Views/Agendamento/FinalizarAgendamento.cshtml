@@ -1,0 +1,40 @@
+﻿<h2>Finalizar essa consulta?</h2>
+
+<h3> Deseja realmente finalizar esta consulta?</h3>
+<br />
+<button type="button" class="btn btn-danger" onclick="Nao()">Não</button>
+<button type="button" class="btn btn-success" onclick="Sim()">Sim</button>
+
+<script>
+    function checkInternetConnection() {
+        if (!navigator.onLine) {
+            alert("Sem conexao com a internet. Verifique sua rede e tente novamente.");
+        }
+    }
+
+    window.addEventListener('load', checkInternetConnection);
+    window.addEventListener('offline', checkInternetConnection);
+
+    document.addEventListener('DOMContentLoaded', function () {
+        var errorMessage = '@TempData["ErrorLogin"]';
+        if (errorMessage) {
+            alert(errorMessage);
+        }
+    });
+
+    function Sim() {
+        if (!navigator.onLine) {
+            alert("Sem conexão com a internet. Verifique sua rede e tente novamente.");
+        } else {
+            window.location.href = '../../Agendamento/FinalizarAgendamentoSucesso/' + '@ViewData["IdMedConsXPat"].ToString()';
+        }
+    }
+
+    function Nao() {
+        if (!navigator.onLine) {
+            alert("Sem conexão com a internet. Verifique sua rede e tente novamente.");
+        } else {
+            window.location.href = '../../Agendamento/Index';
+        }
+    }
+</script>
