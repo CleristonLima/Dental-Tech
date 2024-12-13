@@ -1,5 +1,11 @@
 ﻿<h3 class="titulo-cadastro">Lista de remedios para receitas</h3>
 
+<div>
+    <!-- Campo de pesquisa -->
+    <input type="text" id="searchInput" class="form-control" placeholder="Pesquise o nome do remédio" onkeyup="filtrarRemedios()" />
+    <br />
+</div>
+
 @if (ViewBag.ListaRemedios != null)
 {
 
@@ -8,7 +14,7 @@
     <br />
     <br />
     <div class="table-container">
-        <table class="table table-bordered">
+        <table class="table table-bordered" id="remediosTable">
             <thead>
                 <tr>
                     <th>Foto</th>
@@ -133,6 +139,25 @@ else
             alert("Sem conexão com a internet. Verifique sua rede e tente novamente.");
         } else {
             window.location.href = "../ProdutosEstoque/ExcluirProdutoPaciente/" + id;
+        }
+    }
+
+    function filtrarRemedios() {
+        var input = document.getElementById("searchInput");
+        var filter = input.value.toLowerCase();
+        var table = document.getElementById("remediosTable");
+        var rows = table.getElementsByTagName("tr");
+
+        for (var i = 1; i < rows.length; i++) { // Começa do índice 1 para ignorar o cabeçalho
+            var productCell = rows[i].getElementsByTagName("td")[1]; // Coluna a ser pesquisada
+            if (productCell) {
+                var productName = productCell.textContent || productCell.innerText;
+                if (productName.toLowerCase().indexOf(filter) > -1) {
+                    rows[i].style.display = ""; // Mostra a linha
+                } else {
+                    rows[i].style.display = "none"; // Oculta a linha
+                }
+            }
         }
     }
 

@@ -1,9 +1,16 @@
 ﻿<h3 class="titulo-cadastro">Lista de tipos de consultas</h3>
 
+<div>
+    <!-- Campo de pesquisa -->
+    <input type="text" id="searchInput" class="form-control" placeholder="Pesquise tipo de consulta" onkeyup="filtrarTipoConsulta()" />
+    <br />
+</div>
+
+
 @if (ViewBag.ListaTipoConsultas != null)
 {
     <div class="table-container">
-    <table class="table table-bordered">
+        <table class="table table-bordered" id="tipoConsultaTable">
         <thead>
             <tr>
                 <th>Nome da consulta médica</th>
@@ -110,6 +117,25 @@ else
             alert("Sem conexão com a internet. Verifique sua rede e tente novamente.");
         } else {
             window.location.href = "../TipoConsulta/Excluir/" + id;
+        }
+    }
+
+    function filtrarTipoConsulta() {
+        var input = document.getElementById("searchInput");
+        var filter = input.value.toLowerCase();
+        var table = document.getElementById("tipoConsultaTable");
+        var rows = table.getElementsByTagName("tr");
+
+        for (var i = 1; i < rows.length; i++) { // Começa do índice 1 para ignorar o cabeçalho
+            var productCell = rows[i].getElementsByTagName("td")[0]; // Coluna a ser pesquisada
+            if (productCell) {
+                var productName = productCell.textContent || productCell.innerText;
+                if (productName.toLowerCase().indexOf(filter) > -1) {
+                    rows[i].style.display = ""; // Mostra a linha
+                } else {
+                    rows[i].style.display = "none"; // Oculta a linha
+                }
+            }
         }
     }
 </script>

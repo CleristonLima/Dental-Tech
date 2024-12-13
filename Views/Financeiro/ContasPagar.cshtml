@@ -1,9 +1,15 @@
 ﻿<h3 class="titulo-cadastro">Lista de contas</h3>
 
+<div>
+    <!-- Campo de pesquisa -->
+    <input type="text" id="searchInput" class="form-control" placeholder="Pesquise pelo tipo de conta" onkeyup="filtrarTipoConta()" />
+    <br />
+</div>
+
 @if (ViewBag.ListaContas != null)
 {
     <div class="table-container">
-        <table class="table table-bordered">
+        <table class="table table-bordered" id="contaPagarTable">
             <thead>
                 <tr>
                     <th>Descrição da conta</th>
@@ -122,6 +128,25 @@ else
             alert("Sem conexão com a internet. Verifique sua rede e tente novamente.");
         } else {
             window.location.href = "../Financeiro/Excluir/" + id;
+        }
+    }
+
+    function filtrarTipoConta() {
+        var input = document.getElementById("searchInput");
+        var filter = input.value.toLowerCase();
+        var table = document.getElementById("contaPagarTable");
+        var rows = table.getElementsByTagName("tr");
+
+        for (var i = 1; i < rows.length; i++) { // Começa do índice 1 para ignorar o cabeçalho
+            var productCell = rows[i].getElementsByTagName("td")[0]; // Coluna a ser pesquisada
+            if (productCell) {
+                var productName = productCell.textContent || productCell.innerText;
+                if (productName.toLowerCase().indexOf(filter) > -1) {
+                    rows[i].style.display = ""; // Mostra a linha
+                } else {
+                    rows[i].style.display = "none"; // Oculta a linha
+                }
+            }
         }
     }
 </script>
